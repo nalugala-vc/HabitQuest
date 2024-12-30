@@ -26,11 +26,7 @@ class DailySummary extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(24),
-          gradient: const LinearGradient(
-            colors: [AppColors.pink400, AppColors.purple500],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
+          color: AppColors.purple100,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,14 +37,13 @@ class DailySummary extends StatelessWidget {
                 RobotoCondensed(
                   text: 'Daily Summary',
                   fontSize: 20,
-                  textColor: AppColors.black,
                 ),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   child: RobotoCondensed(
                     text: date,
-                    textColor: AppColors.plainWhite,
+                    textColor: AppColors.purple750,
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
                   ),
@@ -76,7 +71,7 @@ class DailySummary extends StatelessWidget {
                 const HeroIcon(
                   HeroIcons.checkCircle,
                   style: HeroIconStyle.outline,
-                  color: AppColors.grey500,
+                  color: AppColors.purple750,
                 ),
                 spaceW10,
                 RobotoCondensed(

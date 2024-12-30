@@ -65,12 +65,14 @@ class HabitCard extends StatelessWidget {
                         const HeroIcon(
                           HeroIcons.fire,
                           style: HeroIconStyle.outline,
-                          color: AppColors.grey500,
+                          color: AppColors.purple750,
                         ),
                         spaceW5,
                         RobotoCondensed(
                           text: '$streak days',
                           fontSize: 15,
+                          fontWeight: FontWeight.w400,
+                          textColor: AppColors.purple750,
                         )
                       ],
                     )

@@ -41,7 +41,7 @@ class _HomePageMobileState extends State<HomePageMobile> {
                   spaceH15,
                   RobotoCondensed(
                     text: 'My Habits',
-                    fontSize: 16,
+                    fontSize: 18,
                   ),
                   spaceH15,
                   HabitCardList(

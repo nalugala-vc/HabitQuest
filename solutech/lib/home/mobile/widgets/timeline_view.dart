@@ -29,13 +29,17 @@ class _TimelineViewState extends State<TimelineView> {
         ),
         dayProps: EasyDayProps(
           activeDayStyle: DayStyle(
+            dayNumStyle: const TextStyle(
+                color: AppColors.purple500,
+                fontSize: 18,
+                fontWeight: FontWeight.w900),
+            dayStrStyle: const TextStyle(
+                color: AppColors.purple500, fontWeight: FontWeight.w500),
+            monthStrStyle: const TextStyle(
+                color: AppColors.purple500, fontWeight: FontWeight.w500),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
-              gradient: const LinearGradient(
-                colors: [AppColors.pink400, AppColors.purple500],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+              color: AppColors.purple100,
             ),
           ),
         ),
