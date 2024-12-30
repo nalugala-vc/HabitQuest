@@ -21,7 +21,7 @@ class SocialIcons extends StatelessWidget {
         width: 47,
         height: 47,
         decoration: BoxDecoration(
-          color: AppColors.purple400,
+          color: AppColors.purple500,
           borderRadius: BorderRadius.circular(47),
         ),
         child: Center(

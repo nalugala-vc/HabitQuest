@@ -58,10 +58,10 @@ class _SignUpMobileState extends State<SignUpMobile> {
                     ),
                     spaceH15,
                     AuthField(
-                      controller: controller.password,
+                      controller: controller.confirmPassword,
                       isPassword: true,
                       fieldType: FieldType.password,
-                      hintText: 'Password',
+                      hintText: 'Confirm Password',
                     ),
                     spaceH40,
                     RoundedButton(

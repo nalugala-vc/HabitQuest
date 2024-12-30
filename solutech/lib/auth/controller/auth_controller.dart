@@ -15,6 +15,7 @@ class SignUpController extends GetxController {
 
   final email = TextEditingController();
   final password = TextEditingController();
+  final confirmPassword = TextEditingController();
 
   String? validatePassword(String password) {
     if (password.length < 6) {
