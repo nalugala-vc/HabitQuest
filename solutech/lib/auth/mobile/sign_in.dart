@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:solutech/auth/controller/sign_in_controller.dart';
+import 'package:solutech/auth/controller/auth_controller.dart';
 import 'package:solutech/auth/mobile/sign_up.dart';
 import 'package:solutech/auth/widgets/sign_up_option_widget.dart';
 import 'package:solutech/auth/widgets/social_icons.dart';
