@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:solutech/common/widgets/app_bar.dart';
+import 'package:solutech/common/widgets/bottom_nav_bar.dart';
 import 'package:solutech/home/mobile/widgets/daily_summary.dart';
 import 'package:solutech/home/mobile/widgets/habit_card_list.dart';
 import 'package:solutech/home/mobile/widgets/timeline_view.dart';
@@ -19,38 +20,40 @@ class _HomePageMobileState extends State<HomePageMobile> {
   Widget build(BuildContext context) {
     var selectedDate = DateTime.now().obs;
     return Scaffold(
-        appBar: const MainAppBar(),
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TimelineView(
-                    selectedDate: selectedDate.value,
-                    onSelectedDateChanged: (date) =>
-                        setState(() => selectedDate.value = date),
-                  ),
-                  spaceH20,
-                  const DailySummary(
-                    completedTasts: 4,
-                    date: '2024-12-31',
-                    totalTasks: 7,
-                  ),
-                  spaceH15,
-                  RobotoCondensed(
-                    text: 'My Habits',
-                    fontSize: 18,
-                  ),
-                  spaceH15,
-                  HabitCardList(
-                    selectedDate: selectedDate.value,
-                  )
-                ],
-              ),
+      appBar: const MainAppBar(),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TimelineView(
+                  selectedDate: selectedDate.value,
+                  onSelectedDateChanged: (date) =>
+                      setState(() => selectedDate.value = date),
+                ),
+                spaceH20,
+                const DailySummary(
+                  completedTasts: 4,
+                  date: '2024-12-31',
+                  totalTasks: 7,
+                ),
+                spaceH15,
+                RobotoCondensed(
+                  text: 'My Habits',
+                  fontSize: 18,
+                ),
+                spaceH15,
+                HabitCardList(
+                  selectedDate: selectedDate.value,
+                )
+              ],
             ),
           ),
-        ));
+        ),
+      ),
+      bottomNavigationBar: const BottomNavBar(),
+    );
   }
 }
