@@ -7,6 +7,8 @@ class AppColors {
   static const Color pink400 = Color(0XFFF3CDE2);
   static const Color purple100 = Color(0XFFEDE1F8);
   static const Color purple400 = Color(0XFFD6C2EB);
+  static const Color purple500 = Color(0XFFc8add9);
+  static const Color purple600 = Color.fromARGB(255, 172, 144, 203);
   static const Color peach200 = Color(0XFFEBD8D0);
   static const Color grey500 = Color(0XFF757575);
   static const Color grey600 = Color(0XFF909090);

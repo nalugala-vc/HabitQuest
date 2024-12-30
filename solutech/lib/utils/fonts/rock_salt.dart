@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Pacifico extends StatelessWidget {
+class RockSalt extends StatelessWidget {
   final String text;
   final Color textColor;
   final double fontSize;
@@ -9,9 +9,9 @@ class Pacifico extends StatelessWidget {
   final FontWeight fontWeight;
   final int truncateLength;
   final TextAlign textAlignment;
-  final bool underline; // New parameter for underline
+  final bool underline;
 
-  Pacifico({
+  RockSalt({
     super.key,
     required this.text,
     this.shouldTruncate = true,
@@ -20,7 +20,7 @@ class Pacifico extends StatelessWidget {
     this.truncateLength = 45,
     this.fontWeight = FontWeight.bold,
     this.textAlignment = TextAlign.center,
-    this.underline = false, // Default underline set to false
+    this.underline = false,
   });
 
   @override
@@ -32,9 +32,9 @@ class Pacifico extends StatelessWidget {
               : text
           : text,
       textAlign: textAlignment,
-      style: GoogleFonts.pacifico(
+      style: GoogleFonts.rockSalt(
         color: textColor,
-        fontSize: fontSize == 0 ? 36 : fontSize,
+        fontSize: fontSize == 0 ? 30 : fontSize,
         fontWeight: fontWeight,
         decoration: underline ? TextDecoration.underline : TextDecoration.none,
       ),
