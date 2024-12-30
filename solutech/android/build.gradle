@@ -1,19 +1,19 @@
-buildscript{
-    repositories{
+buildscript {
+    repositories {
         google()
         jcenter()
     }
 
-    dependencies{
-        classpath id 'com.google.gms.google-services:4.4.2'
+    dependencies {
+        classpath 'com.google.gms:google-services:4.4.2'
     }
 }
+
 allprojects {
     repositories {
         google()
         mavenCentral()
     }
-
 }
 
 rootProject.buildDir = "../build"
