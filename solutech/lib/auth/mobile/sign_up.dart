@@ -5,6 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:solutech/auth/controller/auth_controller.dart';
 import 'package:solutech/auth/mobile/sign_in.dart';
+import 'package:solutech/auth/onboarding/onboarding_questions.dart';
 import 'package:solutech/auth/widgets/logo_widget.dart';
 import 'package:solutech/auth/widgets/sign_up_option_widget.dart';
 import 'package:solutech/auth/widgets/social_icons.dart';
@@ -66,7 +67,9 @@ class _SignUpMobileState extends State<SignUpMobile> {
                     spaceH40,
                     RoundedButton(
                       label: 'Sign Up',
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.offAll(() => OnboardingQuestions());
+                      },
                     ),
                     spaceH50,
                     const SignUpOptions(

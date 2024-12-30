@@ -51,3 +51,13 @@ class SignUpController extends GetxController {
 
   void register(String email, String password) {}
 }
+
+class OTPController extends GetxController {
+  static OTPController get instance => Get.find();
+
+  final otp = TextEditingController();
+
+  void verifyOTP(
+    String otp,
+  ) {}
+}

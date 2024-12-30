@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:solutech/auth/mobile/sign_up.dart';
+import 'package:solutech/common/constants.dart';
 import 'package:solutech/common/widgets/rounded_button.dart';
 import 'package:solutech/utils/app_colors.dart';
 import 'package:solutech/utils/fonts/roboto_condensed.dart';
@@ -15,30 +16,6 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _controller = PageController();
   int _currentIndex = 0;
-
-  final List<Map<String, String>> _pages = [
-    {
-      "title": "Habit Quest",
-      "description":
-          "Embark on a quest to build better habits and transform your life with small daily steps. Unlock your potential and achieve your dreams.",
-      "image": "assets/icons/logo.png",
-      "isSvg": "false"
-    },
-    {
-      "title": "Manage Your Daily Habits",
-      "description":
-          "Keep your streaks alive by completing daily tasks. Build momentum and achieve big goals with consistent habits.",
-      "image": "assets/images/events.svg",
-      "isSvg": "true"
-    },
-    {
-      "title": "Challenge Yourself!",
-      "description":
-          "Take on 30-day challenges to set new goals and push your limits. Discover what you're truly capable of!",
-      "image": "assets/images/winners.svg",
-      "isSvg": "true"
-    }
-  ];
 
   Widget _buildImage(String imagePath, bool isSvg) {
     if (isSvg) {
@@ -59,7 +36,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _onNextPressed() {
-    if (_currentIndex < _pages.length - 1) {
+    if (_currentIndex < pages.length - 1) {
       _controller.nextPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
@@ -83,20 +60,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     _currentIndex = index;
                   });
                 },
-                itemCount: _pages.length,
+                itemCount: pages.length,
                 itemBuilder: (context, index) {
-                  final isSvg = _pages[index]["isSvg"] == "true";
+                  final isSvg = pages[index]["isSvg"] == "true";
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CircleAvatar(
                         radius: 100,
                         backgroundColor: AppColors.purple500,
-                        child: _buildImage(_pages[index]["image"]!, isSvg),
+                        child: _buildImage(pages[index]["image"]!, isSvg),
                       ),
                       spaceH20,
                       RobotoCondensed(
-                        text: _pages[index]["title"]!,
+                        text: pages[index]["title"]!,
                         fontSize: 24,
                         textColor: AppColors.purple500,
                       ),
@@ -104,7 +81,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: RobotoCondensed(
-                          text: _pages[index]["description"]!,
+                          text: pages[index]["description"]!,
                           textAlignment: TextAlign.center,
                           textColor: AppColors.grey600,
                           fontWeight: FontWeight.normal,
@@ -116,7 +93,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: List.generate(
-                          _pages.length,
+                          pages.length,
                           (index) => AnimatedContainer(
                             duration: const Duration(milliseconds: 300),
                             margin: const EdgeInsets.symmetric(horizontal: 3),
@@ -135,7 +112,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       RoundedButton(
                         onPressed: _onNextPressed,
                         width: 300,
-                        label: _currentIndex == _pages.length - 1
+                        label: _currentIndex == pages.length - 1
                             ? "Get Started"
                             : "Next",
                       ),
