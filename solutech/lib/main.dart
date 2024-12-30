@@ -5,6 +5,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:solutech/auth/mobile/sign_up.dart';
 import 'package:solutech/auth/onboarding/onboarding_questions.dart';
 import 'package:solutech/auth/onboarding/onboarding_screen_1.dart';
+import 'package:solutech/home/mobile/home_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: OnboardingQuestions(),
+      home: HomePageMobile(),
       debugShowCheckedModeBanner: false,
     );
   }

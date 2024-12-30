@@ -28,7 +28,6 @@ class _TimelineViewState extends State<TimelineView> {
           showSelectedDate: true,
         ),
         dayProps: EasyDayProps(
-          dayStructure: DayStructure.dayNumDayStr,
           activeDayStyle: DayStyle(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
