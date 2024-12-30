@@ -1,9 +1,16 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:solutech/auth/controller/sign_in_controller.dart';
-import 'package:solutech/auth/widgets/auth_field.dart';
+import 'package:solutech/auth/mobile/sign_up.dart';
+import 'package:solutech/auth/widgets/sign_up_option_widget.dart';
+import 'package:solutech/auth/widgets/social_icons.dart';
+import 'package:solutech/common/widgets/auth_field.dart';
 import 'package:solutech/auth/widgets/logo_widget.dart';
-import 'package:solutech/utils/fonts/poppins.dart';
+import 'package:solutech/common/widgets/rounded_button.dart';
+import 'package:solutech/utils/app_colors.dart';
+import 'package:solutech/utils/fonts/roboto_condensed.dart';
 import 'package:solutech/utils/spacers.dart';
 
 class SignInMobile extends StatefulWidget {
@@ -31,7 +38,7 @@ class _SignInMobileState extends State<SignInMobile> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Poppins(
+                    RobotoCondensed(
                       text: 'Sign In',
                       fontSize: 32,
                       fontWeight: FontWeight.w800,
@@ -86,20 +93,20 @@ class _SignInMobileState extends State<SignInMobile> {
                       child: RichText(
                         text: TextSpan(
                           text: "Don't have an account?",
-                          style: GoogleFonts.pragatiNarrow(
+                          style: GoogleFonts.robotoCondensed(
                               fontSize: 18,
                               fontWeight: FontWeight.normal,
-                              color: KaleidoColors.greyPlaceholder),
+                              color: AppColors.grey600),
                           children: [
                             TextSpan(
                                 text: ' Sign up',
-                                style: GoogleFonts.pragatiNarrow(
+                                style: GoogleFonts.robotoCondensed(
                                     fontSize: 18,
                                     fontWeight: FontWeight.normal,
-                                    color: KaleidoColors.orangeMain),
+                                    color: AppColors.purple400),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    Get.offAll(() => const SignUp());
+                                    Get.offAll(() => const SignUpMobile());
                                   })
                           ],
                         ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Poppins extends StatelessWidget {
+class RobotoCondensed extends StatelessWidget {
   final String text;
   final Color textColor;
   final double fontSize;
@@ -11,7 +11,7 @@ class Poppins extends StatelessWidget {
   final TextAlign textAlignment;
   final bool underline; // New parameter for underline
 
-  Poppins({
+  RobotoCondensed({
     super.key,
     required this.text,
     this.shouldTruncate = true,
@@ -32,7 +32,7 @@ class Poppins extends StatelessWidget {
               : text
           : text,
       textAlign: textAlignment,
-      style: GoogleFonts.poppins(
+      style: GoogleFonts.robotoCondensed(
         color: textColor,
         fontSize: fontSize == 0 ? 36 : fontSize,
         fontWeight: fontWeight,

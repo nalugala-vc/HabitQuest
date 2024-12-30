@@ -81,7 +81,7 @@ class _AuthFieldState extends State<AuthField> {
               horizontal: 10,
             ),
             hintText: widget.hintText,
-            hintStyle: GoogleFonts.poppins(
+            hintStyle: GoogleFonts.robotoCondensed(
               color: AppColors.grey600,
               fontWeight: FontWeight.normal,
               fontSize: 18,
@@ -145,7 +145,7 @@ class _AuthFieldState extends State<AuthField> {
           horizontal: 12,
         ),
         hintText: widget.hintText,
-        hintStyle: GoogleFonts.poppins(
+        hintStyle: GoogleFonts.robotoCondensed(
           color: AppColors.grey600,
           fontWeight: FontWeight.normal,
           fontSize: 16,
@@ -206,7 +206,7 @@ class _AuthFieldState extends State<AuthField> {
           ),
         ),
         hintText: widget.hintText,
-        hintStyle: GoogleFonts.poppins(
+        hintStyle: GoogleFonts.robotoCondensed(
           color: AppColors.grey600,
           fontWeight: FontWeight.normal,
           fontSize: 18,
@@ -256,7 +256,7 @@ class _AuthFieldState extends State<AuthField> {
           horizontal: 10,
         ),
         hintText: widget.hintText,
-        hintStyle: GoogleFonts.poppins(
+        hintStyle: GoogleFonts.robotoCondensed(
           color: AppColors.grey600,
           fontWeight: FontWeight.normal,
           fontSize: 18,

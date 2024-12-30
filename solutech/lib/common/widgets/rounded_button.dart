@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:solutech/utils/app_colors.dart';
-import 'package:solutech/utils/fonts/poppins.dart';
+import 'package:solutech/utils/fonts/roboto_condensed.dart';
 
 class RoundedButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -42,7 +42,7 @@ class RoundedButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(7),
                 border: Border.all(color: AppColors.purple500, width: 1.5))
             : null,
-        child: Poppins(
+        child: RobotoCondensed(
           text: label,
           fontSize: 20,
           textColor: textColor,
