@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:solutech/common/constants.dart';
 import 'package:solutech/common/widgets/rounded_button.dart';
+import 'package:solutech/home/mobile/home_page.dart';
 import 'package:solutech/utils/app_colors.dart';
 import 'package:solutech/utils/fonts/roboto_condensed.dart';
 import 'package:solutech/utils/spacers.dart';
@@ -27,7 +30,8 @@ class _OnboardingQuestionsState extends State<OnboardingQuestions> {
     if (_userAnswers[currentQuestionKey] == null) {
       // Show a message or do something if the user hasn't selected a choice
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please select an option before proceeding.')),
+        const SnackBar(
+            content: Text('Please select an option before proceeding.')),
       );
       return;
     }
@@ -42,6 +46,7 @@ class _OnboardingQuestionsState extends State<OnboardingQuestions> {
       );
     } else {
       print("User Answers: $_userAnswers");
+      Get.offAll(() => const HomePageMobile());
     }
   }
 
