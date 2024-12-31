@@ -28,6 +28,23 @@ class SignInController extends GetxController {
       );
     }
   }
+
+  void loginWithGoogle() async {
+    try {
+      await _authServices.loginWithGoogle();
+      Get.offAll(() => const HomePageMobile());
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: 'Login failed: ${e.toString()}',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
+  }
 }
 
 class SignUpController extends GetxController {

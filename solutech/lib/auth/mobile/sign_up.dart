@@ -24,6 +24,7 @@ class SignUpMobile extends StatefulWidget {
 
 class _SignUpMobileState extends State<SignUpMobile> {
   final controller = Get.put(SignUpController());
+  final signIpController = Get.put(SignInController());
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -90,7 +91,9 @@ class _SignUpMobileState extends State<SignUpMobile> {
                             logowidth: 20),
                         spaceW20,
                         SocialIcons(
-                            onTap: () {},
+                            onTap: () {
+                              signIpController.loginWithGoogle();
+                            },
                             socialLogo: "assets/icons/devicon_google.png",
                             logoheight: 20,
                             logowidth: 20),

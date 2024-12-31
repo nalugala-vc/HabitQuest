@@ -78,7 +78,9 @@ class _SignInMobileState extends State<SignInMobile> {
                             logowidth: 20),
                         spaceW20,
                         SocialIcons(
-                            onTap: () {},
+                            onTap: () {
+                              controller.loginWithGoogle();
+                            },
                             socialLogo: "assets/icons/devicon_google.png",
                             logoheight: 20,
                             logowidth: 20),

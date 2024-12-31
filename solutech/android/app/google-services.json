@@ -12,7 +12,20 @@
           "package_name": "com.example.solutech"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "260752576315-3dh15lj8gk06ohkig8t6dgmq0jiqv89n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.solutech",
+            "certificate_hash": "4f466ce20268f8fe082f90ca920eb30965bc365a"
+          }
+        },
+        {
+          "client_id": "260752576315-oq8j0lsss3gt158e37m5vnaj6eh4hu9i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBd-KiZHKrB7wEXH2TE5RI1CS-wcGLwyd0"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "260752576315-oq8j0lsss3gt158e37m5vnaj6eh4hu9i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
