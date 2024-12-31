@@ -13,20 +13,6 @@ class StreaksMobile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Color> backgroundColor = [
-      AppColors.greenAchieve,
-      AppColors.blueAchieve,
-      AppColors.greyAchieve,
-      AppColors.yellowAchieve,
-    ];
-
-    List<Color> titleColor = [
-      AppColors.greenAchieveTitle,
-      AppColors.blueAchieveTitle,
-      AppColors.greyAchieveTitle,
-      AppColors.yellowAchieveTitle,
-    ];
-
     return Scaffold(
       appBar: const MainAppBar(),
       body: SafeArea(

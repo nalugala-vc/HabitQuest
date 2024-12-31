@@ -1,3 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
+import 'package:solutech/utils/app_colors.dart';
+
 final List<Map<String, dynamic>> questions = [
   {
     "type": "time",
@@ -96,6 +100,48 @@ List<String> imgURL3 = [
   "assets/images/BADGE-BG2.png",
   "assets/images/BADGE-BG3.png",
   "assets/images/BADGE-BG4.png",
+];
+
+List<HeroIcons> accountIcons = [
+  HeroIcons.user,
+  HeroIcons.bell,
+  HeroIcons.key,
+];
+
+List<String> accountTitles = [
+  'Personal Info',
+  'Notifications',
+  'Privacy and Security',
+];
+
+List<HeroIcons> customizationIcons = [
+  HeroIcons.computerDesktop,
+  HeroIcons.arrowLeftCircle,
+  HeroIcons.globeAlt,
+];
+
+List<String> custimizationTitles = [
+  'Display & Appearance',
+  'Accessibility',
+  'Language',
+];
+
+List<HeroIcons> supportIcons = [
+  HeroIcons.lockOpen,
+  HeroIcons.cursorArrowRipple,
+  HeroIcons.numberedList,
+];
+
+List<String> supportTitles = [
+  'App Permisions',
+  'Support & FAQ',
+  'Give us feedback',
+];
+
+List<Color> profileColors = [
+  AppColors.peach200,
+  AppColors.pink400,
+  AppColors.purple400,
 ];
 
 final List<Map<String, String>> pages = [

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:solutech/home/mobile/home_page.dart';
+import 'package:solutech/profile/mobile/profile_page.dart';
 import 'package:solutech/streaks/mobile/streaks.dart';
 import 'package:solutech/utils/app_colors.dart';
 
@@ -66,7 +67,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
           Get.to(
             () => const StreaksMobile(),
           );
-        } else {}
+        } else {
+          Get.to(
+            () => const ProfilePageMobile(),
+          );
+        }
       },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
