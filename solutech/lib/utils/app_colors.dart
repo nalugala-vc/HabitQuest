@@ -23,4 +23,14 @@ class AppColors {
   static const Color grey700 = Color(0XFF616161);
   static const Color grey800 = Color(0XFF424242);
   static const Color grey900 = Color(0XFF212121);
+
+  //badges
+  static const Color greenAchieve = Color(0xFF92EACA);
+  static const Color greenAchieveTitle = Color(0xFF07673D);
+  static const Color blueAchieve = Color(0xFFB0B8FD);
+  static const Color blueAchieveTitle = Color(0xFF0013BD);
+  static const Color greyAchieve = Color(0xFFBCC1CB);
+  static const Color greyAchieveTitle = Color(0xFF909090);
+  static const Color yellowAchieve = Color(0xFFFCD996);
+  static const Color yellowAchieveTitle = Color(0xFFFDB836);
 }

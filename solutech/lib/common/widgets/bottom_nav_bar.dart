@@ -33,10 +33,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           _buildNavItem(HeroIcons.home, "Home", 0),
-          _buildNavItem(HeroIcons.magnifyingGlass, "Search", 1),
+          _buildNavItem(HeroIcons.plusCircle, "Search", 1),
           _buildNavItem(
             (address != null && address.isNotEmpty)
-                ? HeroIcons.plusCircle
+                ? HeroIcons.fire
                 : HeroIcons.arrowsRightLeft,
             (address != null && address.isNotEmpty) ? "Add" : 'Connect',
             2,
