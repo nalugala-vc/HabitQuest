@@ -46,7 +46,7 @@ class NotificationWidget extends StatelessWidget {
     }
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 7),
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 7),
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
@@ -57,14 +57,6 @@ class NotificationWidget extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (!isRead)
-            const Padding(
-              padding: EdgeInsets.only(right: 5, top: 10),
-              child: CircleAvatar(
-                radius: 5,
-                backgroundColor: Colors.red,
-              ),
-            ),
           CircleAvatar(
             radius: 25,
             backgroundColor: backgroundColor,
@@ -87,8 +79,27 @@ class NotificationWidget extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),
-                    RobotoCondensed(
-                        text: time, fontSize: 12, textColor: AppColors.grey500),
+                    SizedBox(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          RobotoCondensed(
+                              text: time,
+                              fontSize: 12,
+                              textColor: AppColors.grey500),
+                          spaceW10,
+                          if (!isRead)
+                            const Padding(
+                              padding: EdgeInsets.only(right: 5, top: 10),
+                              child: CircleAvatar(
+                                radius: 5,
+                                backgroundColor: Colors.red,
+                              ),
+                            ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
                 spaceH5,

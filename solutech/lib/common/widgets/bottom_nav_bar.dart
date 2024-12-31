@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:solutech/home/create_habit.dart';
 import 'package:solutech/home/mobile/home_page.dart';
 import 'package:solutech/profile/mobile/profile_page.dart';
 import 'package:solutech/streaks/mobile/streaks.dart';
@@ -61,7 +62,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           );
         } else if (index == 1) {
           Get.to(
-            () => const HomePageMobile(),
+            () => const CreateHabit(),
           );
         } else if (index == 2) {
           Get.to(

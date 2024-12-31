@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:solutech/notifications/mobile/notifications_page.dart';
 import 'package:solutech/utils/app_colors.dart';
 import 'package:solutech/utils/fonts/rock_salt.dart';
 
@@ -20,7 +21,11 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
               style: HeroIconStyle.outline,
               size: 30,
             ),
-            onPressed: () {}),
+            onPressed: () {
+              Get.to(
+                () => NotificationsPage(),
+              );
+            }),
       ],
     );
   }

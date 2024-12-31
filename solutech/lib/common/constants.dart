@@ -167,3 +167,41 @@ final List<Map<String, String>> pages = [
     "isSvg": "true"
   }
 ];
+
+final List<Map<String, dynamic>> notifications = [
+  {
+    "type": "Reminder",
+    "title": "Workout Reminder",
+    "description": "Time for your evening workout!",
+    "time": "2h ago",
+    "isRead": false,
+  },
+  {
+    "type": "Tip",
+    "title": "Hydration Tip",
+    "description": "Drink a glass of water to stay hydrated.",
+    "time": "4h ago",
+    "isRead": true,
+  },
+  {
+    "type": "Update",
+    "title": "App Update",
+    "description": "New features have been added to the app!",
+    "time": "1d ago",
+    "isRead": false,
+  },
+  {
+    "type": "Reminder",
+    "title": "Meditation Reminder",
+    "description": "Take 10 minutes to meditate and relax.",
+    "time": "3d ago",
+    "isRead": true,
+  },
+  {
+    "type": "Tip",
+    "title": "Healthy Snack",
+    "description": "Try eating some almonds for a healthy snack.",
+    "time": "5d ago",
+    "isRead": false,
+  },
+];
