@@ -36,9 +36,14 @@ class _ProfileImageWidgetState extends State<ProfileImageWidget> {
     final pickedFile =
         await ImagePicker().pickImage(source: ImageSource.gallery);
 
-    setState(() {
-      image = File(pickedFile!.path);
-    });
+    if (pickedFile != null) {
+      setState(() {
+        image = File(pickedFile.path);
+      });
+    } else {
+      // Optional: Handle the case where no image is selected
+      debugPrint("No image selected.");
+    }
   }
 
   @override
