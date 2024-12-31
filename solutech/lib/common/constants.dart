@@ -36,6 +36,67 @@ final List<Map<String, dynamic>> questions = [
     "key": "reminders"
   },
 ];
+List<String> imgURL = [
+  "assets/images/badge1.png",
+  "assets/images/badge2.png",
+  "assets/images/badge3.png",
+  "assets/images/badge4.png",
+  "assets/images/badge5.png",
+  "assets/images/badge6.png",
+  "assets/images/badge7.png",
+  "assets/images/badge8.png",
+  "assets/images/badge9.png",
+  "assets/images/badge10.png",
+  "assets/images/badge11.png",
+  "assets/images/badge12.png",
+  "assets/images/badge13.png",
+  "assets/images/badge14.png",
+  "assets/images/BADGE-BG1.png",
+  "assets/images/BADGE-BG2.png",
+  "assets/images/BADGE-BG3.png",
+  "assets/images/BADGE-BG4.png",
+];
+
+List<String> imgURL2 = [
+  "assets/images/badge12.png",
+  "assets/images/badge13.png",
+  "assets/images/badge14.png",
+  "assets/images/badge11.png",
+];
+
+List<String> imgURL4 = [
+  "assets/images/badge12.png",
+  "assets/images/badge13.png",
+  "assets/images/badge14.png",
+  "assets/images/badge11.png",
+];
+
+List<String> title1 = [
+  "SUPER SAVER",
+  "BUDGET PRO",
+  "AMBASSADOR",
+  "PREMIUM",
+];
+List<String> title2 = [
+  "INSURE GENIUS",
+  "INVESTMENT WHIZ",
+  "ESTATE PLANNER",
+  "BASIC",
+];
+
+List<String> title3 = [
+  "UZASHOPPER",
+  "INVESTMENT WHIZ",
+  "LIFELONG LEARNER",
+  "PREMIUM",
+];
+
+List<String> imgURL3 = [
+  "assets/images/BADGE-BG1.png",
+  "assets/images/BADGE-BG2.png",
+  "assets/images/BADGE-BG3.png",
+  "assets/images/BADGE-BG4.png",
+];
 
 final List<Map<String, String>> pages = [
   {

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:solutech/home/mobile/home_page.dart';
+import 'package:solutech/streaks/mobile/streaks.dart';
 import 'package:solutech/utils/app_colors.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -35,9 +36,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           _buildNavItem(HeroIcons.home, "Home", 0),
           _buildNavItem(HeroIcons.plusCircle, "Search", 1),
           _buildNavItem(
-            (address != null && address.isNotEmpty)
-                ? HeroIcons.fire
-                : HeroIcons.arrowsRightLeft,
+            HeroIcons.fire,
             (address != null && address.isNotEmpty) ? "Add" : 'Connect',
             2,
           ),
@@ -60,7 +59,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
             () => const HomePageMobile(),
           );
         } else if (index == 1) {
+          Get.to(
+            () => const HomePageMobile(),
+          );
         } else if (index == 2) {
+          Get.to(
+            () => const StreaksMobile(),
+          );
         } else {}
       },
       child: AnimatedContainer(
