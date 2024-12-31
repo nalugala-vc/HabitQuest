@@ -76,4 +76,6 @@ class AuthServices {
       throw Exception('An unknown error occurred: ${e.toString()}');
     }
   }
+
+  Future<void> logout() async => await FirebaseAuth.instance.signOut();
 }
