@@ -68,7 +68,11 @@ class _SignUpMobileState extends State<SignUpMobile> {
                     RoundedButton(
                       label: 'Sign Up',
                       onPressed: () {
-                        Get.offAll(() => OnboardingQuestions());
+                        controller.register(
+                          controller.email.text.trim(),
+                          controller.password.text.trim(),
+                          controller.confirmPassword.text.trim(),
+                        );
                       },
                     ),
                     spaceH50,
