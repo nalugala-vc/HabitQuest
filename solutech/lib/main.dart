@@ -6,6 +6,7 @@ import 'package:solutech/auth/mobile/sign_in.dart';
 import 'package:solutech/auth/mobile/sign_up.dart';
 import 'package:solutech/auth/onboarding/onboarding_questions.dart';
 import 'package:solutech/auth/onboarding/onboarding_screen_1.dart';
+import 'package:solutech/core/di/app_bindings.dart';
 import 'package:solutech/home/mobile/home_page.dart';
 
 Future<void> main() async {
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Flutter Demo',
+      initialBinding: AppBindings(),
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
