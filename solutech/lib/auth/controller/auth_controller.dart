@@ -2,15 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:solutech/auth/onboarding/onboarding_questions.dart';
+import 'package:solutech/home/mobile/home_page.dart';
 import 'package:solutech/services/auth_services.dart';
 
 class SignInController extends GetxController {
   static SignInController get instance => Get.find();
+  final AuthServices _authServices = AuthServices();
 
   final email = TextEditingController();
   final password = TextEditingController();
 
-  void loginUser(String email, String password) {}
+  void loginUser(String email, String password) async {
+    try {
+      await _authServices.signIn(email: email, password: password);
+      Get.offAll(() => const HomePageMobile());
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: 'Login failed: ${e.toString()}',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
+  }
 }
 
 class SignUpController extends GetxController {
@@ -26,7 +43,7 @@ class SignUpController extends GetxController {
     if (password.length < 6) {
       Fluttertoast.showToast(
           msg: 'Password must be at least 6 characters long',
-          toastLength: Toast.LENGTH_SHORT,
+          toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.TOP,
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.red,
@@ -37,7 +54,7 @@ class SignUpController extends GetxController {
     if (!RegExp(r'(?=.*?[#?!@$%^&*-])').hasMatch(password)) {
       Fluttertoast.showToast(
           msg: 'Password must contain at least one special character',
-          toastLength: Toast.LENGTH_SHORT,
+          toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.TOP,
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.red,
@@ -48,7 +65,7 @@ class SignUpController extends GetxController {
     if (!RegExp(r'(?=.*?[0-9])').hasMatch(password)) {
       Fluttertoast.showToast(
           msg: 'Password must contain at least one number',
-          toastLength: Toast.LENGTH_SHORT,
+          toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.TOP,
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.red,
@@ -63,7 +80,7 @@ class SignUpController extends GetxController {
     if (password != confirmPassword) {
       Fluttertoast.showToast(
           msg: 'Passwords do not match',
-          toastLength: Toast.LENGTH_SHORT,
+          toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.TOP,
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.red,
@@ -80,7 +97,7 @@ class SignUpController extends GetxController {
     if (email.isEmpty) {
       Fluttertoast.showToast(
           msg: 'Email is required',
-          toastLength: Toast.LENGTH_SHORT,
+          toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.TOP,
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.red,
@@ -91,7 +108,7 @@ class SignUpController extends GetxController {
     if (!emailRegex.hasMatch(email)) {
       Fluttertoast.showToast(
           msg: 'Enter a valid email address',
-          toastLength: Toast.LENGTH_SHORT,
+          toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.TOP,
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.red,
@@ -120,7 +137,7 @@ class SignUpController extends GetxController {
     } catch (e) {
       Fluttertoast.showToast(
         msg: 'Registration failed: ${e.toString()}',
-        toastLength: Toast.LENGTH_SHORT,
+        toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.red,

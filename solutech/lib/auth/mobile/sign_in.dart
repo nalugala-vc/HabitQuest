@@ -58,7 +58,10 @@ class _SignInMobileState extends State<SignInMobile> {
                     spaceH40,
                     RoundedButton(
                       label: 'Sign In',
-                      onPressed: () {},
+                      onPressed: () {
+                        controller.loginUser(controller.email.text.trim(),
+                            controller.password.text.trim());
+                      },
                     ),
                     spaceH50,
                     const SignUpOptions(
