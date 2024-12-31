@@ -127,7 +127,14 @@ class _CreateHabitState extends State<CreateHabit> {
                   spaceH100,
                   RoundedButton(
                     label: 'Create Habit',
-                    onPressed: () {},
+                    onPressed: () {
+                      controller.onSave(
+                          description: controller.description.text.trim(),
+                          hasReminder: controller.hasReminder.value,
+                          isDaily: controller.isDaily.value,
+                          title: controller.title.text.trim(),
+                          reminderTime: controller.reminderTime.value);
+                    },
                   ),
                 ],
               ),

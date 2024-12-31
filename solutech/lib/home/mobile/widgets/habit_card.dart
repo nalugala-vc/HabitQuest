@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
+
 import 'package:solutech/utils/app_colors.dart';
 import 'package:solutech/utils/fonts/roboto_condensed.dart';
 import 'package:solutech/utils/spacers.dart';
@@ -11,6 +12,7 @@ class HabitCard extends StatelessWidget {
   final String habitId;
   final bool isCompleted;
   final DateTime date;
+  final Function(bool?) onChanged;
   const HabitCard(
       {super.key,
       required this.date,
@@ -18,6 +20,7 @@ class HabitCard extends StatelessWidget {
       required this.isCompleted,
       required this.progress,
       required this.streak,
+      required this.onChanged,
       required this.title});
 
   @override
@@ -51,6 +54,7 @@ class HabitCard extends StatelessWidget {
           padding: EdgeInsets.all(16),
           child: Row(
             children: [
+              Checkbox(value: isCompleted, onChanged: onChanged),
               Expanded(
                   child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
