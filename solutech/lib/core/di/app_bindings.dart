@@ -8,6 +8,6 @@ class AppBindings extends Bindings {
     Get.lazyPut(() => SignInController());
     Get.lazyPut(() => SignUpController());
     Get.lazyPut(() => OTPController());
-    Get.lazyPut(() => HabitController());
+    Get.put(() => HabitController());
   }
 }

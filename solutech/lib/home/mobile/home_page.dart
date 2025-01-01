@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:solutech/common/widgets/app_bar.dart';
 import 'package:solutech/common/widgets/bottom_nav_bar.dart';
+import 'package:solutech/data/habit_quest_database.dart';
 import 'package:solutech/home/controller/habit_controller.dart';
 import 'package:solutech/home/mobile/widgets/daily_summary.dart';
 import 'package:solutech/home/mobile/widgets/habit_card_list.dart';
@@ -19,11 +20,7 @@ class HomePageMobile extends StatefulWidget {
 class _HomePageMobileState extends State<HomePageMobile> {
   final HabitController habitController = Get.find();
 
-  @override
-  void initState() {
-    super.initState();
-    habitController.fetchHabits();
-  }
+  HabitQuestDatabase db = HabitQuestDatabase();
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +47,6 @@ class _HomePageMobileState extends State<HomePageMobile> {
                   final tasksForSelectedDate = habits.where((habit) {
                     DateTime createdAt =
                         habit.createdAt?.toDate() ?? DateTime.now();
-                    print(createdAt);
-                    print(habit.title);
 
                     return createdAt.year == selectedDate.value.year &&
                         createdAt.month == selectedDate.value.month &&
