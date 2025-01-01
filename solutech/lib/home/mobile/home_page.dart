@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:solutech/common/widgets/app_bar.dart';
 import 'package:solutech/common/widgets/bottom_nav_bar.dart';
+import 'package:solutech/home/controller/habit_controller.dart';
 import 'package:solutech/home/mobile/widgets/daily_summary.dart';
 import 'package:solutech/home/mobile/widgets/habit_card_list.dart';
 import 'package:solutech/home/mobile/widgets/timeline_view.dart';
@@ -16,9 +18,18 @@ class HomePageMobile extends StatefulWidget {
 }
 
 class _HomePageMobileState extends State<HomePageMobile> {
+  final HabitController habitController = Get.find();
+
+  @override
+  void initState() {
+    super.initState();
+    habitController.fetchHabits();
+  }
+
   @override
   Widget build(BuildContext context) {
     var selectedDate = DateTime.now().obs;
+
     return Scaffold(
       appBar: const MainAppBar(),
       body: SafeArea(
@@ -34,11 +45,33 @@ class _HomePageMobileState extends State<HomePageMobile> {
                       setState(() => selectedDate.value = date),
                 ),
                 spaceH20,
-                const DailySummary(
-                  completedTasts: 4,
-                  date: '2024-12-31',
-                  totalTasks: 7,
-                ),
+                Obx(() {
+                  final habits = habitController.habits;
+
+                  final tasksForSelectedDate = habits.where((habit) {
+                    DateTime createdAt;
+                    if (habit['createdAt'] is Timestamp) {
+                      createdAt = habit['createdAt'].toDate();
+                    } else {
+                      createdAt = DateTime.parse(habit['createdAt']);
+                    }
+
+                    return createdAt.year == selectedDate.value.year &&
+                        createdAt.month == selectedDate.value.month &&
+                        createdAt.day == selectedDate.value.day;
+                  }).toList();
+
+                  final completedTasks = tasksForSelectedDate
+                      .where((habit) => habit['isCompleted'] == true)
+                      .length;
+                  final totalTasks = tasksForSelectedDate.length;
+
+                  return DailySummary(
+                    completedTasts: completedTasks,
+                    date: selectedDate.value.toString().split(' ')[0],
+                    totalTasks: totalTasks,
+                  );
+                }),
                 spaceH15,
                 RobotoCondensed(
                   text: 'My Habits',
@@ -47,7 +80,7 @@ class _HomePageMobileState extends State<HomePageMobile> {
                 spaceH15,
                 HabitCardList(
                   selectedDate: selectedDate.value,
-                )
+                ),
               ],
             ),
           ),

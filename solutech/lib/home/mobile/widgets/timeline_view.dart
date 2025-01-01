@@ -23,7 +23,6 @@ class _TimelineViewState extends State<TimelineView> {
         initialDate: widget.selectedDate,
         onDateChange: widget.onSelectedDateChanged,
         headerProps: const EasyHeaderProps(
-          monthPickerType: MonthPickerType.dropDown,
           showHeader: false,
           showSelectedDate: true,
         ),

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -18,14 +19,25 @@ class HabitCardList extends StatefulWidget {
 class _HabitCardListState extends State<HabitCardList> {
   final HabitController habitController = Get.find();
 
-  @override
-  void initState() {
-    super.initState();
-    habitController.fetchHabits();
+  List<Map<String, dynamic>> getTasksForSelectedDate(
+      List<Map<String, dynamic>> habits) {
+    return habits.where((habit) {
+      DateTime createdAt;
+      if (habit['createdAt'] is Timestamp) {
+        createdAt = habit['createdAt'].toDate();
+      } else {
+        createdAt = DateTime.parse(habit['createdAt']);
+      }
+
+      return createdAt.year == widget.selectedDate.year &&
+          createdAt.month == widget.selectedDate.month &&
+          createdAt.day == widget.selectedDate.day;
+    }).toList();
   }
 
-  void checkBoxTapped(bool? value, int index) {
-    final habit = habitController.habits[index];
+  void checkBoxTapped(
+      bool? value, int index, List<Map<String, dynamic>> tasksForSelectedDate) {
+    final habit = tasksForSelectedDate[index];
     final habitId = habit['id'];
     final isCompleted = value ?? false;
 
@@ -38,14 +50,14 @@ class _HabitCardListState extends State<HabitCardList> {
         ));
   }
 
-  void deleteHabit(int index) {
+  void deleteHabit(int index, List<Map<String, dynamic>> tasksForSelectedDate) {
     confirmDialogue(
       context: context,
       icon: 'assets/images/delete-file.png',
       label: 'Delete',
       message: 'Are you sure you want to delete this habit ?',
       onConfirm: () {
-        final habit = habitController.habits[index];
+        final habit = tasksForSelectedDate[index];
         final habitId = habit['id'];
         habitController.deleteHabit(habitId);
       },
@@ -60,19 +72,24 @@ class _HabitCardListState extends State<HabitCardList> {
         return Center(child: CircularProgressIndicator());
       }
 
+      final habits = habitController.habits;
+
+      // Filter tasks for the selected date
+      final tasksForSelectedDate = getTasksForSelectedDate(habits);
+
       return ListView.separated(
         separatorBuilder: (context, index) => spaceH15,
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: habitController.habits.length,
+        itemCount: tasksForSelectedDate.length,
         itemBuilder: (context, index) {
-          final habit = habitController.habits[index];
+          final habit = tasksForSelectedDate[index];
           return HabitCard(
-            deleteTapped: (context) => deleteHabit(index),
+            deleteTapped: (context) => deleteHabit(index, tasksForSelectedDate),
             editTapped: (context) => editHabit(habit, index),
             date: widget.selectedDate,
             onChanged: (value) {
-              checkBoxTapped(value, index);
+              checkBoxTapped(value, index, tasksForSelectedDate);
             },
             title: "${habit['title']},${habit['isCompleted']} ",
             isCompleted: habit['isCompleted'],

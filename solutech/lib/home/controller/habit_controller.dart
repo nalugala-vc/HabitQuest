@@ -253,7 +253,7 @@ class HabitController extends GetxController {
         'hasReminder': hasReminder,
         'isCompleted': false,
         'reminderTime': hasReminder && reminderTime != null
-            ? '${reminderTime.hour}:${reminderTime.minute}'
+            ? reminderTime.format(Get.context!)
             : null,
         'createdBy': user!.uid,
         'createdAt': FieldValue.serverTimestamp(),

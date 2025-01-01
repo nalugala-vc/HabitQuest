@@ -16,6 +16,7 @@ class DailySummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final progress = totalTasks == 0 ? 0.0 : completedTasts / totalTasks;
     return Card(
       elevation: 8,
       shadowColor: AppColors.grey200,
@@ -56,7 +57,7 @@ class DailySummary extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: LinearProgressIndicator(
-                    value: completedTasts / totalTasks,
+                    value: progress,
                     minHeight: 8,
                     backgroundColor: AppColors.grey700.withOpacity(0.1),
                     valueColor:
