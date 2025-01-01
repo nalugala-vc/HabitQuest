@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:solutech/common/widgets/confirm_dialogue.dart';
 import 'package:solutech/home/controller/habit_controller.dart';
+import 'package:solutech/home/create_habit.dart';
 import 'package:solutech/home/mobile/widgets/habit_card.dart';
 import 'package:solutech/utils/spacers.dart';
 
@@ -31,7 +32,11 @@ class _HabitCardListState extends State<HabitCardList> {
     habitController.updateHabitCompletion(habitId, isCompleted);
   }
 
-  void editHabit(int index) {}
+  void editHabit(Map<String, dynamic> habit, int index) {
+    Get.to(() => CreateHabit(
+          habit: habit,
+        ));
+  }
 
   void deleteHabit(int index) {
     confirmDialogue(
@@ -64,7 +69,7 @@ class _HabitCardListState extends State<HabitCardList> {
           final habit = habitController.habits[index];
           return HabitCard(
             deleteTapped: (context) => deleteHabit(index),
-            editTapped: (context) => deleteHabit(index),
+            editTapped: (context) => editHabit(habit, index),
             date: widget.selectedDate,
             onChanged: (value) {
               checkBoxTapped(value, index);

@@ -107,12 +107,107 @@ class HabitController extends GetxController {
     }
   }
 
+  Future<void> updateHabit({
+    required String id,
+    String? title,
+    String? description,
+    bool? isDaily,
+    bool? hasReminder,
+    TimeOfDay? reminderTime,
+  }) async {
+    try {
+      final updateData = <String, dynamic>{};
+      if (title != null) updateData['title'] = title;
+      if (description != null) updateData['description'] = description;
+      if (isDaily != null) updateData['isDaily'] = isDaily;
+      if (hasReminder != null) updateData['hasReminder'] = hasReminder;
+      if (reminderTime != null) {
+        updateData['reminderTime'] = reminderTime.format(Get.context!);
+      }
+
+      await FirebaseFirestore.instance
+          .collection('habits')
+          .doc(id)
+          .update(updateData);
+
+      final index = habits.indexWhere((habit) => habit['id'] == id);
+      if (index != -1) {
+        habits[index].addAll(updateData);
+        habits.refresh();
+      }
+      Fluttertoast.showToast(
+        msg: "Habit updated successfully",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      clearFields();
+    } catch (e) {
+      clearFields();
+      Fluttertoast.showToast(
+        msg: "Failed to update habit: $e",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
+  }
+
+  void setHabitValues(Map<String, dynamic>? habit) {
+    if (habit != null) {
+      // Set basic values
+      title.text = habit['title'] ?? '';
+      description.text = habit['description'] ?? '';
+      isDaily.value = habit['isDaily'] ?? false;
+      hasReminder.value = habit['hasReminder'] ?? false;
+
+      // Handle reminder time
+      final rawReminderTime = habit['reminderTime'];
+      print('Raw reminder time string: "$rawReminderTime"');
+
+      if (rawReminderTime != null && rawReminderTime is String) {
+        try {
+          // Split the time string into components
+          final timeStr = rawReminderTime.trim();
+          final timeParts = timeStr.split(' ');
+          final time = timeParts[0].split(':');
+          final period = timeParts[1].toUpperCase(); // AM or PM
+
+          // Convert to 24-hour format
+          int hour = int.parse(time[0]);
+          final int minute = int.parse(time[1]);
+
+          if (period == 'PM' && hour != 12) {
+            hour += 12;
+          } else if (period == 'AM' && hour == 12) {
+            hour = 0;
+          }
+
+          // Create TimeOfDay
+          reminderTime.value = TimeOfDay(hour: hour, minute: minute);
+          print(
+              "Reminder time set: ${reminderTime.value?.format(Get.context!)}");
+        } catch (e) {
+          print("Error parsing reminder time: $e");
+          reminderTime.value = null;
+        }
+      } else {
+        reminderTime.value = null;
+      }
+    }
+  }
+
   Future<void> updateHabitCompletion(String habitId, bool isCompleted) async {
     try {
       final user = FirebaseAuth.instance.currentUser;
       if (user == null) return;
 
-      // Update the Firestore document
       await FirebaseFirestore.instance
           .collection('habits')
           .doc(habitId)
@@ -165,7 +260,10 @@ class HabitController extends GetxController {
       };
 
       await _habitServices.addHabit(habit);
-      Get.to(() => const HomePageMobile());
+
+      fetchHabits();
+
+      clearFields();
 
       Fluttertoast.showToast(
         msg: 'Habit added successfully',
@@ -176,9 +274,9 @@ class HabitController extends GetxController {
         textColor: Colors.white,
         fontSize: 16.0,
       );
-      Get.to(() => const HomePageMobile());
 
-      clearFields();
+      // Navigate only once after everything is done
+      Get.off(() => const HomePageMobile());
     } catch (e) {
       Fluttertoast.showToast(
         msg: "Failed to add habit: $e",
