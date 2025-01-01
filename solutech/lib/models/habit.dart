@@ -1,29 +1,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class HabitModel {
-  String id;
+class Habit {
+  String? id;
   String title;
   String description;
   bool isCompleted;
-  String createdBy; // User ID of the creator
-  Timestamp createdAt;
-  bool hasReminder;
-  String reminderTime;
-  bool isDaily;
+  String? createdBy;
+  Timestamp? createdAt;
+  bool? hasReminder;
+  String? reminderTime;
+  bool? isDaily;
 
-  HabitModel({
-    required this.id,
+  Habit({
     required this.title,
     required this.description,
-    required this.isCompleted,
-    required this.createdBy,
-    required this.createdAt,
-    required this.hasReminder,
-    required this.reminderTime,
-    required this.isDaily,
+    this.createdBy,
+    this.createdAt,
+    this.isCompleted = false,
+    this.id,
+    this.hasReminder,
+    this.reminderTime,
+    this.isDaily,
   });
 
-  // Convert a Habit object to a Map (for Firestore)
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -38,9 +37,8 @@ class HabitModel {
     };
   }
 
-  // Create a Habit object from a Map (from Firestore)
-  factory HabitModel.fromMap(Map<String, dynamic> map) {
-    return HabitModel(
+  factory Habit.fromMap(Map<String, dynamic> map) {
+    return Habit(
       id: map['id'],
       title: map['title'],
       description: map['description'],
@@ -50,6 +48,20 @@ class HabitModel {
       hasReminder: map['hasReminder'],
       reminderTime: map['reminderTime'],
       isDaily: map['isDaily'],
+    );
+  }
+
+  factory Habit.fromDocument(DocumentSnapshot doc) {
+    final data = doc.data() as Map<String, dynamic>;
+    return Habit(
+      title: data['title'] ?? '',
+      description: data['description'] ?? '',
+      isCompleted: data['isCompleted'] ?? false,
+      isDaily: data['isDaily'] ?? false,
+      hasReminder: data['hasReminder'] ?? false,
+      reminderTime: data['reminderTime'],
+      createdBy: data['createdBy'] ?? '',
+      createdAt: data['createdAt'] ?? Timestamp.now(),
     );
   }
 }

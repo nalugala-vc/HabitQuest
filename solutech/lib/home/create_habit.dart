@@ -4,12 +4,13 @@ import 'package:solutech/common/widgets/app_bar.dart';
 import 'package:solutech/common/widgets/auth_field.dart';
 import 'package:solutech/common/widgets/rounded_button.dart';
 import 'package:solutech/home/controller/habit_controller.dart';
+import 'package:solutech/models/habit.dart';
 import 'package:solutech/utils/app_colors.dart';
 import 'package:solutech/utils/fonts/roboto_condensed.dart';
 import 'package:solutech/utils/spacers.dart';
 
 class CreateHabit extends StatefulWidget {
-  final Map<String, dynamic>? habit;
+  final Habit? habit;
 
   const CreateHabit({super.key, this.habit});
 
@@ -147,12 +148,18 @@ class _CreateHabitState extends State<CreateHabit> {
                       if (_formKey.currentState!.validate()) {
                         if (isEditing) {
                           controller.updateHabit(
-                            id: widget.habit?['id'],
-                            title: controller.title.text.trim(),
-                            description: controller.description.text.trim(),
-                            isDaily: controller.isDaily.value,
-                            hasReminder: controller.hasReminder.value,
-                            reminderTime: controller.reminderTime.value,
+                            habit: Habit(
+                              id: widget.habit!.id,
+                              isCompleted: widget.habit!.isCompleted,
+                              createdAt: widget.habit!.createdAt,
+                              createdBy: widget.habit!.createdBy,
+                              title: controller.title.text.trim(),
+                              description: controller.description.text.trim(),
+                              isDaily: controller.isDaily.value,
+                              hasReminder: controller.hasReminder.value,
+                              reminderTime: controller.reminderTime.value
+                                  ?.format(Get.context!),
+                            ),
                           );
                         } else {
                           controller.onSave(

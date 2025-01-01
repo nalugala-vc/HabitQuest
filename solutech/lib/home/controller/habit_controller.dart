@@ -4,15 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:solutech/home/mobile/home_page.dart';
-import 'package:solutech/services/habit_services.dart';
+import 'package:solutech/models/habit.dart';
 
 class HabitController extends GetxController {
   static HabitController get instance => Get.find();
-  final HabitServices _habitServices = HabitServices();
 
   final user = FirebaseAuth.instance.currentUser;
 
-  var habits = <Map<String, dynamic>>[].obs;
+  var habits = <Habit>[].obs;
 
   final title = TextEditingController();
   final description = TextEditingController();
@@ -37,18 +36,8 @@ class HabitController extends GetxController {
           .where('createdBy', isEqualTo: user!.uid)
           .get();
 
-      habits.value = snapshot.docs
-          .map((doc) => {
-                'id': doc.id,
-                'title': doc['title'],
-                'isCompleted': doc['isCompleted'],
-                'description': doc['description'],
-                'isDaily': doc['isDaily'],
-                'hasReminder': doc['hasReminder'],
-                'reminderTime': doc['reminderTime'],
-                'createdAt': doc['createdAt'],
-              })
-          .toList();
+      habits.value =
+          snapshot.docs.map((doc) => Habit.fromDocument(doc)).toList();
     } catch (e) {
       Fluttertoast.showToast(
         msg: "Failed to fetch habit: $e",
@@ -82,7 +71,7 @@ class HabitController extends GetxController {
           .doc(habitId)
           .delete();
 
-      habits.removeWhere((habit) => habit['id'] == habitId);
+      habits.removeWhere((habit) => habit.id == habitId);
       habits.refresh();
 
       Fluttertoast.showToast(
@@ -108,33 +97,38 @@ class HabitController extends GetxController {
   }
 
   Future<void> updateHabit({
-    required String id,
-    String? title,
-    String? description,
-    bool? isDaily,
-    bool? hasReminder,
-    TimeOfDay? reminderTime,
+    required Habit habit,
   }) async {
+    print('created At ${habit.createdAt} createdBy ${habit.createdBy} ');
     try {
-      final updateData = <String, dynamic>{};
-      if (title != null) updateData['title'] = title;
-      if (description != null) updateData['description'] = description;
-      if (isDaily != null) updateData['isDaily'] = isDaily;
-      if (hasReminder != null) updateData['hasReminder'] = hasReminder;
-      if (reminderTime != null) {
-        updateData['reminderTime'] = reminderTime.format(Get.context!);
+      Map<String, dynamic> updateData = {
+        'title': habit.title,
+        'description': habit.description,
+        'isDaily': habit.isDaily,
+        'hasReminder': habit.hasReminder,
+        'isCompleted': habit.isCompleted,
+        'createdAt': habit.createdAt,
+        'createdBy': habit.createdBy,
+      };
+
+      if (habit.hasReminder == true && habit.reminderTime != null) {
+        updateData['reminderTime'] = habit.reminderTime;
+      } else {
+        updateData['reminderTime'] = null;
       }
 
       await FirebaseFirestore.instance
           .collection('habits')
-          .doc(id)
+          .doc(habit.id)
           .update(updateData);
 
-      final index = habits.indexWhere((habit) => habit['id'] == id);
+      final index =
+          habits.indexWhere((existingHabit) => existingHabit.id == habit.id);
       if (index != -1) {
-        habits[index].addAll(updateData);
+        habits[index] = habit;
         habits.refresh();
       }
+
       Fluttertoast.showToast(
         msg: "Habit updated successfully",
         toastLength: Toast.LENGTH_LONG,
@@ -144,8 +138,10 @@ class HabitController extends GetxController {
         textColor: Colors.white,
         fontSize: 16.0,
       );
+
       clearFields();
     } catch (e) {
+      print("Error updating habit: $e"); // Add this for debugging
       clearFields();
       Fluttertoast.showToast(
         msg: "Failed to update habit: $e",
@@ -159,27 +155,23 @@ class HabitController extends GetxController {
     }
   }
 
-  void setHabitValues(Map<String, dynamic>? habit) {
+  void setHabitValues(Habit? habit) {
     if (habit != null) {
-      // Set basic values
-      title.text = habit['title'] ?? '';
-      description.text = habit['description'] ?? '';
-      isDaily.value = habit['isDaily'] ?? false;
-      hasReminder.value = habit['hasReminder'] ?? false;
+      title.text = habit.title;
+      description.text = habit.description;
+      isDaily.value = habit.isDaily ?? false;
+      hasReminder.value = habit.hasReminder ?? false;
 
-      // Handle reminder time
-      final rawReminderTime = habit['reminderTime'];
+      final rawReminderTime = habit.reminderTime;
       print('Raw reminder time string: "$rawReminderTime"');
 
-      if (rawReminderTime != null && rawReminderTime is String) {
+      if (rawReminderTime != null) {
         try {
-          // Split the time string into components
           final timeStr = rawReminderTime.trim();
           final timeParts = timeStr.split(' ');
           final time = timeParts[0].split(':');
-          final period = timeParts[1].toUpperCase(); // AM or PM
+          final period = timeParts[1].toUpperCase();
 
-          // Convert to 24-hour format
           int hour = int.parse(time[0]);
           final int minute = int.parse(time[1]);
 
@@ -189,7 +181,6 @@ class HabitController extends GetxController {
             hour = 0;
           }
 
-          // Create TimeOfDay
           reminderTime.value = TimeOfDay(hour: hour, minute: minute);
           print(
               "Reminder time set: ${reminderTime.value?.format(Get.context!)}");
@@ -215,9 +206,9 @@ class HabitController extends GetxController {
         'isCompleted': isCompleted,
       });
 
-      final index = habits.indexWhere((habit) => habit['id'] == habitId);
+      final index = habits.indexWhere((habit) => habit.id == habitId);
       if (index != -1) {
-        habits[index]['isCompleted'] = isCompleted;
+        habits[index].isCompleted = isCompleted;
         habits.refresh();
       }
     } catch (e) {
@@ -246,20 +237,23 @@ class HabitController extends GetxController {
     }
 
     try {
-      final habit = {
-        'title': title,
-        'description': description,
-        'isDaily': isDaily,
-        'hasReminder': hasReminder,
-        'isCompleted': false,
-        'reminderTime': hasReminder && reminderTime != null
+      final habit = Habit(
+        title: title,
+        description: description,
+        isCompleted: false,
+        isDaily: isDaily,
+        hasReminder: hasReminder,
+        reminderTime: hasReminder && reminderTime != null
             ? reminderTime.format(Get.context!)
             : null,
-        'createdBy': user!.uid,
-        'createdAt': FieldValue.serverTimestamp(),
-      };
+        createdBy: user!.uid,
+        createdAt: Timestamp.fromMillisecondsSinceEpoch(0),
+      );
 
-      await _habitServices.addHabit(habit);
+      await FirebaseFirestore.instance.collection('habits').add({
+        ...habit.toMap(),
+        'createdAt': FieldValue.serverTimestamp(),
+      });
 
       fetchHabits();
 
@@ -275,7 +269,6 @@ class HabitController extends GetxController {
         fontSize: 16.0,
       );
 
-      // Navigate only once after everything is done
       Get.off(() => const HomePageMobile());
     } catch (e) {
       Fluttertoast.showToast(

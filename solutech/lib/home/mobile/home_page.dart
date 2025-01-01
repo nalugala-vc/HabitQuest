@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:solutech/common/widgets/app_bar.dart';
@@ -49,12 +48,10 @@ class _HomePageMobileState extends State<HomePageMobile> {
                   final habits = habitController.habits;
 
                   final tasksForSelectedDate = habits.where((habit) {
-                    DateTime createdAt;
-                    if (habit['createdAt'] is Timestamp) {
-                      createdAt = habit['createdAt'].toDate();
-                    } else {
-                      createdAt = DateTime.parse(habit['createdAt']);
-                    }
+                    DateTime createdAt =
+                        habit.createdAt?.toDate() ?? DateTime.now();
+                    print(createdAt);
+                    print(habit.title);
 
                     return createdAt.year == selectedDate.value.year &&
                         createdAt.month == selectedDate.value.month &&
@@ -62,7 +59,7 @@ class _HomePageMobileState extends State<HomePageMobile> {
                   }).toList();
 
                   final completedTasks = tasksForSelectedDate
-                      .where((habit) => habit['isCompleted'] == true)
+                      .where((habit) => habit.isCompleted == true)
                       .length;
                   final totalTasks = tasksForSelectedDate.length;
 
