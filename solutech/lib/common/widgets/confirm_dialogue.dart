@@ -55,7 +55,7 @@ void confirmDialogue(
               spaceH10,
               RoundedButton(
                 onPressed: () {
-                  onConfirm;
+                  onConfirm();
 
                   Navigator.of(context).pop();
                 },

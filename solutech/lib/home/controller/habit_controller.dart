@@ -120,11 +120,10 @@ class HabitController extends GetxController {
         'isCompleted': isCompleted,
       });
 
-      // Manually update the local `habits` list
       final index = habits.indexWhere((habit) => habit['id'] == habitId);
       if (index != -1) {
-        habits[index]['isCompleted'] = isCompleted; // Update completion locally
-        habits.refresh(); // Refresh the list to trigger UI updates
+        habits[index]['isCompleted'] = isCompleted;
+        habits.refresh();
       }
     } catch (e) {
       Fluttertoast.showToast(
