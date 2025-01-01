@@ -62,6 +62,51 @@ class HabitController extends GetxController {
     }
   }
 
+  Future<void> deleteHabit(String habitId) async {
+    try {
+      if (user == null) {
+        Fluttertoast.showToast(
+          msg: "User not logged in",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+        return;
+      }
+
+      await FirebaseFirestore.instance
+          .collection('habits')
+          .doc(habitId)
+          .delete();
+
+      habits.removeWhere((habit) => habit['id'] == habitId);
+      habits.refresh();
+
+      Fluttertoast.showToast(
+        msg: "Habit deleted successfully",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: "Failed to delete habit: $e",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
+  }
+
   Future<void> updateHabitCompletion(String habitId, bool isCompleted) async {
     try {
       final user = FirebaseAuth.instance.currentUser;

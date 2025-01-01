@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:solutech/common/widgets/confirm_dialogue.dart';
 import 'package:solutech/home/controller/habit_controller.dart';
 import 'package:solutech/home/mobile/widgets/habit_card.dart';
 import 'package:solutech/utils/spacers.dart';
@@ -30,6 +31,22 @@ class _HabitCardListState extends State<HabitCardList> {
     habitController.updateHabitCompletion(habitId, isCompleted);
   }
 
+  void editHabit(int index) {}
+
+  void deleteHabit(int index) {
+    confirmDialogue(
+      context: context,
+      icon: 'assets/images/delete-file.png',
+      label: 'Delete',
+      message: 'Are you sure you want to delete this habit ?',
+      onConfirm: () {
+        final habit = habitController.habits[index];
+        final habitId = habit['id'];
+        habitController.deleteHabit(habitId);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Obx(() {
@@ -46,6 +63,8 @@ class _HabitCardListState extends State<HabitCardList> {
         itemBuilder: (context, index) {
           final habit = habitController.habits[index];
           return HabitCard(
+            deleteTapped: (context) => deleteHabit(index),
+            editTapped: (context) => deleteHabit(index),
             date: widget.selectedDate,
             onChanged: (value) {
               checkBoxTapped(value, index);
