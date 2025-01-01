@@ -28,6 +28,13 @@ class _CreateHabitState extends State<CreateHabit> {
   }
 
   @override
+  void dispose() {
+    controller.clearFields();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final isEditing = widget.habit != null;
 
