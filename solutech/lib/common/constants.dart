@@ -60,6 +60,20 @@ List<String> imgURL = [
   "assets/images/BADGE-BG3.png",
   "assets/images/BADGE-BG4.png",
 ];
+Map<String, String> badgesAndNames = {
+  "assets/images/badge2.png": "DAY ONE DONE",
+  "assets/images/badge1.png": "TRIPLE THREAT",
+  "assets/images/badge4.png": "HIGH FIVE",
+  "assets/images/badge6.png": "WEEKLY WARRIOR",
+  "assets/images/badge9.png": "PERFECT TEN",
+  "assets/images/badge10.png": "FIFTEEN FORTITUDE",
+  "assets/images/badge11.png": "TWENTY TROOPER",
+  "assets/images/badge12.png": "MONTHLY MARVEL",
+  "assets/images/badge13.png": "TRIPLE TRIUMPH",
+  "assets/images/badge14.png": "TENACIOUS TEN",
+  "assets/images/BADGE-BG1.png": "THIRTY THRIVER",
+  "assets/images/BADGE-BG2.png": "HABIT HERO",
+};
 
 List<String> imgURL2 = [
   "assets/images/badge12.png",
@@ -74,25 +88,28 @@ List<String> imgURL4 = [
   "assets/images/badge14.png",
   "assets/images/badge11.png",
 ];
-
+//CONSISTENCY
 List<String> title1 = [
-  "SUPER SAVER",
-  "BUDGET PRO",
-  "AMBASSADOR",
-  "PREMIUM",
+  "DAY ONE DONE", //Complete your first habit
+  "TRIPLE THREAT", //Maintain 3 day streak
+  "HIGH FIVE",
+
+  ///Maintain 5 day streak
+  "WEEKLY WARRIOR", //Maintain 7 day streak
 ];
+//TASK COMPLETION
 List<String> title2 = [
-  "INSURE GENIUS",
-  "INVESTMENT WHIZ",
-  "ESTATE PLANNER",
-  "BASIC",
+  "PERFECT TEN", //Maintain 103 day streak
+  "FIFTEEN FORTITUDE", //Maintain 15 day streak
+  "TWENTY TROOPER", //Maintain 20 day streak
+  "MONTHLY MARVEL", //Maintain 30 day streak
 ];
 
 List<String> title3 = [
-  "UZASHOPPER",
-  "INVESTMENT WHIZ",
-  "LIFELONG LEARNER",
-  "PREMIUM",
+  "TRIPLE TRIUMPH", //Complete a total of 3 habits
+  "TENACIOUS TEN", // Complete 5010 total habits
+  "THIRTY THRIVER", //Complete 30 total habits
+  "HABIT HERO", //Complete 100 total habits
 ];
 
 List<String> imgURL3 = [

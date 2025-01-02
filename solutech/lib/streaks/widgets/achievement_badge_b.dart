@@ -8,12 +8,14 @@ class AchievementBadgeB extends StatefulWidget {
   final String title;
   final Color bgColor;
   final Color titleColor;
+  final VoidCallback onPressed;
 
   const AchievementBadgeB({
     super.key,
     required this.imgURL,
     required this.bgColor,
     required this.title,
+    required this.onPressed,
     this.titleColor = const Color(0xFF121212),
   });
   @override
@@ -26,11 +28,7 @@ class AchievementBadgeBState extends State<AchievementBadgeB> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          isSelected = !isSelected;
-        });
-      },
+      onTap: widget.onPressed,
       child: Container(
           padding: EdgeInsets.all(10),
           margin: EdgeInsets.all(5),

@@ -16,17 +16,21 @@ class HabitController extends BaseController {
   var habits = <Habit>[].obs;
   final datasets = <DateTime, int>{}.obs;
 
+  var unlockedBadges = <String>[].obs;
+
   final title = TextEditingController();
   final description = TextEditingController();
   var isDaily = false.obs;
   var isWeekly = false.obs;
   var hasReminder = false.obs;
+
   var reminderTime = Rx<TimeOfDay?>(const TimeOfDay(hour: 10, minute: 0));
 
   @override
   void onInit() {
     super.onInit();
     fetchHabits();
+    initializeBadges();
   }
 
   void setReminderTime(TimeOfDay time) {
@@ -334,5 +338,74 @@ class HabitController extends BaseController {
     isWeekly.value = false;
     hasReminder.value = false;
     reminderTime.value = const TimeOfDay(hour: 10, minute: 0);
+  }
+
+// Initialize all badges as locked (false)
+  void initializeBadges() {
+    unlockedBadges.clear();
+  }
+
+  Future<void> checkAchievements() async {
+    Map<DateTime, bool> consecutiveDays =
+        {}; // Track consecutive days for streaks
+
+    // Track longest streak
+    int currentStreak = 0;
+    int maxStreak = 0;
+    DateTime? prevDate;
+
+    // Loop through each habit's completion status
+    for (var habit in habits) {
+      if (habit.completionStatus != null) {
+        habit.completionStatus!.forEach((timestamp, isCompleted) {
+          if (isCompleted) {
+            final date = timestamp.toDate();
+
+            print('date $date');
+
+            if (!consecutiveDays.containsKey(date)) {
+              consecutiveDays[date] = true;
+            }
+
+            // Calculate streaks
+            if (prevDate != null && date.difference(prevDate!).inDays == 1) {
+              currentStreak++;
+            } else {
+              currentStreak = 1;
+            }
+            maxStreak = currentStreak > maxStreak ? currentStreak : maxStreak;
+            prevDate = date;
+          }
+        });
+      }
+    }
+
+    // Helper function to unlock a badge
+    void unlockBadge(String badgeTitle) {
+      if (!unlockedBadges.contains(badgeTitle)) {
+        unlockedBadges.add(badgeTitle);
+      }
+    }
+
+    // Check streak-based achievements
+    if (maxStreak >= 1) unlockBadge("DAY ONE DONE");
+    if (maxStreak >= 3) unlockBadge("TRIPLE THREAT");
+    if (maxStreak >= 5) unlockBadge("HIGH FIVE");
+    if (maxStreak >= 7) unlockBadge("WEEKLY WARRIOR");
+    if (maxStreak >= 10) unlockBadge("PERFECT TEN");
+    if (maxStreak >= 15) unlockBadge("FIFTEEN FORTITUDE");
+    if (maxStreak >= 20) unlockBadge("TWENTY TROOPER");
+    if (maxStreak >= 30) unlockBadge("MONTHLY MARVEL");
+
+    int totalTasksCompleted = 0;
+    for (var habit in habits) {
+      totalTasksCompleted +=
+          habit.completionStatus?.values.where((status) => status).length ?? 0;
+    }
+
+    if (totalTasksCompleted >= 3) unlockBadge("TRIPLE TRIUMPH");
+    if (totalTasksCompleted >= 10) unlockBadge("TENACIOUS TEN");
+    if (totalTasksCompleted >= 30) unlockBadge("THIRTY THRIVER");
+    if (totalTasksCompleted >= 100) unlockBadge("HABIT HERO");
   }
 }
