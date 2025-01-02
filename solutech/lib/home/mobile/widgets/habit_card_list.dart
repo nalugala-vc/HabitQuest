@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:solutech/common/error_dialogue.dart';
 import 'package:solutech/common/widgets/confirm_dialogue.dart';
 import 'package:solutech/home/controller/habit_controller.dart';
 import 'package:solutech/home/create_habit.dart';
@@ -24,6 +25,13 @@ class _HabitCardListState extends State<HabitCardList> {
     final habit = tasksForSelectedDate[index];
     final habitId = habit.id;
     final isCompleted = value ?? false;
+
+    if (widget.selectedDate.value.toString().split(' ')[0] !=
+        DateTime.now().toString().split(' ')[0]) {
+      // Show feedback if the selected date is not today
+      errorDialogue(context: context, isCompleted: isCompleted);
+      return;
+    }
 
     if (habit.isDaily == true || habit.isWeekly == true) {
       // Update only the last completed date without marking it permanently completed
