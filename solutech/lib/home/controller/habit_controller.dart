@@ -13,6 +13,7 @@ class HabitController extends BaseController {
   final user = FirebaseAuth.instance.currentUser;
 
   var habits = <Habit>[].obs;
+  final datasets = <DateTime, int>{}.obs;
 
   final title = TextEditingController();
   final description = TextEditingController();
@@ -24,6 +25,7 @@ class HabitController extends BaseController {
   void onInit() {
     super.onInit();
     fetchHabits();
+    fetchCompletedHabits();
   }
 
   void setReminderTime(TimeOfDay time) {
@@ -32,6 +34,33 @@ class HabitController extends BaseController {
 
   void toggleHasReminder(bool value) {
     hasReminder.value = value;
+  }
+
+  Future<void> fetchCompletedHabits() async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user == null) return;
+
+      final querySnapshot = await FirebaseFirestore.instance
+          .collection('habits')
+          .where('isCompleted', isEqualTo: true)
+          .get();
+
+      final Map<DateTime, int> newDatasets = {};
+
+      for (var doc in querySnapshot.docs) {
+        final data = doc.data();
+        final completedDate = (data['createdAt'] as Timestamp).toDate();
+
+        final dateKey = DateTime(
+            completedDate.year, completedDate.month, completedDate.day);
+        newDatasets[dateKey] = (newDatasets[dateKey] ?? 0) + 1;
+      }
+
+      datasets.value = newDatasets; // Update the observable map
+    } catch (e) {
+      print("Error fetching completed habits: $e");
+    }
   }
 
   Future<void> fetchHabits() async {
@@ -210,6 +239,7 @@ class HabitController extends BaseController {
       final user = FirebaseAuth.instance.currentUser;
       if (user == null) return;
 
+      // Update Firestore
       await FirebaseFirestore.instance
           .collection('habits')
           .doc(habitId)
@@ -217,10 +247,29 @@ class HabitController extends BaseController {
         'isCompleted': isCompleted,
       });
 
+      // Update the local habits list
       final index = habits.indexWhere((habit) => habit.id == habitId);
       if (index != -1) {
         habits[index].isCompleted = isCompleted;
         habits.refresh();
+
+        // Update the datasets map
+        final completedDate = DateTime.now();
+        final dateKey = DateTime(
+            completedDate.year, completedDate.month, completedDate.day);
+
+        if (isCompleted) {
+          // Increment the value for the date
+          datasets[dateKey] = (datasets[dateKey] ?? 0) + 1;
+        } else {
+          // Decrement the value for the date (if > 0)
+          if (datasets[dateKey] != null && datasets[dateKey]! > 0) {
+            datasets[dateKey] = datasets[dateKey]! - 1;
+          }
+        }
+
+        // Refresh datasets observable
+        datasets.refresh();
       }
     } catch (e) {
       Fluttertoast.showToast(
