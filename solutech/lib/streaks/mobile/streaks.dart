@@ -23,6 +23,11 @@ class StreaksMobile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   spaceH20,
+                  RobotoCondensed(
+                    text: 'My Progress',
+                    fontSize: 20,
+                  ),
+                  spaceH10,
                   const MyHeatMap(),
                   spaceH20,
                   RobotoCondensed(

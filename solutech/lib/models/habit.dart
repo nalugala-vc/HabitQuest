@@ -10,6 +10,7 @@ class Habit {
   bool? hasReminder;
   String? reminderTime;
   bool? isDaily;
+  bool? isWeekly;
 
   Habit({
     required this.title,
@@ -21,6 +22,7 @@ class Habit {
     this.hasReminder,
     this.reminderTime,
     this.isDaily,
+    this.isWeekly,
   });
 
   Map<String, dynamic> toMap() {

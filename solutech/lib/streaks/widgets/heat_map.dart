@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_heatmap_calendar/flutter_heatmap_calendar.dart';
 import 'package:get/get.dart';
 import 'package:solutech/home/controller/habit_controller.dart';
+import 'package:solutech/streaks/widgets/completed_task_dialogue_box.dart';
 
 class MyHeatMap extends StatelessWidget {
   const MyHeatMap({super.key});
@@ -12,7 +13,8 @@ class MyHeatMap extends StatelessWidget {
 
     return Obx(() {
       return HeatMap(
-        datasets: habitController.datasets.value, // Use `.value` here
+        // ignore: invalid_use_of_protected_member
+        datasets: habitController.datasets.value,
         defaultColor: Colors.grey.shade300,
         startDate: DateTime.now().subtract(const Duration(days: 40)),
         size: 25,
@@ -33,10 +35,47 @@ class MyHeatMap extends StatelessWidget {
           10: Color.fromARGB(255, 156, 39, 176),
         },
         onClick: (value) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text(value.toString())));
+          final completedTasks = habitController.datasets[value] ?? 0;
+          final formattedDate =
+              '${_getDayOfWeek(value)} ${value.day} ${_getMonth(value)} ${value.year}';
+
+          completedTaskDialogue(
+              completedTasks: completedTasks,
+              context: context,
+              formattedDate: formattedDate);
         },
       );
     });
+  }
+
+  String _getDayOfWeek(DateTime date) {
+    final weekdays = [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday'
+    ];
+    return weekdays[date.weekday - 1];
+  }
+
+  String _getMonth(DateTime date) {
+    final months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ];
+    return months[date.month - 1];
   }
 }
