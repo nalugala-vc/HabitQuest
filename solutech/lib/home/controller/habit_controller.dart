@@ -20,6 +20,12 @@ class HabitController extends BaseController {
   var hasReminder = false.obs;
   var reminderTime = Rx<TimeOfDay?>(const TimeOfDay(hour: 10, minute: 0));
 
+  @override
+  void onInit() {
+    super.onInit();
+    fetchHabits();
+  }
+
   void setReminderTime(TimeOfDay time) {
     reminderTime.value = time;
   }

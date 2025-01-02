@@ -21,12 +21,6 @@ class _HomePageMobileState extends State<HomePageMobile> {
   final HabitController habitController = Get.find();
 
   @override
-  void initState() {
-    super.initState();
-    habitController.fetchHabits();
-  }
-
-  @override
   Widget build(BuildContext context) {
     var selectedDate = DateTime.now().obs;
 

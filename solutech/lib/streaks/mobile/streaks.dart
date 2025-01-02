@@ -22,6 +22,7 @@ class StreaksMobile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  spaceH20,
                   const MyHeatMap(),
                   spaceH20,
                   RobotoCondensed(
