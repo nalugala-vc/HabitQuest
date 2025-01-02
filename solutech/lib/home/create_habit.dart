@@ -31,7 +31,6 @@ class _CreateHabitState extends State<CreateHabit> {
   @override
   void dispose() {
     controller.clearFields();
-
     super.dispose();
   }
 
@@ -83,8 +82,34 @@ class _CreateHabitState extends State<CreateHabit> {
                       spaceW20,
                       Obx(() => Switch(
                           value: controller.isDaily.value,
-                          onChanged: (value) =>
-                              controller.isDaily.value = value)),
+                          onChanged: (value) {
+                            // Disable isWeekly if isDaily is set to true
+                            if (value) {
+                              controller.isWeekly.value = false;
+                            }
+                            controller.isDaily.value = value;
+                          })),
+                    ],
+                  ),
+                  spaceH15,
+                  Row(
+                    children: [
+                      RobotoCondensed(
+                        text: 'Weekly',
+                        fontSize: 16,
+                        fontWeight: FontWeight.normal,
+                        textColor: AppColors.grey600,
+                      ),
+                      spaceW20,
+                      Obx(() => Switch(
+                          value: controller.isWeekly.value,
+                          onChanged: (value) {
+                            // Disable isDaily if isWeekly is set to true
+                            if (value) {
+                              controller.isDaily.value = false;
+                            }
+                            controller.isWeekly.value = value;
+                          })),
                     ],
                   ),
                   spaceH15,
@@ -163,6 +188,7 @@ class _CreateHabitState extends State<CreateHabit> {
                           );
                         } else {
                           controller.onSave(
+                            isWeekly: controller.isWeekly.value,
                             title: controller.title.text.trim(),
                             description: controller.description.text.trim(),
                             isDaily: controller.isDaily.value,

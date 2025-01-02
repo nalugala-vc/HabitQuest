@@ -10,7 +10,7 @@ import 'package:solutech/models/habit.dart';
 import 'package:solutech/utils/spacers.dart';
 
 class HabitCardList extends StatefulWidget {
-  final DateTime selectedDate;
+  final Rx<DateTime> selectedDate;
   const HabitCardList({super.key, required this.selectedDate});
 
   @override
@@ -24,9 +24,41 @@ class _HabitCardListState extends State<HabitCardList> {
     return habits.where((habit) {
       DateTime createdAt = habit.createdAt?.toDate() ?? DateTime.now();
 
-      return createdAt.year == widget.selectedDate.year &&
-          createdAt.month == widget.selectedDate.month &&
-          createdAt.day == widget.selectedDate.day;
+      // Handle isDaily habits: Always appear on every date
+      if (habit.isDaily == true) {
+        // Check if the habit was already completed today
+        DateTime? lastCompleted = habit.lastCompletedOn?.toDate();
+        if (lastCompleted != null &&
+            lastCompleted.year == widget.selectedDate.value.year &&
+            lastCompleted.month == widget.selectedDate.value.month &&
+            lastCompleted.day == widget.selectedDate.value.day) {
+          habit.isCompleted = true; // Keep completed status
+        } else {
+          habit.isCompleted = false; // Reset status for a new day
+        }
+        return true;
+      }
+
+      // Handle isWeekly habits: Appear on the same weekday as the creation date
+      if (habit.isWeekly == true &&
+          createdAt.weekday == widget.selectedDate.value.weekday) {
+        // Check if the habit was already completed this week
+        DateTime? lastCompleted = habit.lastCompletedOn?.toDate();
+        if (lastCompleted != null &&
+            lastCompleted.year == widget.selectedDate.value.year &&
+            lastCompleted.month == widget.selectedDate.value.month &&
+            lastCompleted.day == widget.selectedDate.value.day) {
+          habit.isCompleted = true; // Keep completed status
+        } else {
+          habit.isCompleted = false; // Reset status for a new week
+        }
+        return true;
+      }
+
+      // Handle regular habits: Appear only on their creation date
+      return createdAt.year == widget.selectedDate.value.year &&
+          createdAt.month == widget.selectedDate.value.month &&
+          createdAt.day == widget.selectedDate.value.day;
     }).toList();
   }
 
@@ -36,7 +68,12 @@ class _HabitCardListState extends State<HabitCardList> {
     final habitId = habit.id;
     final isCompleted = value ?? false;
 
-    habitController.updateHabitCompletion(habitId!, isCompleted);
+    if (habit.isDaily == true || habit.isWeekly == true) {
+      // Update only the last completed date without marking it permanently completed
+      habitController.updateLastCompletedOn(habitId!, DateTime.now());
+    } else {
+      habitController.updateHabitCompletion(habitId!, isCompleted);
+    }
   }
 
   void editHabit(Habit habit, int index) {
@@ -59,34 +96,33 @@ class _HabitCardListState extends State<HabitCardList> {
     );
   }
 
+  @override
   Widget build(BuildContext context) {
     return Obx(() {
-      // Check if the data is still loading
-      if (habitController.isLoading.value) {
-        return const Center(child: CircularProgressIndicator());
-      }
-
-      // Check if the data has loaded but is empty
-      if (habitController.habits.isEmpty) {
-        return const EmptyStateWidget(
-          message: 'No habits found. Start by adding one!',
-        );
-      }
-
-      // Data has loaded and is not empty
       final habits = habitController.habits;
-      final tasksForSelectedDate = getTasksForSelectedDate(habits);
+      final tasksForSelectedDate = habits.where((habit) {
+        DateTime createdAt = habit.createdAt?.toDate() ?? DateTime.now();
 
-      // Handle case where there are no tasks for the selected date
+        if (habit.isDaily == true) {
+          return true;
+        }
+
+        if (habit.isWeekly == true &&
+            createdAt.weekday == widget.selectedDate.value.weekday) {
+          return true;
+        }
+
+        return createdAt.year == widget.selectedDate.value.year &&
+            createdAt.month == widget.selectedDate.value.month &&
+            createdAt.day == widget.selectedDate.value.day;
+      }).toList();
+
       if (tasksForSelectedDate.isEmpty) {
-        return const Center(
-          child: const EmptyStateWidget(
-            message: 'No habits found for the selected date',
-          ),
+        return const EmptyStateWidget(
+          message: 'No habits found for the selected date',
         );
       }
 
-      // Display tasks for the selected date
       return ListView.separated(
         separatorBuilder: (context, index) => spaceH15,
         shrinkWrap: true,
@@ -97,10 +133,9 @@ class _HabitCardListState extends State<HabitCardList> {
           return HabitCard(
             deleteTapped: (context) => deleteHabit(index, tasksForSelectedDate),
             editTapped: (context) => editHabit(habit, index),
-            date: widget.selectedDate,
-            onChanged: (value) {
-              checkBoxTapped(value, index, tasksForSelectedDate);
-            },
+            date: widget.selectedDate.value,
+            onChanged: (value) =>
+                checkBoxTapped(value, index, tasksForSelectedDate),
             title: habit.title,
             isCompleted: habit.isCompleted,
             progress: 4,

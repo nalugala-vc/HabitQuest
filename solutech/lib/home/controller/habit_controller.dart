@@ -18,6 +18,7 @@ class HabitController extends BaseController {
   final title = TextEditingController();
   final description = TextEditingController();
   var isDaily = false.obs;
+  var isWeekly = false.obs;
   var hasReminder = false.obs;
   var reminderTime = Rx<TimeOfDay?>(const TimeOfDay(hour: 10, minute: 0));
 
@@ -288,6 +289,7 @@ class HabitController extends BaseController {
     required String title,
     required String description,
     required bool isDaily,
+    required bool isWeekly,
     required bool hasReminder,
     TimeOfDay? reminderTime,
   }) async {
@@ -302,7 +304,11 @@ class HabitController extends BaseController {
         description: description,
         isCompleted: false,
         isDaily: isDaily,
+        isWeekly: isWeekly,
         hasReminder: hasReminder,
+        completedOn: null,
+        lastCompletedOn: null,
+        weeklyDay: null,
         reminderTime: hasReminder && reminderTime != null
             ? reminderTime.format(Get.context!)
             : null,
@@ -333,6 +339,27 @@ class HabitController extends BaseController {
     } catch (e) {
       Fluttertoast.showToast(
         msg: "Failed to add habit: $e",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
+  }
+
+  Future<void> updateLastCompletedOn(
+      String habitId, DateTime lastCompletedOn) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('habits')
+          .doc(habitId)
+          .update({'lastCompletedOn': Timestamp.fromDate(lastCompletedOn)});
+      fetchHabits(); // Refresh habits to reflect changes
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: "Failed to update habit: $e",
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 1,

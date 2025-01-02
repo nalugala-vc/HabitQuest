@@ -11,19 +11,24 @@ class Habit {
   String? reminderTime;
   bool? isDaily;
   bool? isWeekly;
+  Timestamp? completedOn;
+  Timestamp? lastCompletedOn;
+  int? weeklyDay;
 
-  Habit({
-    required this.title,
-    required this.description,
-    this.createdBy,
-    this.createdAt,
-    this.isCompleted = false,
-    this.id,
-    this.hasReminder,
-    this.reminderTime,
-    this.isDaily,
-    this.isWeekly,
-  });
+  Habit(
+      {required this.title,
+      required this.description,
+      this.createdBy,
+      this.createdAt,
+      this.isCompleted = false,
+      this.id,
+      this.hasReminder,
+      this.reminderTime,
+      this.isDaily,
+      this.isWeekly,
+      this.lastCompletedOn,
+      this.weeklyDay,
+      this.completedOn});
 
   Map<String, dynamic> toMap() {
     return {
@@ -36,6 +41,10 @@ class Habit {
       'hasReminder': hasReminder,
       'reminderTime': reminderTime,
       'isDaily': isDaily,
+      'isWeekly': isWeekly,
+      'completedOn': completedOn,
+      'lastCompletedOn': lastCompletedOn,
+      'weeklyDay': weeklyDay,
     };
   }
 
@@ -50,6 +59,10 @@ class Habit {
       hasReminder: map['hasReminder'],
       reminderTime: map['reminderTime'],
       isDaily: map['isDaily'],
+      isWeekly: map['isWeekly'],
+      completedOn: map['completedOn'],
+      lastCompletedOn: map['lastCompletedOn'],
+      weeklyDay: map['weeklyDay'],
     );
   }
 
@@ -61,10 +74,14 @@ class Habit {
       description: data['description'] ?? '',
       isCompleted: data['isCompleted'] ?? false,
       isDaily: data['isDaily'] ?? false,
+      isWeekly: data['isWeekly'] ?? false,
       hasReminder: data['hasReminder'] ?? false,
       reminderTime: data['reminderTime'],
       createdBy: data['createdBy'] ?? '',
       createdAt: data['createdAt'] ?? Timestamp.now(),
+      completedOn: data['completedOn'],
+      lastCompletedOn: data['lastCompletedOn'],
+      weeklyDay: data['weeklyDay'],
     );
   }
 }
