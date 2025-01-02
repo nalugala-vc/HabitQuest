@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:solutech/common/empty_state.dart';
 import 'package:solutech/common/widgets/confirm_dialogue.dart';
 import 'package:solutech/home/controller/habit_controller.dart';
 import 'package:solutech/home/create_habit.dart';
 import 'package:solutech/home/mobile/widgets/habit_card.dart';
 import 'package:solutech/models/habit.dart';
+import 'package:solutech/utils/functions.dart';
 import 'package:solutech/utils/spacers.dart';
 
 class HabitCardList extends StatefulWidget {
@@ -19,48 +18,6 @@ class HabitCardList extends StatefulWidget {
 
 class _HabitCardListState extends State<HabitCardList> {
   final HabitController habitController = Get.find();
-
-  List<Habit> getTasksForSelectedDate(List<Habit> habits) {
-    return habits.where((habit) {
-      DateTime createdAt = habit.createdAt?.toDate() ?? DateTime.now();
-
-      // Handle isDaily habits: Always appear on every date
-      if (habit.isDaily == true) {
-        // Check if the habit was already completed today
-        DateTime? lastCompleted = habit.lastCompletedOn?.toDate();
-        if (lastCompleted != null &&
-            lastCompleted.year == widget.selectedDate.value.year &&
-            lastCompleted.month == widget.selectedDate.value.month &&
-            lastCompleted.day == widget.selectedDate.value.day) {
-          habit.isCompleted = true; // Keep completed status
-        } else {
-          habit.isCompleted = false; // Reset status for a new day
-        }
-        return true;
-      }
-
-      // Handle isWeekly habits: Appear on the same weekday as the creation date
-      if (habit.isWeekly == true &&
-          createdAt.weekday == widget.selectedDate.value.weekday) {
-        // Check if the habit was already completed this week
-        DateTime? lastCompleted = habit.lastCompletedOn?.toDate();
-        if (lastCompleted != null &&
-            lastCompleted.year == widget.selectedDate.value.year &&
-            lastCompleted.month == widget.selectedDate.value.month &&
-            lastCompleted.day == widget.selectedDate.value.day) {
-          habit.isCompleted = true; // Keep completed status
-        } else {
-          habit.isCompleted = false; // Reset status for a new week
-        }
-        return true;
-      }
-
-      // Handle regular habits: Appear only on their creation date
-      return createdAt.year == widget.selectedDate.value.year &&
-          createdAt.month == widget.selectedDate.value.month &&
-          createdAt.day == widget.selectedDate.value.day;
-    }).toList();
-  }
 
   void checkBoxTapped(
       bool? value, int index, List<Habit> tasksForSelectedDate) {
@@ -100,28 +57,8 @@ class _HabitCardListState extends State<HabitCardList> {
   Widget build(BuildContext context) {
     return Obx(() {
       final habits = habitController.habits;
-      final tasksForSelectedDate = habits.where((habit) {
-        DateTime createdAt = habit.createdAt?.toDate() ?? DateTime.now();
-
-        if (habit.isDaily == true) {
-          return true;
-        }
-
-        if (habit.isWeekly == true &&
-            createdAt.weekday == widget.selectedDate.value.weekday) {
-          return true;
-        }
-
-        return createdAt.year == widget.selectedDate.value.year &&
-            createdAt.month == widget.selectedDate.value.month &&
-            createdAt.day == widget.selectedDate.value.day;
-      }).toList();
-
-      if (tasksForSelectedDate.isEmpty) {
-        return const EmptyStateWidget(
-          message: 'No habits found for the selected date',
-        );
-      }
+      final tasksForSelectedDate =
+          getTasksForSelectedDate(habits, widget.selectedDate);
 
       return ListView.separated(
         separatorBuilder: (context, index) => spaceH15,
