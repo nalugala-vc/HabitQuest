@@ -106,7 +106,7 @@ class _CreateHabitState extends State<CreateHabit> {
                           onChanged: (value) {
                             // Disable isDaily if isWeekly is set to true
                             if (value) {
-                              controller.isDaily.value = false;
+                              controller.isWeekly.value = false;
                             }
                             controller.isWeekly.value = value;
                           })),
@@ -175,6 +175,7 @@ class _CreateHabitState extends State<CreateHabit> {
                           controller.updateHabit(
                             habit: Habit(
                               id: widget.habit!.id,
+                              isWeekly: controller.isWeekly.value,
                               completionStatus: widget.habit!.completionStatus,
                               createdAt: widget.habit!.createdAt,
                               createdBy: widget.habit!.createdBy,

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class Habit {
   String? id;
@@ -25,20 +26,18 @@ class Habit {
     this.reminderTime,
     this.isDaily,
     this.isWeekly,
-    this.lastCompletedOn,
-    this.weeklyDay,
-    this.completedOn,
     this.completionStatus,
   });
-
   Map<String, dynamic> toMap() {
     Map<String, dynamic>? convertedCompletionStatus;
     if (completionStatus != null) {
       convertedCompletionStatus = {};
       completionStatus!.forEach((key, value) {
-        // Use timestamp's millisecondsSinceEpoch as the key
-        convertedCompletionStatus![key.millisecondsSinceEpoch.toString()] =
-            value;
+        // Convert Timestamp to DateTime and then format it
+        String formattedKey = DateFormat('yyyyMMdd').format(key.toDate());
+
+        // Store the value with the formatted date as the key
+        convertedCompletionStatus![formattedKey] = value;
       });
     }
     return {
@@ -51,9 +50,6 @@ class Habit {
       'reminderTime': reminderTime,
       'isDaily': isDaily,
       'isWeekly': isWeekly,
-      'completedOn': completedOn,
-      'lastCompletedOn': lastCompletedOn,
-      'weeklyDay': weeklyDay,
       'completionStatus': convertedCompletionStatus,
     };
   }
@@ -104,9 +100,6 @@ class Habit {
       reminderTime: data['reminderTime']?.toString(),
       createdBy: data['createdBy']?.toString() ?? '',
       createdAt: toTimestamp(data['createdAt']) ?? Timestamp.now(),
-      completedOn: toTimestamp(data['completedOn']),
-      lastCompletedOn: toTimestamp(data['lastCompletedOn']),
-      weeklyDay: data['weeklyDay'] as int?,
       completionStatus: completionStatus,
     );
   }

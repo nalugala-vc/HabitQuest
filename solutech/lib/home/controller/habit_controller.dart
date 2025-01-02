@@ -27,7 +27,6 @@ class HabitController extends BaseController {
   void onInit() {
     super.onInit();
     fetchHabits();
-    fetchCompletedHabits();
   }
 
   void setReminderTime(TimeOfDay time) {
@@ -36,33 +35,6 @@ class HabitController extends BaseController {
 
   void toggleHasReminder(bool value) {
     hasReminder.value = value;
-  }
-
-  Future<void> fetchCompletedHabits() async {
-    try {
-      final user = FirebaseAuth.instance.currentUser;
-      if (user == null) return;
-
-      final querySnapshot = await FirebaseFirestore.instance
-          .collection('habits')
-          .where('isCompleted', isEqualTo: true)
-          .get();
-
-      final Map<DateTime, int> newDatasets = {};
-
-      for (var doc in querySnapshot.docs) {
-        final data = doc.data();
-        final completedDate = (data['lastCompletedOn'] as Timestamp).toDate();
-
-        final dateKey = DateTime(
-            completedDate.year, completedDate.month, completedDate.day);
-        newDatasets[dateKey] = (newDatasets[dateKey] ?? 0) + 1;
-      }
-
-      datasets.value = newDatasets; // Update the observable map
-    } catch (e) {
-      print("Error fetching completed habits: $e");
-    }
   }
 
   Future<void> fetchHabits() async {
@@ -199,6 +171,7 @@ class HabitController extends BaseController {
       title.text = habit.title;
       description.text = habit.description;
       isDaily.value = habit.isDaily ?? false;
+      isWeekly.value = habit.isWeekly ?? false;
       hasReminder.value = habit.hasReminder ?? false;
 
       final rawReminderTime = habit.reminderTime;
@@ -260,7 +233,6 @@ class HabitController extends BaseController {
               : isCompleted;
 
       final updateData = {
-        'lastCompletedOn': Timestamp.fromDate(completedOn),
         'completionStatus.$formattedDate': newStatus,
       };
 
@@ -312,9 +284,6 @@ class HabitController extends BaseController {
         isDaily: isDaily,
         isWeekly: isWeekly,
         hasReminder: hasReminder,
-        completedOn: null,
-        lastCompletedOn: null,
-        weeklyDay: null,
         reminderTime: hasReminder && reminderTime != null
             ? reminderTime.format(Get.context!)
             : null,
