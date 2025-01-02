@@ -13,7 +13,7 @@ class Habit {
   Timestamp? completedOn;
   Timestamp? lastCompletedOn;
   int? weeklyDay;
-  Map<Timestamp, bool>? completionStatus; // Tracks completion status per date
+  Map<Timestamp, bool>? completionStatus;
 
   Habit({
     required this.title,
@@ -28,7 +28,7 @@ class Habit {
     this.lastCompletedOn,
     this.weeklyDay,
     this.completedOn,
-    this.completionStatus, // Initialize the new field
+    this.completionStatus,
   });
 
   Map<String, dynamic> toMap() {
@@ -45,31 +45,47 @@ class Habit {
       'completedOn': completedOn,
       'lastCompletedOn': lastCompletedOn,
       'weeklyDay': weeklyDay,
-      'completionStatus': completionStatus, // Add to serialization
+      'completionStatus':
+          completionStatus?.map((key, value) => MapEntry(key, value)),
     };
-  }
-
-  factory Habit.fromMap(Map<String, dynamic> map) {
-    return Habit(
-      id: map['id'],
-      title: map['title'],
-      description: map['description'],
-      createdBy: map['createdBy'],
-      createdAt: map['createdAt'],
-      hasReminder: map['hasReminder'],
-      reminderTime: map['reminderTime'],
-      isDaily: map['isDaily'],
-      isWeekly: map['isWeekly'],
-      completedOn: map['completedOn'],
-      lastCompletedOn: map['lastCompletedOn'],
-      weeklyDay: map['weeklyDay'],
-      completionStatus:
-          Map<Timestamp, bool>.from(map['completionStatus'] ?? {}),
-    );
   }
 
   factory Habit.fromDocument(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
+
+    // Helper function to safely convert to Timestamp
+    Timestamp? toTimestamp(dynamic value) {
+      if (value == null) return null;
+      if (value is Timestamp) return value;
+      if (value is String) {
+        try {
+          // Convert string to DateTime and then to Timestamp
+          return Timestamp.fromDate(DateTime.parse(value));
+        } catch (e) {
+          print('Error converting string to Timestamp: $e');
+          return null;
+        }
+      }
+      return null;
+    }
+
+    // Handle completionStatus conversion
+    Map<Timestamp, bool>? completionStatus;
+    if (data['completionStatus'] != null) {
+      try {
+        completionStatus =
+            (data['completionStatus'] as Map<dynamic, dynamic>).map(
+          (key, value) => MapEntry(
+            key is Timestamp ? key : toTimestamp(key) ?? Timestamp.now(),
+            value as bool,
+          ),
+        );
+      } catch (e) {
+        print('Error converting completionStatus: $e');
+        completionStatus = {};
+      }
+    }
+
     return Habit(
       id: doc.id,
       title: data['title'] ?? '',
@@ -77,14 +93,13 @@ class Habit {
       isDaily: data['isDaily'] ?? false,
       isWeekly: data['isWeekly'] ?? false,
       hasReminder: data['hasReminder'] ?? false,
-      reminderTime: data['reminderTime'],
-      createdBy: data['createdBy'] ?? '',
-      createdAt: data['createdAt'] ?? Timestamp.now(),
-      completedOn: data['completedOn'],
-      lastCompletedOn: data['lastCompletedOn'],
-      weeklyDay: data['weeklyDay'],
-      completionStatus:
-          Map<Timestamp, bool>.from(data['completionStatus'] ?? {}),
+      reminderTime: data['reminderTime']?.toString(),
+      createdBy: data['createdBy']?.toString() ?? '',
+      createdAt: toTimestamp(data['createdAt']) ?? Timestamp.now(),
+      completedOn: toTimestamp(data['completedOn']),
+      lastCompletedOn: toTimestamp(data['lastCompletedOn']),
+      weeklyDay: data['weeklyDay'] as int?,
+      completionStatus: completionStatus,
     );
   }
 }

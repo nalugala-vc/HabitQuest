@@ -81,6 +81,9 @@ class HabitController extends BaseController {
 
       setBusy(false);
     } catch (e) {
+      print(
+        "Failed to fetch habit: $e",
+      );
       Fluttertoast.showToast(
         msg: "Failed to fetch habit: $e",
         toastLength: Toast.LENGTH_LONG,
@@ -340,6 +343,9 @@ class HabitController extends BaseController {
 
       Get.off(() => const HomePageMobile());
     } catch (e) {
+      print(
+        "Failed to add habit: $e",
+      );
       Fluttertoast.showToast(
         msg: "Failed to add habit: $e",
         toastLength: Toast.LENGTH_LONG,
@@ -356,6 +362,7 @@ class HabitController extends BaseController {
     title.clear();
     description.clear();
     isDaily.value = false;
+    isWeekly.value = false;
     hasReminder.value = false;
     reminderTime.value = const TimeOfDay(hour: 10, minute: 0);
   }

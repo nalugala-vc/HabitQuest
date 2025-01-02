@@ -45,25 +45,40 @@ class _HomePageMobileState extends State<HomePageMobile> {
                   final tasksForSelectedDate = habits.where((habit) {
                     DateTime createdAt =
                         habit.createdAt?.toDate() ?? DateTime.now();
+                    final newselectedDate = selectedDate.value;
 
+                    // For daily habits, check if created before or on selected date
                     if (habit.isDaily == true) {
-                      return true;
+                      return createdAt.isAtSameMomentAs(newselectedDate) ||
+                          (createdAt.isBefore(newselectedDate
+                                  .add(const Duration(days: 1))) &&
+                              createdAt.day <= newselectedDate.day);
                     }
 
+                    // For weekly habits, check created date and weekday match
                     if (habit.isWeekly == true &&
-                        createdAt.weekday == selectedDate.value.weekday) {
+                        newselectedDate.weekday == createdAt.weekday &&
+                        (createdAt.isBefore(newselectedDate) ||
+                            createdAt.isAtSameMomentAs(newselectedDate))) {
                       return true;
                     }
 
-                    return createdAt.year == selectedDate.value.year &&
-                        createdAt.month == selectedDate.value.month &&
-                        createdAt.day == selectedDate.value.day;
+                    // For one-time habits, check exact date match
+                    return createdAt.year == newselectedDate.year &&
+                        createdAt.month == newselectedDate.month &&
+                        createdAt.day == newselectedDate.day;
                   }).toList();
 
-                  final completedTasks = tasksForSelectedDate
-                      .where((habit) =>
-                          habit.completionStatus?[selectedDate.value] ?? false)
-                      .length;
+                  final completedTasks = tasksForSelectedDate.where((habit) {
+                    return habit.completionStatus?.entries.any((entry) {
+                          final entryDate = entry.key.toDate();
+                          return entryDate.year == selectedDate.value.year &&
+                              entryDate.month == selectedDate.value.month &&
+                              entryDate.day == selectedDate.value.day &&
+                              entry.value == true;
+                        }) ??
+                        false;
+                  }).length;
                   final totalTasks = tasksForSelectedDate.length;
 
                   return DailySummary(
