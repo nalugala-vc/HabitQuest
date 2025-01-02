@@ -8,7 +8,6 @@ import 'package:solutech/home/mobile/widgets/daily_summary.dart';
 import 'package:solutech/home/mobile/widgets/habit_card_list.dart';
 import 'package:solutech/home/mobile/widgets/timeline_view.dart';
 import 'package:solutech/utils/fonts/roboto_condensed.dart';
-import 'package:solutech/utils/functions.dart';
 import 'package:solutech/utils/spacers.dart';
 
 class HomePageMobile extends StatefulWidget {
@@ -43,11 +42,27 @@ class _HomePageMobileState extends State<HomePageMobile> {
                   // Filter tasks for the selected date inside Obx
                   final habits = habitController.habits;
 
-                  final tasksForSelectedDate =
-                      getTasksForSelectedDate(habits, selectedDate);
+                  final tasksForSelectedDate = habits.where((habit) {
+                    DateTime createdAt =
+                        habit.createdAt?.toDate() ?? DateTime.now();
+
+                    if (habit.isDaily == true) {
+                      return true;
+                    }
+
+                    if (habit.isWeekly == true &&
+                        createdAt.weekday == selectedDate.value.weekday) {
+                      return true;
+                    }
+
+                    return createdAt.year == selectedDate.value.year &&
+                        createdAt.month == selectedDate.value.month &&
+                        createdAt.day == selectedDate.value.day;
+                  }).toList();
 
                   final completedTasks = tasksForSelectedDate
-                      .where((habit) => habit.isCompleted == true)
+                      .where((habit) =>
+                          habit.completionStatus?[selectedDate.value] ?? false)
                       .length;
                   final totalTasks = tasksForSelectedDate.length;
 

@@ -4,7 +4,6 @@ class Habit {
   String? id;
   String title;
   String description;
-  bool isCompleted;
   String? createdBy;
   Timestamp? createdAt;
   bool? hasReminder;
@@ -14,28 +13,29 @@ class Habit {
   Timestamp? completedOn;
   Timestamp? lastCompletedOn;
   int? weeklyDay;
+  Map<Timestamp, bool>? completionStatus; // Tracks completion status per date
 
-  Habit(
-      {required this.title,
-      required this.description,
-      this.createdBy,
-      this.createdAt,
-      this.isCompleted = false,
-      this.id,
-      this.hasReminder,
-      this.reminderTime,
-      this.isDaily,
-      this.isWeekly,
-      this.lastCompletedOn,
-      this.weeklyDay,
-      this.completedOn});
+  Habit({
+    required this.title,
+    required this.description,
+    this.createdBy,
+    this.createdAt,
+    this.id,
+    this.hasReminder,
+    this.reminderTime,
+    this.isDaily,
+    this.isWeekly,
+    this.lastCompletedOn,
+    this.weeklyDay,
+    this.completedOn,
+    this.completionStatus, // Initialize the new field
+  });
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'title': title,
       'description': description,
-      'isCompleted': isCompleted,
       'createdBy': createdBy,
       'createdAt': createdAt,
       'hasReminder': hasReminder,
@@ -45,6 +45,7 @@ class Habit {
       'completedOn': completedOn,
       'lastCompletedOn': lastCompletedOn,
       'weeklyDay': weeklyDay,
+      'completionStatus': completionStatus, // Add to serialization
     };
   }
 
@@ -53,7 +54,6 @@ class Habit {
       id: map['id'],
       title: map['title'],
       description: map['description'],
-      isCompleted: map['isCompleted'],
       createdBy: map['createdBy'],
       createdAt: map['createdAt'],
       hasReminder: map['hasReminder'],
@@ -63,6 +63,8 @@ class Habit {
       completedOn: map['completedOn'],
       lastCompletedOn: map['lastCompletedOn'],
       weeklyDay: map['weeklyDay'],
+      completionStatus:
+          Map<Timestamp, bool>.from(map['completionStatus'] ?? {}),
     );
   }
 
@@ -72,7 +74,6 @@ class Habit {
       id: doc.id,
       title: data['title'] ?? '',
       description: data['description'] ?? '',
-      isCompleted: data['isCompleted'] ?? false,
       isDaily: data['isDaily'] ?? false,
       isWeekly: data['isWeekly'] ?? false,
       hasReminder: data['hasReminder'] ?? false,
@@ -82,6 +83,8 @@ class Habit {
       completedOn: data['completedOn'],
       lastCompletedOn: data['lastCompletedOn'],
       weeklyDay: data['weeklyDay'],
+      completionStatus:
+          Map<Timestamp, bool>.from(data['completionStatus'] ?? {}),
     );
   }
 }

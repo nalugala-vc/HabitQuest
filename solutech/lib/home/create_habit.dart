@@ -175,7 +175,7 @@ class _CreateHabitState extends State<CreateHabit> {
                           controller.updateHabit(
                             habit: Habit(
                               id: widget.habit!.id,
-                              isCompleted: widget.habit!.isCompleted,
+                              completionStatus: widget.habit!.completionStatus,
                               createdAt: widget.habit!.createdAt,
                               createdBy: widget.habit!.createdBy,
                               title: controller.title.text.trim(),

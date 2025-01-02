@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:solutech/core/controller/base_controller.dart';
 import 'package:solutech/home/mobile/home_page.dart';
 import 'package:solutech/models/habit.dart';
+import 'package:intl/intl.dart';
 
 class HabitController extends BaseController {
   static HabitController get instance => Get.find();
@@ -51,7 +52,7 @@ class HabitController extends BaseController {
 
       for (var doc in querySnapshot.docs) {
         final data = doc.data();
-        final completedDate = (data['createdAt'] as Timestamp).toDate();
+        final completedDate = (data['lastCompletedOn'] as Timestamp).toDate();
 
         final dateKey = DateTime(
             completedDate.year, completedDate.month, completedDate.day);
@@ -140,18 +141,12 @@ class HabitController extends BaseController {
   Future<void> updateHabit({
     required Habit habit,
   }) async {
-    print('created At ${habit.createdAt} createdBy ${habit.createdBy} ');
-    try {
-      Map<String, dynamic> updateData = {
-        'title': habit.title,
-        'description': habit.description,
-        'isDaily': habit.isDaily,
-        'hasReminder': habit.hasReminder,
-        'isCompleted': habit.isCompleted,
-        'createdAt': habit.createdAt,
-        'createdBy': habit.createdBy,
-      };
+    print('createdAt: ${habit.createdAt}, createdBy: ${habit.createdBy}');
 
+    try {
+      Map<String, dynamic> updateData = habit.toMap();
+
+      // Explicitly handle fields that need custom logic
       if (habit.hasReminder == true && habit.reminderTime != null) {
         updateData['reminderTime'] = habit.reminderTime;
       } else {
@@ -182,7 +177,7 @@ class HabitController extends BaseController {
 
       clearFields();
     } catch (e) {
-      print("Error updating habit: $e"); // Add this for debugging
+      print("Error updating habit: $e");
       clearFields();
       Fluttertoast.showToast(
         msg: "Failed to update habit: $e",
@@ -235,42 +230,50 @@ class HabitController extends BaseController {
     }
   }
 
-  Future<void> updateHabitCompletion(String habitId, bool isCompleted) async {
+  Future<void> updateHabitCompletion(
+    String habitId,
+    DateTime completedOn,
+    bool isCompleted,
+  ) async {
     try {
-      final user = FirebaseAuth.instance.currentUser;
-      if (user == null) return;
+      final formattedDate = DateFormat('yyyyMMdd').format(completedOn);
+      final timestampKey = Timestamp.fromDate(DateTime(
+        int.parse(formattedDate.substring(0, 4)), // year
+        int.parse(formattedDate.substring(4, 6)), // month
+        int.parse(formattedDate.substring(6, 8)), // day
+      ));
 
-      // Update Firestore
+      final habitDoc = await FirebaseFirestore.instance
+          .collection('habits')
+          .doc(habitId)
+          .get();
+
+      final currentStatus =
+          habitDoc.data()?['completionStatus']?[formattedDate] ?? false;
+
+      final newStatus =
+          formattedDate == DateFormat('yyyyMMdd').format(DateTime.now())
+              ? !currentStatus
+              : isCompleted;
+
+      final updateData = {
+        'lastCompletedOn': Timestamp.fromDate(completedOn),
+        'completionStatus.$formattedDate': newStatus,
+      };
+
       await FirebaseFirestore.instance
           .collection('habits')
           .doc(habitId)
-          .update({
-        'isCompleted': isCompleted,
-      });
+          .update(updateData);
 
-      // Update the local habits list
       final index = habits.indexWhere((habit) => habit.id == habitId);
       if (index != -1) {
-        habits[index].isCompleted = isCompleted;
-        habits.refresh();
-
-        // Update the datasets map
-        final completedDate = DateTime.now();
-        final dateKey = DateTime(
-            completedDate.year, completedDate.month, completedDate.day);
-
-        if (isCompleted) {
-          // Increment the value for the date
-          datasets[dateKey] = (datasets[dateKey] ?? 0) + 1;
-        } else {
-          // Decrement the value for the date (if > 0)
-          if (datasets[dateKey] != null && datasets[dateKey]! > 0) {
-            datasets[dateKey] = datasets[dateKey]! - 1;
-          }
+        habits[index].lastCompletedOn = Timestamp.fromDate(completedOn);
+        if (habits[index].completionStatus == null) {
+          habits[index].completionStatus = {};
         }
-
-        // Refresh datasets observable
-        datasets.refresh();
+        habits[index].completionStatus![timestampKey] = newStatus;
+        habits.refresh();
       }
     } catch (e) {
       Fluttertoast.showToast(
@@ -302,7 +305,7 @@ class HabitController extends BaseController {
       final habit = Habit(
         title: title,
         description: description,
-        isCompleted: false,
+        completionStatus: {},
         isDaily: isDaily,
         isWeekly: isWeekly,
         hasReminder: hasReminder,
@@ -349,51 +352,11 @@ class HabitController extends BaseController {
     }
   }
 
-  Future<void> updateLastCompletedOn(
-      String habitId, DateTime lastCompletedOn) async {
-    try {
-      await FirebaseFirestore.instance
-          .collection('habits')
-          .doc(habitId)
-          .update({'lastCompletedOn': Timestamp.fromDate(lastCompletedOn)});
-      fetchHabits(); // Refresh habits to reflect changes
-    } catch (e) {
-      Fluttertoast.showToast(
-        msg: "Failed to update habit: $e",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
-    }
-  }
-
   void clearFields() {
     title.clear();
     description.clear();
     isDaily.value = false;
     hasReminder.value = false;
     reminderTime.value = const TimeOfDay(hour: 10, minute: 0);
-  }
-
-  //heat map
-  Map<DateTime, int> calculateCompletionCounts(List<Habit> habits) {
-    final Map<DateTime, int> completionCounts = {};
-
-    for (final habit in habits) {
-      final date = DateTime(
-        habit.createdAt!.toDate().year,
-        habit.createdAt!.toDate().month,
-        habit.createdAt!.toDate().day,
-      );
-
-      if (habit.isCompleted) {
-        completionCounts[date] = (completionCounts[date] ?? 0) + 1;
-      }
-    }
-
-    return completionCounts;
   }
 }
