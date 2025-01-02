@@ -11,9 +11,11 @@ class MyHeatMap extends StatelessWidget {
   Widget build(BuildContext context) {
     final habitController = Get.find<HabitController>();
 
+    // Make sure dataset generation happens once, avoid repeating this call
+    Future.delayed(Duration.zero, () => _generateHeatmapData(habitController));
+
     return Obx(() {
       return HeatMap(
-        // ignore: invalid_use_of_protected_member
         datasets: habitController.datasets.value,
         defaultColor: Colors.grey.shade300,
         startDate: DateTime.now().subtract(const Duration(days: 40)),
@@ -46,6 +48,34 @@ class MyHeatMap extends StatelessWidget {
         },
       );
     });
+  }
+
+  void _generateHeatmapData(HabitController habitController) {
+    final datasets = <DateTime, int>{}.obs;
+
+    final habits = habitController.habits;
+    final now = DateTime.now();
+
+    for (var habit in habits) {
+      // Check if habit has completion status
+      if (habit.completionStatus != null) {
+        habit.completionStatus!.forEach((timestamp, isCompleted) {
+          if (isCompleted) {
+            final date = timestamp.toDate();
+
+            // If the habit was completed on this date, increment the count
+            if (datasets.containsKey(date)) {
+              datasets[date] = datasets[date]! + 1;
+            } else {
+              datasets[date] = 1;
+            }
+          }
+        });
+      }
+    }
+
+    // Update the datasets in the controller
+    habitController.datasets.value = datasets;
   }
 
   String _getDayOfWeek(DateTime date) {
