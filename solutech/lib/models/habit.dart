@@ -54,6 +54,7 @@ class Habit {
   factory Habit.fromDocument(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
     return Habit(
+      id: doc.id,
       title: data['title'] ?? '',
       description: data['description'] ?? '',
       isCompleted: data['isCompleted'] ?? false,

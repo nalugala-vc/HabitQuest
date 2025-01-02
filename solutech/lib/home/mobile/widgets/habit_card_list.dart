@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:solutech/common/empty_state.dart';
 import 'package:solutech/common/widgets/confirm_dialogue.dart';
 import 'package:solutech/home/controller/habit_controller.dart';
 import 'package:solutech/home/create_habit.dart';
@@ -58,19 +59,34 @@ class _HabitCardListState extends State<HabitCardList> {
     );
   }
 
-  @override
   Widget build(BuildContext context) {
     return Obx(() {
-      // Watch for changes in the habit list
-      if (habitController.habits.isEmpty) {
-        return Center(child: CircularProgressIndicator());
+      // Check if the data is still loading
+      if (habitController.isLoading.value) {
+        return const Center(child: CircularProgressIndicator());
       }
 
-      final habits = habitController.habits;
+      // Check if the data has loaded but is empty
+      if (habitController.habits.isEmpty) {
+        return const EmptyStateWidget(
+          message: 'No habits found. Start by adding one!',
+        );
+      }
 
-      // Filter tasks for the selected date
+      // Data has loaded and is not empty
+      final habits = habitController.habits;
       final tasksForSelectedDate = getTasksForSelectedDate(habits);
 
+      // Handle case where there are no tasks for the selected date
+      if (tasksForSelectedDate.isEmpty) {
+        return const Center(
+          child: const EmptyStateWidget(
+            message: 'No habits found for the selected date',
+          ),
+        );
+      }
+
+      // Display tasks for the selected date
       return ListView.separated(
         separatorBuilder: (context, index) => spaceH15,
         shrinkWrap: true,

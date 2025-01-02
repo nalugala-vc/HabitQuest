@@ -4,6 +4,7 @@ import 'package:solutech/common/widgets/app_bar.dart';
 import 'package:solutech/common/widgets/bottom_nav_bar.dart';
 import 'package:solutech/streaks/widgets/achievement_badge_a.dart';
 import 'package:solutech/streaks/widgets/achievement_badge_b.dart';
+import 'package:solutech/streaks/widgets/heat_map.dart';
 import 'package:solutech/utils/app_colors.dart';
 import 'package:solutech/utils/fonts/roboto_condensed.dart';
 import 'package:solutech/utils/spacers.dart';
@@ -16,11 +17,12 @@ class StreaksMobile extends StatelessWidget {
     return Scaffold(
       appBar: const MainAppBar(),
       body: SafeArea(
-          child: Container(
+          child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const MyHeatMap(),
                   spaceH20,
                   RobotoCondensed(
                     text: 'Unlock Badges With every Achievement!',

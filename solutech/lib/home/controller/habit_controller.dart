@@ -3,10 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:solutech/core/controller/base_controller.dart';
 import 'package:solutech/home/mobile/home_page.dart';
 import 'package:solutech/models/habit.dart';
 
-class HabitController extends GetxController {
+class HabitController extends BaseController {
   static HabitController get instance => Get.find();
 
   final user = FirebaseAuth.instance.currentUser;
@@ -31,6 +32,8 @@ class HabitController extends GetxController {
     try {
       if (user == null) return;
 
+      setBusy(true);
+
       final snapshot = await FirebaseFirestore.instance
           .collection('habits')
           .where('createdBy', isEqualTo: user!.uid)
@@ -38,6 +41,8 @@ class HabitController extends GetxController {
 
       habits.value =
           snapshot.docs.map((doc) => Habit.fromDocument(doc)).toList();
+
+      setBusy(false);
     } catch (e) {
       Fluttertoast.showToast(
         msg: "Failed to fetch habit: $e",
@@ -289,5 +294,24 @@ class HabitController extends GetxController {
     isDaily.value = false;
     hasReminder.value = false;
     reminderTime.value = const TimeOfDay(hour: 10, minute: 0);
+  }
+
+  //heat map
+  Map<DateTime, int> calculateCompletionCounts(List<Habit> habits) {
+    final Map<DateTime, int> completionCounts = {};
+
+    for (final habit in habits) {
+      final date = DateTime(
+        habit.createdAt!.toDate().year,
+        habit.createdAt!.toDate().month,
+        habit.createdAt!.toDate().day,
+      );
+
+      if (habit.isCompleted) {
+        completionCounts[date] = (completionCounts[date] ?? 0) + 1;
+      }
+    }
+
+    return completionCounts;
   }
 }

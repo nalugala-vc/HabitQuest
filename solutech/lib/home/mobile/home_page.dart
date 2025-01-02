@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:solutech/common/widgets/app_bar.dart';
 import 'package:solutech/common/widgets/bottom_nav_bar.dart';
-import 'package:solutech/data/habit_quest_database.dart';
+
 import 'package:solutech/home/controller/habit_controller.dart';
 import 'package:solutech/home/mobile/widgets/daily_summary.dart';
 import 'package:solutech/home/mobile/widgets/habit_card_list.dart';
@@ -20,7 +20,11 @@ class HomePageMobile extends StatefulWidget {
 class _HomePageMobileState extends State<HomePageMobile> {
   final HabitController habitController = Get.find();
 
-  HabitQuestDatabase db = HabitQuestDatabase();
+  @override
+  void initState() {
+    super.initState();
+    habitController.fetchHabits();
+  }
 
   @override
   Widget build(BuildContext context) {
