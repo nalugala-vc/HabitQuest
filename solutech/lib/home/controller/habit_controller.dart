@@ -141,15 +141,15 @@ class HabitController extends BaseController {
     }
   }
 
-  Future<void> updateHabit({
-    required Habit habit,
-  }) async {
-    print('createdAt: ${habit.createdAt}, createdBy: ${habit.createdBy}');
-
+  Future<void> updateHabit({required Habit habit}) async {
     try {
+      // Get the data to update
       Map<String, dynamic> updateData = habit.toMap();
 
-      // Explicitly handle fields that need custom logic
+      // Remove the id field as it shouldn't be updated
+      updateData.remove('id');
+
+      // Handle reminder time
       if (habit.hasReminder == true && habit.reminderTime != null) {
         updateData['reminderTime'] = habit.reminderTime;
       } else {

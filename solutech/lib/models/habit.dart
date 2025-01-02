@@ -32,6 +32,15 @@ class Habit {
   });
 
   Map<String, dynamic> toMap() {
+    Map<String, dynamic>? convertedCompletionStatus;
+    if (completionStatus != null) {
+      convertedCompletionStatus = {};
+      completionStatus!.forEach((key, value) {
+        // Use timestamp's millisecondsSinceEpoch as the key
+        convertedCompletionStatus![key.millisecondsSinceEpoch.toString()] =
+            value;
+      });
+    }
     return {
       'id': id,
       'title': title,
@@ -45,8 +54,7 @@ class Habit {
       'completedOn': completedOn,
       'lastCompletedOn': lastCompletedOn,
       'weeklyDay': weeklyDay,
-      'completionStatus':
-          completionStatus?.map((key, value) => MapEntry(key, value)),
+      'completionStatus': convertedCompletionStatus,
     };
   }
 
