@@ -1,9 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:solutech/auth/onboarding/onboarding_questions.dart';
-import 'package:solutech/home/mobile/home_page.dart';
+import 'package:solutech/home/homepage.dart';
 import 'package:solutech/services/auth_services.dart';
 
 class SignInController extends GetxController {
@@ -16,7 +15,7 @@ class SignInController extends GetxController {
   void loginUser(String email, String password) async {
     try {
       await _authServices.signIn(email: email, password: password);
-      Get.offAll(() => const HomePageMobile());
+      Get.offAll(() => const Homepage());
     } catch (e) {
       Fluttertoast.showToast(
         msg: 'Login failed: ${e.toString()}',
@@ -34,7 +33,7 @@ class SignInController extends GetxController {
     try {
       await _authServices.loginWithGoogle();
 
-      Get.offAll(() => const HomePageMobile());
+      Get.offAll(() => const Homepage());
     } catch (e) {
       Fluttertoast.showToast(
         msg: 'Login failed: ${e.toString()}',

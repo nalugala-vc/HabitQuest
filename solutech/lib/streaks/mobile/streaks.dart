@@ -6,7 +6,6 @@ import 'package:solutech/common/constants.dart';
 import 'package:solutech/common/streak_dialogue.dart';
 import 'package:solutech/common/widgets/app_bar.dart';
 import 'package:solutech/common/widgets/bottom_nav_bar.dart';
-import 'package:solutech/common/widgets/rounded_button.dart';
 import 'package:solutech/home/controller/habit_controller.dart';
 import 'package:solutech/streaks/widgets/achievement_badge_a.dart';
 import 'package:solutech/streaks/widgets/achievement_badge_b.dart';

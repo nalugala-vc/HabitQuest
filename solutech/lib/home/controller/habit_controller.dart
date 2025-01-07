@@ -43,8 +43,6 @@ class HabitController extends BaseController {
 
   Future<void> fetchHabits() async {
     try {
-      print('fetchingHabits');
-      print('user is $user');
       if (user == null) return;
 
       setBusy(true);
