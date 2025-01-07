@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:solutech/auth/mobile/sign_up.dart';
 import 'package:solutech/common/constants.dart';
 import 'package:solutech/common/widgets/rounded_button.dart';
 import 'package:solutech/utils/app_colors.dart';
@@ -42,7 +41,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         curve: Curves.easeInOut,
       );
     } else {
-      Get.offAll(() => const SignUpMobile());
+      Get.offAllNamed('/sign-up');
     }
   }
 

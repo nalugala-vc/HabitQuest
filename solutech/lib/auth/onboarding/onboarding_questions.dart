@@ -3,7 +3,6 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:solutech/common/constants.dart';
 import 'package:solutech/common/widgets/rounded_button.dart';
-import 'package:solutech/home/mobile/home_page.dart';
 import 'package:solutech/utils/app_colors.dart';
 import 'package:solutech/utils/fonts/roboto_condensed.dart';
 import 'package:solutech/utils/spacers.dart';
@@ -46,7 +45,7 @@ class _OnboardingQuestionsState extends State<OnboardingQuestions> {
       );
     } else {
       print("User Answers: $_userAnswers");
-      Get.offAll(() => const HomePageMobile());
+      Get.offAllNamed('/homepage');
     }
   }
 

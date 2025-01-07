@@ -5,15 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:solutech/auth/mobile/sign_in.dart';
-import 'package:solutech/auth/mobile/sign_up.dart';
 import 'package:solutech/auth/onboarding/onboarding_questions.dart';
 import 'package:solutech/auth/onboarding/onboarding_screen_1.dart';
+import 'package:solutech/auth/sign_in.dart';
+import 'package:solutech/auth/sign_up.dart';
 import 'package:solutech/core/di/app_bindings.dart';
-import 'package:solutech/home/controller/habit_controller.dart';
 import 'package:solutech/home/create_habit.dart';
 import 'package:solutech/home/homepage.dart';
-import 'package:solutech/home/mobile/home_page.dart';
-import 'package:solutech/models/habit.dart';
+import 'package:solutech/initial_page.dart';
 import 'package:solutech/profile/profile_page.dart';
 
 Future<void> main() async {
@@ -61,8 +60,11 @@ class MyApp extends StatelessWidget {
         home: SignInMobile(),
         debugShowCheckedModeBanner: false,
         getPages: [
-          GetPage(name: '/', page: () => const SignInMobile()),
+          GetPage(name: '/', page: () => const InitialPage()),
+          GetPage(name: '/sign-in', page: () => const SignIn()),
+          GetPage(name: '/sign-up', page: () => const SignUp()),
           GetPage(name: '/homepage', page: () => const Homepage()),
+          GetPage(name: '/onboarding', page: () => OnboardingScreen()),
           GetPage(name: '/onboarding-qs', page: () => OnboardingQuestions()),
           GetPage(name: '/create-habit', page: () => const CreateHabit()),
           GetPage(name: '/profile-page', page: () => const ProfilePage()),

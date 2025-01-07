@@ -2,20 +2,23 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthServices {
   Future<UserCredential?> loginWithGoogle() async {
     try {
+      UserCredential? userCredential;
+
       if (kIsWeb) {
         // Web authentication with Google sign-in popup
         GoogleAuthProvider authProvider = GoogleAuthProvider();
 
         // Sign-in using the popup
-        final UserCredential userCredential =
+        userCredential =
             await FirebaseAuth.instance.signInWithPopup(authProvider);
-
-        return userCredential;
       } else {
         // Mobile authentication with Google sign-in
         final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -37,13 +40,20 @@ class AuthServices {
             idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
 
         // Sign in with credentials and return the result
-        return await FirebaseAuth.instance.signInWithCredential(cred);
+        userCredential = await FirebaseAuth.instance.signInWithCredential(cred);
       }
+
+      // Save user info in SharedPreferences
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('userEmail', userCredential.user?.email ?? '');
+      prefs.setString('userName', userCredential.user?.displayName ?? '');
+      prefs.setString('userPhotoURL', userCredential.user?.photoURL ?? '');
+
+      return userCredential;
     } catch (e) {
-      // Log and handle the error
       print("Error during Google sign-in: ${e.toString()}");
+      return null;
     }
-    return null;
   }
 
   Future<void> signUp({
@@ -51,8 +61,11 @@ class AuthServices {
     required String password,
   }) async {
     try {
-      await FirebaseAuth.instance
+      final userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
+      // Save user info in SharedPreferences
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('userEmail', userCredential.user?.email ?? '');
     } on FirebaseAuthException catch (e) {
       String message = '';
       if (e.code == 'weak-password') {
@@ -86,8 +99,12 @@ class AuthServices {
     required String password,
   }) async {
     try {
-      await FirebaseAuth.instance
+      final userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
+
+      // Save user info in SharedPreferences
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('userEmail', userCredential.user?.email ?? '');
     } on FirebaseAuthException catch (e) {
       String message = '';
       if (e.code == 'user-not-found') {
@@ -120,5 +137,15 @@ class AuthServices {
     }
   }
 
-  Future<void> logout() async => await FirebaseAuth.instance.signOut();
+  Future<void> logout() async {
+    await FirebaseAuth.instance.signOut();
+
+    GoogleSignIn googleSignIn = GoogleSignIn();
+    await googleSignIn.signOut();
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+
+    Get.offAllNamed('/');
+  }
 }

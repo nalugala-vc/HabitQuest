@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:solutech/auth/controller/auth_controller.dart';
-import 'package:solutech/auth/mobile/sign_up.dart';
 import 'package:solutech/auth/widgets/sign_up_option_widget.dart';
 import 'package:solutech/auth/widgets/social_icons.dart';
 import 'package:solutech/common/widgets/auth_field.dart';
@@ -111,7 +110,7 @@ class _SignInMobileState extends State<SignInMobile> {
                                     color: AppColors.purple400),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    Get.offAll(() => const SignUpMobile());
+                                    Get.offAllNamed('/sign-up');
                                   })
                           ],
                         ),

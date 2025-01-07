@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:solutech/home/create_habit.dart';
 import 'package:solutech/home/homepage.dart';
-import 'package:solutech/profile/mobile/profile_page.dart';
 import 'package:solutech/profile/profile_page.dart';
 import 'package:solutech/streaks/mobile/streaks.dart';
 import 'package:solutech/utils/app_colors.dart';
