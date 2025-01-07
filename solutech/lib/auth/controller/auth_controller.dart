@@ -15,7 +15,7 @@ class SignInController extends GetxController {
   void loginUser(String email, String password) async {
     try {
       await _authServices.signIn(email: email, password: password);
-      Get.offAll(() => const Homepage());
+      Get.offAllNamed('/homepage');
     } catch (e) {
       Fluttertoast.showToast(
         msg: 'Login failed: ${e.toString()}',
@@ -33,7 +33,7 @@ class SignInController extends GetxController {
     try {
       await _authServices.loginWithGoogle();
 
-      Get.offAll(() => const Homepage());
+      Get.offAllNamed('/homepage');
     } catch (e) {
       Fluttertoast.showToast(
         msg: 'Login failed: ${e.toString()}',
@@ -151,7 +151,7 @@ class SignUpController extends GetxController {
 
     try {
       await _authServices.signUp(email: email, password: password);
-      Get.offAll(() => OnboardingQuestions());
+      Get.offAllNamed('/onboarding-qs');
     } catch (e) {
       Fluttertoast.showToast(
         msg: 'Registration failed: ${e.toString()}',

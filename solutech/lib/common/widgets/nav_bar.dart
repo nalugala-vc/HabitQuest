@@ -57,8 +57,8 @@ class NavBar extends StatelessWidget {
               size: 24,
             ),
             name: 'Create habit',
-            isActive: currentRoute.startsWith('/patient/appointments'),
-            onTap: () => Get.toNamed('/patient/appointments'),
+            isActive: currentRoute.startsWith('/create-habit'),
+            onTap: () => Get.toNamed('/create-habit'),
           ),
 
           NavWidget(

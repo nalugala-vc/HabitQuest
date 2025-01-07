@@ -269,13 +269,54 @@ class HabitController extends BaseController {
 
       final index = habits.indexWhere((habit) => habit.id == habitId);
       if (index != -1) {
-        habits[index].lastCompletedOn = Timestamp.fromDate(completedOn);
-        if (habits[index].completionStatus == null) {
-          habits[index].completionStatus = {};
+        // Create a new habit object with updated completion status
+        final updatedHabit =
+            Habit.from(habits[index]); // Assuming you have a copy constructor
+        if (updatedHabit.completionStatus == null) {
+          updatedHabit.completionStatus = {};
         }
-        habits[index].completionStatus![timestampKey] = newStatus;
+        updatedHabit.completionStatus![timestampKey] = newStatus;
+        updatedHabit.lastCompletedOn = Timestamp.fromDate(completedOn);
+
+        // Update the habits list with the new habit object
+        habits[index] = updatedHabit;
+
+        // Update datasets for the specific date
+        final completedDate = timestampKey.toDate();
+        final dateKey = DateTime(
+          completedDate.year,
+          completedDate.month,
+          completedDate.day,
+        );
+
+        // Count completed habits for this date
+        int completedCount = 0;
+        for (var habit in habits) {
+          if (habit.completionStatus?.entries.any((entry) {
+                final entryDate = entry.key.toDate();
+                return entryDate.year == dateKey.year &&
+                    entryDate.month == dateKey.month &&
+                    entryDate.day == dateKey.day &&
+                    entry.value == true;
+              }) ??
+              false) {
+            completedCount++;
+          }
+        }
+
+        // Update datasets with the new count
+        if (completedCount > 0) {
+          datasets[dateKey] = completedCount;
+        } else {
+          datasets.remove(dateKey);
+        }
+
+        // Trigger updates
         habits.refresh();
+        datasets.refresh();
       }
+
+      checkAchievements();
     } catch (e) {
       Fluttertoast.showToast(
         msg: "Failed to update habit: $e",
@@ -336,7 +377,7 @@ class HabitController extends BaseController {
         fontSize: 16.0,
       );
 
-      Get.off(() => const HomePageMobile());
+      Get.toNamed('/homepage');
     } catch (e) {
       print(
         "Failed to add habit: $e",

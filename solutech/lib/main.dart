@@ -10,6 +10,8 @@ import 'package:solutech/auth/onboarding/onboarding_questions.dart';
 import 'package:solutech/auth/onboarding/onboarding_screen_1.dart';
 import 'package:solutech/core/di/app_bindings.dart';
 import 'package:solutech/home/controller/habit_controller.dart';
+import 'package:solutech/home/create_habit.dart';
+import 'package:solutech/home/homepage.dart';
 import 'package:solutech/home/mobile/home_page.dart';
 import 'package:solutech/models/habit.dart';
 
@@ -59,6 +61,9 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         getPages: [
           GetPage(name: '/', page: () => const SignInMobile()),
+          GetPage(name: '/homepage', page: () => const Homepage()),
+          GetPage(name: '/onboarding-qs', page: () => OnboardingQuestions()),
+          GetPage(name: '/create-habit', page: () => const CreateHabit()),
         ]);
   }
 }

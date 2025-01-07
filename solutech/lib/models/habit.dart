@@ -28,6 +28,23 @@ class Habit {
     this.isWeekly,
     this.completionStatus,
   });
+
+  Habit.from(Habit other)
+      : id = other.id,
+        title = other.title,
+        description = other.description,
+        createdBy = other.createdBy,
+        createdAt = other.createdAt,
+        hasReminder = other.hasReminder,
+        reminderTime = other.reminderTime,
+        isDaily = other.isDaily,
+        isWeekly = other.isWeekly,
+        completedOn = other.completedOn,
+        lastCompletedOn = other.lastCompletedOn,
+        weeklyDay = other.weeklyDay,
+        completionStatus = other.completionStatus != null
+            ? Map<Timestamp, bool>.from(other.completionStatus!)
+            : null;
   Map<String, dynamic> toMap() {
     Map<String, dynamic>? convertedCompletionStatus;
     if (completionStatus != null) {
