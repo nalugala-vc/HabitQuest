@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:solutech/home/create_habit.dart';
-import 'package:solutech/home/mobile/create_habit.dart';
 import 'package:solutech/home/homepage.dart';
-import 'package:solutech/home/mobile/home_page.dart';
 import 'package:solutech/profile/mobile/profile_page.dart';
+import 'package:solutech/profile/profile_page.dart';
 import 'package:solutech/streaks/mobile/streaks.dart';
 import 'package:solutech/utils/app_colors.dart';
 
@@ -19,8 +17,6 @@ class BottomNavBar extends StatefulWidget {
 
 class _BottomNavBarState extends State<BottomNavBar> {
   int _currentIndex = 0;
-
-  String address = '0x2783';
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +37,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           _buildNavItem(HeroIcons.plusCircle, "Search", 1),
           _buildNavItem(
             HeroIcons.fire,
-            (address != null && address.isNotEmpty) ? "Add" : 'Connect',
+            'Streaks',
             2,
           ),
           _buildNavItem(HeroIcons.user, "Profile", 3),
@@ -72,7 +68,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           );
         } else {
           Get.to(
-            () => const ProfilePageMobile(),
+            () => const ProfilePage(),
           );
         }
       },

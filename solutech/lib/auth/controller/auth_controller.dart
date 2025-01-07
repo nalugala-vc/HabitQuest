@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:solutech/auth/onboarding/onboarding_questions.dart';
-import 'package:solutech/home/homepage.dart';
 import 'package:solutech/services/auth_services.dart';
 
 class SignInController extends GetxController {

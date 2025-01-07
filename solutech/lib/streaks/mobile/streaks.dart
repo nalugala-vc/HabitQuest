@@ -63,6 +63,7 @@ class StreaksMobile extends StatelessWidget {
                   spaceH15,
                   Obx(() {
                     final badgesLength = habitController.unlockedBadges.length;
+                    print(badgesLength);
                     final badges = habitController.unlockedBadges;
 
                     return Column(
@@ -106,6 +107,7 @@ class StreaksMobile extends StatelessWidget {
                   spaceH15,
                   Obx(() {
                     final badgesLength = habitController.unlockedBadges.length;
+                    print(badgesLength);
                     final badges = habitController.unlockedBadges;
 
                     return Column(
@@ -154,6 +156,7 @@ class StreaksMobile extends StatelessWidget {
                   spaceH15,
                   Obx(() {
                     final badgesLength = habitController.unlockedBadges.length;
+                    print(badgesLength);
                     final badges = habitController.unlockedBadges;
 
                     return Column(

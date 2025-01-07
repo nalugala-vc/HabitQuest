@@ -14,6 +14,7 @@ import 'package:solutech/home/create_habit.dart';
 import 'package:solutech/home/homepage.dart';
 import 'package:solutech/home/mobile/home_page.dart';
 import 'package:solutech/models/habit.dart';
+import 'package:solutech/profile/profile_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -64,6 +65,7 @@ class MyApp extends StatelessWidget {
           GetPage(name: '/homepage', page: () => const Homepage()),
           GetPage(name: '/onboarding-qs', page: () => OnboardingQuestions()),
           GetPage(name: '/create-habit', page: () => const CreateHabit()),
+          GetPage(name: '/profile-page', page: () => const ProfilePage()),
         ]);
   }
 }

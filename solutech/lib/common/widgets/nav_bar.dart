@@ -19,24 +19,27 @@ class NavBar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Logo container
-          Row(
-            children: [
-              Container(
-                margin: const EdgeInsets.all(20),
-                height: 40,
-                width: 40,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/icons/logo.png'),
-                    fit: BoxFit.cover,
+          Padding(
+            padding: EdgeInsets.only(right: 20),
+            child: Row(
+              children: [
+                Container(
+                  margin: const EdgeInsets.all(20),
+                  height: 40,
+                  width: 40,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/icons/logo.png'),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-              ),
-              RockSalt(
-                  text: 'HabitQuest',
-                  fontSize: 20,
-                  textColor: AppColors.plainWhite),
-            ],
+                RockSalt(
+                    text: 'HabitQuest',
+                    fontSize: 16,
+                    textColor: AppColors.plainWhite),
+              ],
+            ),
           ),
           NavWidget(
             icon: const HeroIcon(
@@ -46,8 +49,8 @@ class NavBar extends StatelessWidget {
               size: 24,
             ),
             name: 'Home',
-            isActive: true,
-            onTap: () => Get.toNamed('/patient/homepage'),
+            isActive: currentRoute.startsWith('/homepage'),
+            onTap: () => Get.toNamed('/homepage'),
           ),
           NavWidget(
             icon: const HeroIcon(
@@ -69,19 +72,8 @@ class NavBar extends StatelessWidget {
               size: 24,
             ),
             name: 'Profile',
-            isActive: currentRoute == '/patient/prescriptions',
-            onTap: () => Get.toNamed('/patient/prescriptions'),
-          ),
-          NavWidget(
-            icon: const HeroIcon(
-              HeroIcons.banknotes,
-              style: HeroIconStyle.outline,
-              color: Colors.white,
-              size: 24,
-            ),
-            name: 'Billing',
-            isActive: currentRoute == '/patient/billing',
-            onTap: () => Get.toNamed('/patient/billing'),
+            isActive: currentRoute == '/profile-page',
+            onTap: () => Get.toNamed('/profile-page'),
           ),
 
           const Spacer(),

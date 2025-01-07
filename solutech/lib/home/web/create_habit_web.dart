@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:solutech/common/widgets/app_bar.dart';
 import 'package:solutech/common/widgets/auth_field.dart';
 import 'package:solutech/common/widgets/nav_bar.dart';
 import 'package:solutech/common/widgets/rounded_button.dart';
