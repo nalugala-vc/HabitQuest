@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -31,7 +32,15 @@ class SignInController extends GetxController {
 
   void loginWithGoogle() async {
     try {
-      await _authServices.loginWithGoogle();
+      print('Starting Google login process...');
+
+      final result = await _authServices.loginWithGoogle();
+      print('Auth service result: $result');
+
+      // Check if user is actually signed in
+      final currentUser = FirebaseAuth.instance.currentUser;
+      print('Current Firebase User: ${currentUser?.email ?? "No user"}');
+
       Get.offAll(() => const HomePageMobile());
     } catch (e) {
       Fluttertoast.showToast(

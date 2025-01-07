@@ -43,6 +43,8 @@ class HabitController extends BaseController {
 
   Future<void> fetchHabits() async {
     try {
+      print('fetchingHabits');
+      print('user is $user');
       if (user == null) return;
 
       setBusy(true);
@@ -52,8 +54,12 @@ class HabitController extends BaseController {
           .where('createdBy', isEqualTo: user!.uid)
           .get();
 
+      print(habits.value);
+
       habits.value =
           snapshot.docs.map((doc) => Habit.fromDocument(doc)).toList();
+
+      habits.value.map((habit) => habit.title).forEach(print);
 
       setBusy(false);
     } catch (e) {
@@ -275,6 +281,7 @@ class HabitController extends BaseController {
     required bool hasReminder,
     TimeOfDay? reminderTime,
   }) async {
+    print('clicked');
     if (user == null) {
       Get.snackbar("Error", "User not logged in");
       return;
