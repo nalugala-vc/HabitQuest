@@ -20,7 +20,7 @@ class StreaksMobile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final habitController = Get.find<HabitController>();
-    habitController.checkAchievements();
+
     return Scaffold(
       appBar: const MainAppBar(),
       body: SafeArea(

@@ -55,6 +55,9 @@ class HabitController extends BaseController {
       habits.value =
           snapshot.docs.map((doc) => Habit.fromDocument(doc)).toList();
 
+      generateHeatmapData();
+      checkAchievements();
+
       setBusy(false);
     } catch (e) {
       print(
@@ -70,6 +73,25 @@ class HabitController extends BaseController {
         fontSize: 16.0,
       );
     }
+  }
+
+  void generateHeatmapData() {
+    final newDatasets = <DateTime, int>{};
+
+    print('Generating heatmap data with ${habits.length} habits');
+
+    for (var habit in habits) {
+      if (habit.completionStatus != null) {
+        habit.completionStatus!.forEach((timestamp, isCompleted) {
+          if (isCompleted) {
+            final date = timestamp.toDate();
+            newDatasets[date] = (newDatasets[date] ?? 0) + 1;
+          }
+        });
+      }
+    }
+
+    datasets.value = newDatasets;
   }
 
   Future<void> deleteHabit(String habitId) async {
@@ -346,6 +368,7 @@ class HabitController extends BaseController {
   }
 
   Future<void> checkAchievements() async {
+    print('Checking achievements lol');
     Map<DateTime, bool> consecutiveDays =
         {}; // Track consecutive days for streaks
 

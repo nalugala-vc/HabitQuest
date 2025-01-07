@@ -18,7 +18,7 @@ class StreaksWeb extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final habitController = Get.find<HabitController>();
-    habitController.checkAchievements();
+
     return SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
