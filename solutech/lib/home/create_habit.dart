@@ -83,7 +83,6 @@ class _CreateHabitState extends State<CreateHabit> {
                       Obx(() => Switch(
                           value: controller.isDaily.value,
                           onChanged: (value) {
-                            // Disable isWeekly if isDaily is set to true
                             if (value) {
                               controller.isWeekly.value = false;
                             }
@@ -102,14 +101,14 @@ class _CreateHabitState extends State<CreateHabit> {
                       ),
                       spaceW20,
                       Obx(() => Switch(
-                          value: controller.isWeekly.value,
-                          onChanged: (value) {
-                            // Disable isDaily if isWeekly is set to true
-                            if (value) {
-                              controller.isWeekly.value = false;
-                            }
-                            controller.isWeekly.value = value;
-                          })),
+                            value: controller.isWeekly.value,
+                            onChanged: (value) {
+                              if (value) {
+                                controller.isDaily.value = false;
+                              }
+                              controller.isWeekly.value = value;
+                            },
+                          )),
                     ],
                   ),
                   spaceH15,

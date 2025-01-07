@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -6,16 +7,41 @@ import 'package:google_sign_in/google_sign_in.dart';
 class AuthServices {
   Future<UserCredential?> loginWithGoogle() async {
     try {
-      final googleUser = await GoogleSignIn().signIn();
+      if (kIsWeb) {
+        // Web authentication with Google sign-in popup
+        GoogleAuthProvider authProvider = GoogleAuthProvider();
 
-      final googleAuth = await googleUser?.authentication;
+        // Sign-in using the popup
+        final UserCredential userCredential =
+            await FirebaseAuth.instance.signInWithPopup(authProvider);
 
-      final cred = GoogleAuthProvider.credential(
-          idToken: googleAuth?.idToken, accessToken: googleAuth?.accessToken);
+        return userCredential;
+      } else {
+        // Mobile authentication with Google sign-in
+        final GoogleSignIn googleSignIn = GoogleSignIn();
 
-      return await FirebaseAuth.instance.signInWithCredential(cred);
+        // Attempt to sign in
+        final googleUser = await googleSignIn.signIn();
+
+        // Check if the user is null (user might have canceled sign-in)
+        if (googleUser == null) {
+          print("Google Sign-In canceled by user");
+          return null;
+        }
+
+        // Get authentication tokens from Google
+        final googleAuth = await googleUser.authentication;
+
+        // Create credentials using the tokens
+        final cred = GoogleAuthProvider.credential(
+            idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
+
+        // Sign in with credentials and return the result
+        return await FirebaseAuth.instance.signInWithCredential(cred);
+      }
     } catch (e) {
-      print(e.toString());
+      // Log and handle the error
+      print("Error during Google sign-in: ${e.toString()}");
     }
     return null;
   }

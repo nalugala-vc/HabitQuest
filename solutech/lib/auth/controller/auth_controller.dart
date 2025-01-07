@@ -32,14 +32,7 @@ class SignInController extends GetxController {
 
   void loginWithGoogle() async {
     try {
-      print('Starting Google login process...');
-
-      final result = await _authServices.loginWithGoogle();
-      print('Auth service result: $result');
-
-      // Check if user is actually signed in
-      final currentUser = FirebaseAuth.instance.currentUser;
-      print('Current Firebase User: ${currentUser?.email ?? "No user"}');
+      await _authServices.loginWithGoogle();
 
       Get.offAll(() => const HomePageMobile());
     } catch (e) {
