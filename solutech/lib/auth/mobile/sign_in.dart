@@ -71,12 +71,6 @@ class _SignInMobileState extends State<SignInMobile> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SocialIcons(
-                            onTap: () {},
-                            socialLogo: "assets/icons/logos_facebook.png",
-                            logoheight: 20,
-                            logowidth: 20),
-                        spaceW20,
-                        SocialIcons(
                             onTap: () {
                               controller.loginWithGoogle();
                             },
@@ -84,12 +78,6 @@ class _SignInMobileState extends State<SignInMobile> {
                             logoheight: 20,
                             logowidth: 20),
                         spaceW20,
-                        SocialIcons(
-                          onTap: () {},
-                          socialLogo: "assets/icons/logos_apple.png",
-                          logoheight: 20,
-                          logowidth: 20,
-                        )
                       ],
                     ),
                     spaceH50,

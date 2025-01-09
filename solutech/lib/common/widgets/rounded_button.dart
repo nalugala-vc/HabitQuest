@@ -27,7 +27,7 @@ class RoundedButton extends StatelessWidget {
     final Color effectiveBackgroundColor =
         backgroundColor ?? Theme.of(context).colorScheme.primary;
     final Color effectiveTextColor =
-        textColor ?? Theme.of(context).colorScheme.onPrimary;
+        textColor ?? Theme.of(context).colorScheme.surface;
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(

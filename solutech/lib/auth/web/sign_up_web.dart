@@ -87,25 +87,12 @@ class _SignUpWebState extends State<SignUpWeb> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SocialIcons(
-                                onTap: () {},
-                                socialLogo: "assets/icons/logos_facebook.png",
-                                logoheight: 20,
-                                logowidth: 20),
-                            spaceW20,
-                            SocialIcons(
                                 onTap: () {
                                   signIpController.loginWithGoogle();
                                 },
                                 socialLogo: "assets/icons/devicon_google.png",
                                 logoheight: 20,
                                 logowidth: 20),
-                            spaceW20,
-                            SocialIcons(
-                              onTap: () {},
-                              socialLogo: "assets/icons/logos_apple.png",
-                              logoheight: 20,
-                              logowidth: 20,
-                            )
                           ],
                         ),
                         spaceH50,
