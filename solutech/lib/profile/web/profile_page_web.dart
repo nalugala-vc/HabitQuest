@@ -47,7 +47,7 @@ class _ProfilePageWebState extends State<ProfilePageWeb> {
                     itemBuilder: (context, index) => ProfileWidget(
                       bgColor: profileColors[index],
                       icon: accountIcons[index],
-                      onSelectedDateChanged: () {},
+                      onTap: () {},
                       title: accountTitles[index],
                     ),
                     itemCount: accountIcons.length,
@@ -65,7 +65,7 @@ class _ProfilePageWebState extends State<ProfilePageWeb> {
                     itemBuilder: (context, index) => ProfileWidget(
                       bgColor: profileColors[index],
                       icon: customizationIcons[index],
-                      onSelectedDateChanged: () {},
+                      onTap: () {},
                       title: custimizationTitles[index],
                     ),
                     itemCount: custimizationTitles.length,
@@ -83,7 +83,7 @@ class _ProfilePageWebState extends State<ProfilePageWeb> {
                     itemBuilder: (context, index) => ProfileWidget(
                       bgColor: profileColors[index],
                       icon: supportIcons[index],
-                      onSelectedDateChanged: () {},
+                      onTap: () {},
                       title: supportTitles[index],
                     ),
                     itemCount: supportIcons.length,

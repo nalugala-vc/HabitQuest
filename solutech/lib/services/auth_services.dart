@@ -48,6 +48,7 @@ class AuthServices {
       prefs.setString('userEmail', userCredential.user?.email ?? '');
       prefs.setString('userName', userCredential.user?.displayName ?? '');
       prefs.setString('userPhotoURL', userCredential.user?.photoURL ?? '');
+      prefs.setString('userId', userCredential.user?.uid ?? '');
 
       return userCredential;
     } catch (e) {
@@ -65,7 +66,11 @@ class AuthServices {
           .createUserWithEmailAndPassword(email: email, password: password);
       // Save user info in SharedPreferences
       SharedPreferences prefs = await SharedPreferences.getInstance();
+
       prefs.setString('userEmail', userCredential.user?.email ?? '');
+      prefs.setString('userName', userCredential.user?.displayName ?? '');
+      prefs.setString('userPhotoURL', userCredential.user?.photoURL ?? '');
+      prefs.setString('userId', userCredential.user?.uid ?? '');
     } on FirebaseAuthException catch (e) {
       String message = '';
       if (e.code == 'weak-password') {
@@ -105,6 +110,9 @@ class AuthServices {
       // Save user info in SharedPreferences
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('userEmail', userCredential.user?.email ?? '');
+      prefs.setString('userName', userCredential.user?.displayName ?? '');
+      prefs.setString('userPhotoURL', userCredential.user?.photoURL ?? '');
+      prefs.setString('userId', userCredential.user?.uid ?? '');
     } on FirebaseAuthException catch (e) {
       String message = '';
       if (e.code == 'user-not-found') {

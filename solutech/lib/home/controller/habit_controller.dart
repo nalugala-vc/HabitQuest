@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solutech/core/controller/base_controller.dart';
 
 import 'package:solutech/models/habit.dart';
@@ -10,8 +10,10 @@ import 'package:intl/intl.dart';
 
 class HabitController extends BaseController {
   static HabitController get instance => Get.find();
-
-  final user = FirebaseAuth.instance.currentUser;
+  RxString userId = ''.obs;
+  RxString userEmail = ''.obs;
+  RxString userName = ''.obs;
+  RxString userPhotoURL = ''.obs;
 
   var habits = <Habit>[].obs;
   final datasets = <DateTime, int>{}.obs;
@@ -29,8 +31,23 @@ class HabitController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    fetchHabits();
+    _initializeController();
+  }
+
+  Future<void> _initializeController() async {
+    await _loadUserDetails();
+    await fetchHabits();
     initializeBadges();
+  }
+
+  Future<void> _loadUserDetails() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print('User ID ${prefs.getString('userId')}');
+
+    userId.value = prefs.getString('userId') ?? '';
+    userEmail.value = prefs.getString('userEmail') ?? '';
+    userName.value = prefs.getString('userName') ?? '';
+    userPhotoURL.value = prefs.getString('userPhotoURL') ?? '';
   }
 
   void setReminderTime(TimeOfDay time) {
@@ -43,13 +60,16 @@ class HabitController extends BaseController {
 
   Future<void> fetchHabits() async {
     try {
-      if (user == null) return;
+      if (userId.value.isEmpty) {
+        print("User ID is null or empty");
+        return;
+      }
 
       setBusy(true);
 
       final snapshot = await FirebaseFirestore.instance
           .collection('habits')
-          .where('createdBy', isEqualTo: user!.uid)
+          .where('createdBy', isEqualTo: userId.value)
           .get();
 
       habits.value =
@@ -96,7 +116,7 @@ class HabitController extends BaseController {
 
   Future<void> deleteHabit(String habitId) async {
     try {
-      if (user == null) {
+      if (userId.value.isEmpty) {
         Fluttertoast.showToast(
           msg: "User not logged in",
           toastLength: Toast.LENGTH_LONG,
@@ -141,13 +161,10 @@ class HabitController extends BaseController {
 
   Future<void> updateHabit({required Habit habit}) async {
     try {
-      // Get the data to update
       Map<String, dynamic> updateData = habit.toMap();
 
-      // Remove the id field as it shouldn't be updated
       updateData.remove('id');
 
-      // Handle reminder time
       if (habit.hasReminder == true && habit.reminderTime != null) {
         updateData['reminderTime'] = habit.reminderTime;
       } else {
@@ -240,9 +257,9 @@ class HabitController extends BaseController {
     try {
       final formattedDate = DateFormat('yyyyMMdd').format(completedOn);
       final timestampKey = Timestamp.fromDate(DateTime(
-        int.parse(formattedDate.substring(0, 4)), // year
-        int.parse(formattedDate.substring(4, 6)), // month
-        int.parse(formattedDate.substring(6, 8)), // day
+        int.parse(formattedDate.substring(0, 4)),
+        int.parse(formattedDate.substring(4, 6)),
+        int.parse(formattedDate.substring(6, 8)),
       ));
 
       final habitDoc = await FirebaseFirestore.instance
@@ -269,19 +286,15 @@ class HabitController extends BaseController {
 
       final index = habits.indexWhere((habit) => habit.id == habitId);
       if (index != -1) {
-        // Create a new habit object with updated completion status
-        final updatedHabit =
-            Habit.from(habits[index]); // Assuming you have a copy constructor
+        final updatedHabit = Habit.from(habits[index]);
         if (updatedHabit.completionStatus == null) {
           updatedHabit.completionStatus = {};
         }
         updatedHabit.completionStatus![timestampKey] = newStatus;
         updatedHabit.lastCompletedOn = Timestamp.fromDate(completedOn);
 
-        // Update the habits list with the new habit object
         habits[index] = updatedHabit;
 
-        // Update datasets for the specific date
         final completedDate = timestampKey.toDate();
         final dateKey = DateTime(
           completedDate.year,
@@ -289,7 +302,6 @@ class HabitController extends BaseController {
           completedDate.day,
         );
 
-        // Count completed habits for this date
         int completedCount = 0;
         for (var habit in habits) {
           if (habit.completionStatus?.entries.any((entry) {
@@ -304,14 +316,12 @@ class HabitController extends BaseController {
           }
         }
 
-        // Update datasets with the new count
         if (completedCount > 0) {
           datasets[dateKey] = completedCount;
         } else {
           datasets.remove(dateKey);
         }
 
-        // Trigger updates
         habits.refresh();
         datasets.refresh();
       }
@@ -338,7 +348,7 @@ class HabitController extends BaseController {
     required bool hasReminder,
     TimeOfDay? reminderTime,
   }) async {
-    if (user == null) {
+    if (userId.value.isEmpty) {
       Get.snackbar("Error", "User not logged in");
       return;
     }
@@ -354,7 +364,7 @@ class HabitController extends BaseController {
         reminderTime: hasReminder && reminderTime != null
             ? reminderTime.format(Get.context!)
             : null,
-        createdBy: user!.uid,
+        createdBy: userId.value,
         createdAt: Timestamp.fromMillisecondsSinceEpoch(0),
       );
 
@@ -403,22 +413,18 @@ class HabitController extends BaseController {
     reminderTime.value = const TimeOfDay(hour: 10, minute: 0);
   }
 
-// Initialize all badges as locked (false)
   void initializeBadges() {
     unlockedBadges.clear();
   }
 
   Future<void> checkAchievements() async {
     print('Checking achievements lol');
-    Map<DateTime, bool> consecutiveDays =
-        {}; // Track consecutive days for streaks
+    Map<DateTime, bool> consecutiveDays = {};
 
-    // Track longest streak
     int currentStreak = 0;
     int maxStreak = 0;
     DateTime? prevDate;
 
-    // Loop through each habit's completion status
     for (var habit in habits) {
       if (habit.completionStatus != null) {
         habit.completionStatus!.forEach((timestamp, isCompleted) {
@@ -431,7 +437,6 @@ class HabitController extends BaseController {
               consecutiveDays[date] = true;
             }
 
-            // Calculate streaks
             if (prevDate != null && date.difference(prevDate!).inDays == 1) {
               currentStreak++;
             } else {
@@ -444,14 +449,12 @@ class HabitController extends BaseController {
       }
     }
 
-    // Helper function to unlock a badge
     void unlockBadge(String badgeTitle) {
       if (!unlockedBadges.contains(badgeTitle)) {
         unlockedBadges.add(badgeTitle);
       }
     }
 
-    // Check streak-based achievements
     if (maxStreak >= 1) unlockBadge("DAY ONE DONE");
     if (maxStreak >= 3) unlockBadge("TRIPLE THREAT");
     if (maxStreak >= 5) unlockBadge("HIGH FIVE");

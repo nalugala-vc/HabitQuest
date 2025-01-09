@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
-import 'package:solutech/auth/mobile/sign_in.dart';
 import 'package:solutech/auth/onboarding/onboarding_questions.dart';
 import 'package:solutech/auth/onboarding/onboarding_screen_1.dart';
 import 'package:solutech/auth/sign_in.dart';
@@ -57,8 +56,9 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: SignInMobile(),
+        home: InitialPage(),
         debugShowCheckedModeBanner: false,
+        initialRoute: '/',
         getPages: [
           GetPage(name: '/', page: () => const InitialPage()),
           GetPage(name: '/sign-in', page: () => const SignIn()),

@@ -31,95 +31,99 @@ class _SignInWebState extends State<SignInWeb> {
             containerHeight: double.infinity,
             containerWidth: 300,
           ),
-          spaceH15,
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  RobotoCondensed(
-                    text: 'Sign In Web',
-                    fontSize: 32,
-                    fontWeight: FontWeight.w800,
-                  ),
-                  spaceH15,
-                  AuthField(
-                    controller: controller.email,
-                    hintText: 'Email',
-                  ),
-                  spaceH25,
-                  AuthField(
-                    controller: controller.password,
-                    isPassword: true,
-                    fieldType: FieldType.password,
-                    hintText: 'Password',
-                  ),
-                  spaceH40,
-                  RoundedButton(
-                    label: 'Sign In',
-                    onPressed: () {
-                      controller.loginUser(controller.email.text.trim(),
-                          controller.password.text.trim());
-                    },
-                  ),
-                  spaceH50,
-                  const SignUpOptions(
-                    text: 'or sign in with',
-                  ),
-                  spaceH50,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SocialIcons(
-                          onTap: () {},
-                          socialLogo: "assets/icons/logos_facebook.png",
-                          logoheight: 20,
-                          logowidth: 20),
-                      spaceW20,
-                      SocialIcons(
-                          onTap: () {
-                            controller.loginWithGoogle();
+          spaceW15,
+          Expanded(
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 200, vertical: 10),
+              child: Form(
+                  key: _formKey,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        RobotoCondensed(
+                          text: 'Sign In',
+                          fontSize: 32,
+                          fontWeight: FontWeight.w800,
+                        ),
+                        spaceH15,
+                        AuthField(
+                          controller: controller.email,
+                          hintText: 'Email',
+                        ),
+                        spaceH25,
+                        AuthField(
+                          controller: controller.password,
+                          isPassword: true,
+                          fieldType: FieldType.password,
+                          hintText: 'Password',
+                        ),
+                        spaceH40,
+                        RoundedButton(
+                          label: 'Sign In',
+                          onPressed: () {
+                            controller.loginUser(controller.email.text.trim(),
+                                controller.password.text.trim());
                           },
-                          socialLogo: "assets/icons/devicon_google.png",
-                          logoheight: 20,
-                          logowidth: 20),
-                      spaceW20,
-                      SocialIcons(
-                        onTap: () {},
-                        socialLogo: "assets/icons/logos_apple.png",
-                        logoheight: 20,
-                        logowidth: 20,
-                      )
-                    ],
-                  ),
-                  spaceH50,
-                  Center(
-                    child: RichText(
-                      text: TextSpan(
-                        text: "Don't have an account?",
-                        style: GoogleFonts.robotoCondensed(
-                            fontSize: 18,
-                            fontWeight: FontWeight.normal,
-                            color: AppColors.grey600),
-                        children: [
-                          TextSpan(
-                              text: ' Sign up',
+                        ),
+                        spaceH50,
+                        const SignUpOptions(
+                          text: 'or sign in with',
+                        ),
+                        spaceH20,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SocialIcons(
+                                onTap: () {},
+                                socialLogo: "assets/icons/logos_facebook.png",
+                                logoheight: 20,
+                                logowidth: 20),
+                            spaceW20,
+                            SocialIcons(
+                                onTap: () {
+                                  controller.loginWithGoogle();
+                                },
+                                socialLogo: "assets/icons/devicon_google.png",
+                                logoheight: 20,
+                                logowidth: 20),
+                            spaceW20,
+                            SocialIcons(
+                              onTap: () {},
+                              socialLogo: "assets/icons/logos_apple.png",
+                              logoheight: 20,
+                              logowidth: 20,
+                            )
+                          ],
+                        ),
+                        spaceH20,
+                        Center(
+                          child: RichText(
+                            text: TextSpan(
+                              text: "Don't have an account?",
                               style: GoogleFonts.robotoCondensed(
                                   fontSize: 18,
                                   fontWeight: FontWeight.normal,
-                                  color: AppColors.purple400),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Get.offAllNamed('/sign-up');
-                                })
-                        ],
-                      ),
+                                  color: AppColors.grey600),
+                              children: [
+                                TextSpan(
+                                    text: ' Sign up',
+                                    style: GoogleFonts.robotoCondensed(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.normal,
+                                        color: AppColors.purple400),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        Get.offAllNamed('/sign-up');
+                                      })
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
+                  )),
             ),
           )
         ],

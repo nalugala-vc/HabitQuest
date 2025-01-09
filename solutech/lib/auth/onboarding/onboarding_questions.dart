@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -57,7 +58,7 @@ class _OnboardingQuestionsState extends State<OnboardingQuestions> {
 
   Widget _buildTimePicker(String key) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -68,142 +69,174 @@ class _OnboardingQuestionsState extends State<OnboardingQuestions> {
             shouldTruncate: false,
           ),
           spaceH20,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: SizedBox(
-                  height: 150,
-                  child: ListWheelScrollView.useDelegate(
-                    itemExtent: 50,
-                    perspective: 0.003,
-                    onSelectedItemChanged: (index) {
-                      setState(() {
-                        _userAnswers[key] = {
-                          "hour": (index % 12) + 1,
-                          "minute": _userAnswers[key]?["minute"] ?? 0,
-                          "period": _userAnswers[key]?["period"] ?? "AM"
-                        };
-                      });
-                    },
-                    physics: const FixedExtentScrollPhysics(),
-                    childDelegate: ListWheelChildBuilderDelegate(
-                      builder: (context, index) {
-                        final hour = (index % 12) + 1;
-                        return Center(
-                            child: Container(
-                          padding: const EdgeInsets.all(8.0),
-                          decoration: BoxDecoration(
-                            color: _userAnswers[key]?["hour"] == hour
-                                ? AppColors.purple100
-                                : Colors
-                                    .transparent, // Light purple background for selected item
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: RobotoCondensed(
-                            text: hour.toString().padLeft(2, '0'),
-                            fontSize: 24,
-                            textColor: _userAnswers[key]?["hour"] == hour
-                                ? AppColors.purple600
-                                : Colors.grey,
-                          ),
-                        ));
-                      },
-                      childCount: 12,
-                    ),
+          if (kIsWeb) ...[
+            RoundedButton(
+              width: 200,
+              onPressed: () async {
+                final timeOfDay = await showTimePicker(
+                  context: context,
+                  initialTime: TimeOfDay(
+                    hour: _userAnswers[key]?["hour"] ?? 12,
+                    minute: _userAnswers[key]?["minute"] ?? 0,
                   ),
-                ),
-              ),
-              Expanded(
-                child: SizedBox(
-                  height: 150,
-                  child: ListWheelScrollView.useDelegate(
-                    itemExtent: 50,
-                    perspective: 0.003,
-                    onSelectedItemChanged: (index) {
-                      setState(() {
-                        _userAnswers[key] = {
-                          "hour": _userAnswers[key]?["hour"] ?? 1,
-                          "minute": index,
-                          "period": _userAnswers[key]?["period"] ?? "AM"
-                        };
-                      });
-                    },
-                    physics: const FixedExtentScrollPhysics(),
-                    childDelegate: ListWheelChildBuilderDelegate(
-                      builder: (context, index) {
-                        if (index >= 0 && index < 60) {
+                );
+
+                if (timeOfDay != null) {
+                  setState(() {
+                    _userAnswers[key] = {
+                      "hour": timeOfDay.hour,
+                      "minute": timeOfDay.minute,
+                      "period": timeOfDay.period == DayPeriod.am ? "AM" : "PM",
+                    };
+                  });
+                }
+              },
+              label: _userAnswers[key] == null
+                  ? 'Select Time'
+                  : '${_userAnswers[key]["hour"].toString().padLeft(2, '0')}:'
+                      '${_userAnswers[key]["minute"].toString().padLeft(2, '0')} '
+                      '${_userAnswers[key]["period"]}',
+            ),
+          ] else ...[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: SizedBox(
+                    height: 150,
+                    child: ListWheelScrollView.useDelegate(
+                      itemExtent: 50,
+                      perspective: 0.003,
+                      onSelectedItemChanged: (index) {
+                        setState(() {
+                          _userAnswers[key] = {
+                            "hour": (index % 12) + 1,
+                            "minute": _userAnswers[key]?["minute"] ?? 0,
+                            "period": _userAnswers[key]?["period"] ?? "AM"
+                          };
+                        });
+                      },
+                      physics: const FixedExtentScrollPhysics(),
+                      childDelegate: ListWheelChildBuilderDelegate(
+                        builder: (context, index) {
+                          final hour = (index % 12) + 1;
                           return Center(
                             child: Container(
                               padding: const EdgeInsets.all(8.0),
                               decoration: BoxDecoration(
-                                color: _userAnswers[key]?["minute"] == index
+                                color: _userAnswers[key]?["hour"] == hour
                                     ? AppColors.purple100
                                     : Colors.transparent,
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: RobotoCondensed(
-                                text: index.toString().padLeft(2, '0'),
+                                text: hour.toString().padLeft(2, '0'),
                                 fontSize: 24,
-                                textColor: _userAnswers[key]?["minute"] == index
+                                textColor: _userAnswers[key]?["hour"] == hour
                                     ? AppColors.purple600
                                     : Colors.grey,
                               ),
                             ),
                           );
-                        }
-                        return null;
-                      },
-                      childCount: 60,
+                        },
+                        childCount: 12,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: SizedBox(
-                  height: 150,
-                  child: ListWheelScrollView.useDelegate(
-                    itemExtent: 50,
-                    perspective: 0.003,
-                    onSelectedItemChanged: (index) {
-                      setState(() {
-                        _userAnswers[key] = {
-                          "hour": _userAnswers[key]?["hour"] ?? 1,
-                          "minute": _userAnswers[key]?["minute"] ?? 0,
-                          "period": index == 0 ? "AM" : "PM"
-                        };
-                      });
-                    },
-                    physics: const FixedExtentScrollPhysics(),
-                    childDelegate: ListWheelChildBuilderDelegate(
-                      builder: (context, index) {
-                        final period = index == 0 ? "AM" : "PM";
-                        return Center(
-                          child: Container(
-                            padding: const EdgeInsets.all(8.0),
-                            decoration: BoxDecoration(
-                              color: _userAnswers[key]?["period"] == period
-                                  ? AppColors.purple100
-                                  : Colors.transparent,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: RobotoCondensed(
-                              text: period,
-                              fontSize: 24,
-                              textColor: _userAnswers[key]?["period"] == period
-                                  ? AppColors.purple600
-                                  : Colors.grey,
-                            ),
-                          ),
-                        );
+                Expanded(
+                  child: SizedBox(
+                    height: 150,
+                    child: ListWheelScrollView.useDelegate(
+                      itemExtent: 50,
+                      perspective: 0.003,
+                      onSelectedItemChanged: (index) {
+                        setState(() {
+                          _userAnswers[key] = {
+                            "hour": _userAnswers[key]?["hour"] ?? 1,
+                            "minute": index,
+                            "period": _userAnswers[key]?["period"] ?? "AM"
+                          };
+                        });
                       },
-                      childCount: 2,
+                      physics: const FixedExtentScrollPhysics(),
+                      childDelegate: ListWheelChildBuilderDelegate(
+                        builder: (context, index) {
+                          if (index >= 0 && index < 60) {
+                            return Center(
+                              child: Container(
+                                padding: const EdgeInsets.all(8.0),
+                                decoration: BoxDecoration(
+                                  color: _userAnswers[key]?["minute"] == index
+                                      ? AppColors.purple100
+                                      : Colors.transparent,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: RobotoCondensed(
+                                  text: index.toString().padLeft(2, '0'),
+                                  fontSize: 24,
+                                  textColor:
+                                      _userAnswers[key]?["minute"] == index
+                                          ? AppColors.purple600
+                                          : Colors.grey,
+                                ),
+                              ),
+                            );
+                          }
+                          return null;
+                        },
+                        childCount: 60,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
+                Expanded(
+                  child: SizedBox(
+                    height: 150,
+                    child: ListWheelScrollView.useDelegate(
+                      itemExtent: 50,
+                      perspective: 0.003,
+                      onSelectedItemChanged: (index) {
+                        setState(() {
+                          _userAnswers[key] = {
+                            "hour": _userAnswers[key]?["hour"] ?? 1,
+                            "minute": _userAnswers[key]?["minute"] ?? 0,
+                            "period": index == 0 ? "AM" : "PM"
+                          };
+                        });
+                      },
+                      physics: const FixedExtentScrollPhysics(),
+                      childDelegate: ListWheelChildBuilderDelegate(
+                        builder: (context, index) {
+                          final period = index == 0 ? "AM" : "PM";
+                          return Center(
+                            child: Container(
+                              padding: const EdgeInsets.all(8.0),
+                              decoration: BoxDecoration(
+                                color: _userAnswers[key]?["period"] == period
+                                    ? AppColors.purple100
+                                    : Colors.transparent,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: RobotoCondensed(
+                                text: period,
+                                fontSize: 24,
+                                textColor:
+                                    _userAnswers[key]?["period"] == period
+                                        ? AppColors.purple600
+                                        : Colors.grey,
+                              ),
+                            ),
+                          );
+                        },
+                        childCount: 2,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
           spaceH150,
           RoundedButton(
             onPressed: _userAnswers[key] == null ? () {} : _onNextPressed,
@@ -284,7 +317,7 @@ class _OnboardingQuestionsState extends State<OnboardingQuestions> {
           spaceH20,
           Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: 30,
+              horizontal: kIsWeb ? 150 : 30,
               vertical: 40,
             ),
             child: LinearProgressIndicator(

@@ -18,7 +18,7 @@ void confirmDialogue(
         surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
         content: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,

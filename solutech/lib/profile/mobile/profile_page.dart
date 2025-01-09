@@ -43,7 +43,7 @@ class _ProfilePageMobileState extends State<ProfilePageMobile> {
                 itemBuilder: (context, index) => ProfileWidget(
                   bgColor: profileColors[index],
                   icon: accountIcons[index],
-                  onSelectedDateChanged: () {},
+                  onTap: () {},
                   title: accountTitles[index],
                 ),
                 itemCount: accountIcons.length,
@@ -61,7 +61,7 @@ class _ProfilePageMobileState extends State<ProfilePageMobile> {
                 itemBuilder: (context, index) => ProfileWidget(
                   bgColor: profileColors[index],
                   icon: customizationIcons[index],
-                  onSelectedDateChanged: () {},
+                  onTap: () {},
                   title: custimizationTitles[index],
                 ),
                 itemCount: custimizationTitles.length,
@@ -79,7 +79,7 @@ class _ProfilePageMobileState extends State<ProfilePageMobile> {
                 itemBuilder: (context, index) => ProfileWidget(
                   bgColor: profileColors[index],
                   icon: supportIcons[index],
-                  onSelectedDateChanged: () {},
+                  onTap: () {},
                   title: supportTitles[index],
                 ),
                 itemCount: supportIcons.length,

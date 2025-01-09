@@ -18,18 +18,16 @@ class _InitialPageState extends State<InitialPage> {
   }
 
   Future<void> _checkUserStatus() async {
-    // Access SharedPreferences
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    // Check if a user is stored
-    bool isUserLoggedIn =
-        prefs.containsKey('userEmail'); // Adjust key as needed
+    bool isUserLoggedIn = prefs.containsKey('userEmail');
 
-    // Navigate to the appropriate screen
     if (isUserLoggedIn) {
-      Get.offAllNamed('/sign-in');
+      print('user status $isUserLoggedIn');
+      Get.offAllNamed('/homepage');
     } else {
-      Navigator.pushReplacementNamed(context, '/login'); // Login route
+      print('user status $isUserLoggedIn');
+      Get.offAllNamed('/onboarding');
     }
   }
 

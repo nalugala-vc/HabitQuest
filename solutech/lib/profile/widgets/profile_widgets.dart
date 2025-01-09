@@ -8,47 +8,50 @@ class ProfileWidget extends StatelessWidget {
   final HeroIcons icon;
   final String title;
   final Color bgColor;
-  final VoidCallback onSelectedDateChanged;
+  final VoidCallback onTap;
   const ProfileWidget(
       {super.key,
       required this.bgColor,
       required this.icon,
-      required this.onSelectedDateChanged,
+      required this.onTap,
       required this.title});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        SizedBox(
-          child: Row(
-            children: [
-              CircleAvatar(
-                backgroundColor: bgColor,
-                child: HeroIcon(
-                  icon,
-                  color: AppColors.grey900,
-                  style: HeroIconStyle.outline,
-                  size: 24,
+    return InkWell(
+      onTap: onTap,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SizedBox(
+            child: Row(
+              children: [
+                CircleAvatar(
+                  backgroundColor: bgColor,
+                  child: HeroIcon(
+                    icon,
+                    color: AppColors.grey900,
+                    style: HeroIconStyle.outline,
+                    size: 24,
+                  ),
                 ),
-              ),
-              spaceW10,
-              RobotoCondensed(
-                text: title,
-                fontSize: 17,
-                fontWeight: FontWeight.w500,
-              ),
-            ],
+                spaceW10,
+                RobotoCondensed(
+                  text: title,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w500,
+                ),
+              ],
+            ),
           ),
-        ),
-        const HeroIcon(
-          HeroIcons.chevronRight,
-          color: AppColors.grey900,
-          style: HeroIconStyle.outline,
-          size: 24,
-        ),
-      ],
+          const HeroIcon(
+            HeroIcons.chevronRight,
+            color: AppColors.grey900,
+            style: HeroIconStyle.outline,
+            size: 24,
+          ),
+        ],
+      ),
     );
   }
 }

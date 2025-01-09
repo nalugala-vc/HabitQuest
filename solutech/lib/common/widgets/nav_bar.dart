@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:solutech/common/widgets/confirm_dialogue.dart';
 import 'package:solutech/common/widgets/nav_widget.dart';
+import 'package:solutech/services/auth_services.dart';
 import 'package:solutech/utils/app_colors.dart';
 import 'package:solutech/utils/fonts/rock_salt.dart';
 
@@ -86,15 +88,23 @@ class NavBar extends StatelessWidget {
             ),
             name: 'Logout',
             isActive: false,
-            onTap: () => {},
+            onTap: () => _handleLogout(context),
           ),
         ],
       ),
     );
   }
 
-  // void _handleLogout() async {
-  //   final SignInController authController = Get.find<SignInController>();
-  //   await authController.logoutUser();
-  // }
+  void _handleLogout(BuildContext context) async {
+    final AuthServices _authServices = AuthServices();
+    confirmDialogue(
+      context: context,
+      icon: 'assets/images/warning.png',
+      label: 'Log out',
+      message: 'Are you sure you want to log out?',
+      onConfirm: () async {
+        await _authServices.logout();
+      },
+    );
+  }
 }
