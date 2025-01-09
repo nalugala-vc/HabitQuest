@@ -6,7 +6,7 @@ import 'package:solutech/utils/spacers.dart';
 
 class HabitCard extends StatelessWidget {
   final String title;
-  final int streak;
+  final String description;
   final double progress;
   final String habitId;
   final bool isCompleted;
@@ -20,7 +20,7 @@ class HabitCard extends StatelessWidget {
       required this.habitId,
       required this.isCompleted,
       required this.progress,
-      required this.streak,
+      required this.description,
       required this.onChanged,
       required this.deleteTapped,
       required this.editTapped,
@@ -87,26 +87,24 @@ class HabitCard extends StatelessWidget {
                       text: title,
                       fontSize: 16,
                     ),
-                    if (streak > 0) ...[
-                      Row(
-                        children: [
-                          HeroIcon(
-                            HeroIcons.fire,
-                            style: HeroIconStyle.outline,
-                            color:
-                                Theme.of(context).colorScheme.secondaryFixedDim,
-                          ),
-                          spaceW5,
-                          RobotoCondensed(
-                            text: '$streak days',
-                            fontSize: 15,
-                            fontWeight: FontWeight.w400,
-                            textColor:
-                                Theme.of(context).colorScheme.secondaryFixedDim,
-                          )
-                        ],
-                      )
-                    ]
+                    Row(
+                      children: [
+                        HeroIcon(
+                          HeroIcons.pencil,
+                          style: HeroIconStyle.outline,
+                          color:
+                              Theme.of(context).colorScheme.secondaryFixedDim,
+                        ),
+                        spaceW5,
+                        RobotoCondensed(
+                          text: description,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400,
+                          textColor:
+                              Theme.of(context).colorScheme.secondaryFixedDim,
+                        )
+                      ],
+                    )
                   ],
                 ))
               ],

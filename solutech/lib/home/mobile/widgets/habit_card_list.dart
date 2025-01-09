@@ -30,7 +30,6 @@ class _HabitCardListState extends State<HabitCardList> {
 
     if (widget.selectedDate.value.toString().split(' ')[0] !=
         DateTime.now().toString().split(' ')[0]) {
-      // Show feedback if the selected date is not today
       errorDialogue(context: context, isCompleted: isCompleted);
       return;
     }
@@ -109,7 +108,6 @@ class _HabitCardListState extends State<HabitCardList> {
             int.parse(selectedDateFormatted.substring(6, 8)),
           ));
 
-          // Check completion status for the specific selected date
           final isCompleted = habit.completionStatus?[timestampKey] ?? false;
 
           return HabitCard(
@@ -119,10 +117,9 @@ class _HabitCardListState extends State<HabitCardList> {
             onChanged: (value) =>
                 checkBoxTapped(value, index, tasksForSelectedDate),
             title: habit.title,
-            isCompleted:
-                isCompleted, // This will now reflect the correct status for each date
+            isCompleted: isCompleted,
             progress: 4,
-            streak: 6,
+            description: habit.description,
             habitId: index.toString(),
           );
         },

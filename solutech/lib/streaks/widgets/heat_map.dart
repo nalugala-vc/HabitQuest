@@ -16,6 +16,8 @@ class MyHeatMap extends StatelessWidget {
       print('Dataset entries: ${habitController.datasets.length}');
 
       return HeatMap(
+        textColor: Theme.of(context).colorScheme.onSurfaceVariant,
+        fontSize: 16,
         datasets: habitController.datasets,
         defaultColor: Theme.of(context).colorScheme.onSecondary,
         startDate: DateTime.now().subtract(const Duration(days: 40)),

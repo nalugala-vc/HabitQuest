@@ -43,10 +43,7 @@ class AchievementBadgeBState extends State<AchievementBadgeB> {
             children: [
               SizedBox(
                 width: 100,
-                child: RobotoCondensed(
-                    text: widget.title,
-                    textColor: widget.titleColor,
-                    fontSize: 12),
+                child: RobotoCondensed(text: widget.title, fontSize: 12),
               ),
               spaceH10,
               Image.asset(

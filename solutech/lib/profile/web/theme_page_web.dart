@@ -14,7 +14,6 @@ class ThemeScreenWeb extends StatelessWidget {
     final ThemeController themeController = Get.find();
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Row(
         children: [
           NavBar(),
@@ -35,11 +34,11 @@ class ThemeScreenWeb extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Obx(() {
-                          return Text(
-                            themeController.isDarkMode.value
+                          return RobotoCondensed(
+                            text: themeController.isDarkMode.value
                                 ? 'Change to Light Mode'
                                 : 'Change to Dark Mode',
-                            style: const TextStyle(fontSize: 18),
+                            fontSize: 18,
                           );
                         }),
                         Obx(() {

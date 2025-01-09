@@ -26,7 +26,7 @@ class RobotoCondensed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Color effectiveTextColor =
-        textColor ?? Theme.of(context).colorScheme.onPrimary;
+        textColor ?? Theme.of(context).colorScheme.onSurfaceVariant;
     return Text(
       shouldTruncate
           ? text.length > truncateLength
