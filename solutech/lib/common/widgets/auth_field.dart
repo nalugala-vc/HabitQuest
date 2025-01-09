@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:solutech/utils/app_colors.dart';
 
 enum FieldType {
   text,
@@ -64,15 +63,15 @@ class _AuthFieldState extends State<AuthField> {
           decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(5),
-              borderSide: const BorderSide(
-                color: AppColors.purple400,
+              borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.onSurface,
                 width: 1,
               ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(5),
-              borderSide: const BorderSide(
-                color: AppColors.purple400,
+              borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.onSurface,
                 width: 2,
               ),
             ),
@@ -82,7 +81,7 @@ class _AuthFieldState extends State<AuthField> {
             ),
             hintText: widget.hintText,
             hintStyle: GoogleFonts.robotoCondensed(
-              color: AppColors.grey600,
+              color: Theme.of(context).colorScheme.onPrimary,
               fontWeight: FontWeight.normal,
               fontSize: 18,
             ),
@@ -90,7 +89,7 @@ class _AuthFieldState extends State<AuthField> {
                 ? IconButton(
                     icon: Icon(
                       _isObscured ? Icons.visibility_off : Icons.visibility,
-                      color: AppColors.grey600,
+                      color: Theme.of(context).colorScheme.onPrimary,
                     ),
                     onPressed: () {
                       setState(() {
@@ -128,15 +127,15 @@ class _AuthFieldState extends State<AuthField> {
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5),
-          borderSide: const BorderSide(
-            color: AppColors.purple400,
+          borderSide: BorderSide(
+            color: Theme.of(context).colorScheme.onSurface,
             width: 1,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5),
-          borderSide: const BorderSide(
-            color: AppColors.purple400,
+          borderSide: BorderSide(
+            color: Theme.of(context).colorScheme.onSurface,
             width: 2,
           ),
         ),
@@ -146,7 +145,7 @@ class _AuthFieldState extends State<AuthField> {
         ),
         hintText: widget.hintText,
         hintStyle: GoogleFonts.robotoCondensed(
-          color: AppColors.grey600,
+          color: Theme.of(context).colorScheme.onPrimary,
           fontWeight: FontWeight.normal,
           fontSize: 16,
         ),
@@ -193,27 +192,27 @@ class _AuthFieldState extends State<AuthField> {
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5),
-          borderSide: const BorderSide(
-            color: AppColors.purple400,
+          borderSide: BorderSide(
+            color: Theme.of(context).colorScheme.onSurface,
             width: 1,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5),
-          borderSide: const BorderSide(
-            color: AppColors.purple400,
+          borderSide: BorderSide(
+            color: Theme.of(context).colorScheme.onSurface,
             width: 2,
           ),
         ),
         hintText: widget.hintText,
         hintStyle: GoogleFonts.robotoCondensed(
-          color: AppColors.grey600,
+          color: Theme.of(context).colorScheme.onPrimary,
           fontWeight: FontWeight.normal,
           fontSize: 18,
         ),
         suffixIcon: Icon(
           icon,
-          color: AppColors.grey600,
+          color: Theme.of(context).colorScheme.onPrimary,
         ),
       ),
     );
@@ -239,15 +238,15 @@ class _AuthFieldState extends State<AuthField> {
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5),
-          borderSide: const BorderSide(
-            color: AppColors.purple400,
+          borderSide: BorderSide(
+            color: Theme.of(context).colorScheme.onSurface,
             width: 1,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5),
-          borderSide: const BorderSide(
-            color: AppColors.purple400,
+          borderSide: BorderSide(
+            color: Theme.of(context).colorScheme.onSurface,
             width: 2,
           ),
         ),
@@ -257,7 +256,7 @@ class _AuthFieldState extends State<AuthField> {
         ),
         hintText: widget.hintText,
         hintStyle: GoogleFonts.robotoCondensed(
-          color: AppColors.grey600,
+          color: Theme.of(context).colorScheme.onPrimary,
           fontWeight: FontWeight.normal,
           fontSize: 18,
         ),

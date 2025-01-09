@@ -5,7 +5,6 @@ import 'package:solutech/home/create_habit.dart';
 import 'package:solutech/home/homepage.dart';
 import 'package:solutech/profile/profile_page.dart';
 import 'package:solutech/streaks/mobile/streaks.dart';
-import 'package:solutech/utils/app_colors.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
@@ -26,7 +25,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         vertical: 10,
       ),
       decoration: BoxDecoration(
-        color: AppColors.purple500,
+        color: Theme.of(context).colorScheme.primary,
         borderRadius: BorderRadius.circular(30),
       ),
       child: Row(
@@ -76,13 +75,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         decoration: BoxDecoration(
           color: isActive
-              ? const Color.fromARGB(255, 149, 121, 168)
+              ? Theme.of(context).colorScheme.outline
               : Colors.transparent,
           borderRadius: BorderRadius.circular(isActive ? 100 : 0),
         ),
         child: HeroIcon(
           icon,
-          color: isActive ? Colors.white : Colors.white,
+          color: Theme.of(context).colorScheme.surface,
           style: HeroIconStyle.outline,
           size: 28,
         ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:solutech/utils/app_colors.dart';
 
 class SocialIcons extends StatelessWidget {
   final VoidCallback onTap;
@@ -21,7 +20,7 @@ class SocialIcons extends StatelessWidget {
         width: 47,
         height: 47,
         decoration: BoxDecoration(
-          color: AppColors.purple500,
+          color: Theme.of(context).colorScheme.primary,
           borderRadius: BorderRadius.circular(47),
         ),
         child: Center(

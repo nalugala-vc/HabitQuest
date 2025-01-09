@@ -8,7 +8,7 @@ import 'package:solutech/auth/widgets/social_icons.dart';
 import 'package:solutech/common/widgets/auth_field.dart';
 import 'package:solutech/auth/widgets/logo_widget.dart';
 import 'package:solutech/common/widgets/rounded_button.dart';
-import 'package:solutech/utils/app_colors.dart';
+
 import 'package:solutech/utils/fonts/roboto_condensed.dart';
 import 'package:solutech/utils/spacers.dart';
 
@@ -98,16 +98,19 @@ class _SignInMobileState extends State<SignInMobile> {
                         text: TextSpan(
                           text: "Don't have an account?",
                           style: GoogleFonts.robotoCondensed(
-                              fontSize: 18,
-                              fontWeight: FontWeight.normal,
-                              color: AppColors.grey600),
+                            fontSize: 18,
+                            fontWeight: FontWeight.normal,
+                            color: Theme.of(context).colorScheme.onPrimary,
+                          ),
                           children: [
                             TextSpan(
                                 text: ' Sign up',
                                 style: GoogleFonts.robotoCondensed(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.normal,
-                                    color: AppColors.purple400),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.normal,
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface,
+                                ),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     Get.offAllNamed('/sign-up');

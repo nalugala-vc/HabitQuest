@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:solutech/common/constants.dart';
 import 'package:solutech/common/widgets/rounded_button.dart';
-import 'package:solutech/utils/app_colors.dart';
 import 'package:solutech/utils/fonts/roboto_condensed.dart';
 import 'package:solutech/utils/spacers.dart';
 
@@ -48,7 +47,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.purple100,
+      backgroundColor: Theme.of(context).colorScheme.onTertiary,
       body: Column(
         children: [
           Expanded(
@@ -67,14 +66,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     children: [
                       CircleAvatar(
                         radius: 100,
-                        backgroundColor: AppColors.purple500,
+                        backgroundColor: Theme.of(context).colorScheme.primary,
                         child: _buildImage(pages[index]["image"]!, isSvg),
                       ),
                       spaceH20,
                       RobotoCondensed(
                         text: pages[index]["title"]!,
                         fontSize: 24,
-                        textColor: AppColors.purple500,
+                        textColor: Theme.of(context).colorScheme.primary,
                       ),
                       spaceH10,
                       Padding(
@@ -82,7 +81,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         child: RobotoCondensed(
                           text: pages[index]["description"]!,
                           textAlignment: TextAlign.center,
-                          textColor: AppColors.grey600,
+                          textColor: Theme.of(context).colorScheme.onPrimary,
                           fontWeight: FontWeight.normal,
                           shouldTruncate: false,
                           fontSize: 17,
@@ -100,8 +99,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             height: 7,
                             decoration: BoxDecoration(
                               color: _currentIndex == index
-                                  ? AppColors.purple500
-                                  : Colors.grey[350],
+                                  ? Theme.of(context).colorScheme.primary
+                                  : Theme.of(context).colorScheme.onSecondary,
                               borderRadius: BorderRadius.circular(5),
                             ),
                           ),

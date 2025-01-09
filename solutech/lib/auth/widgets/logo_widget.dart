@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:solutech/utils/app_colors.dart';
+
 import 'package:solutech/utils/fonts/rock_salt.dart';
 import 'package:solutech/utils/spacers.dart';
 
@@ -19,7 +19,7 @@ class LogoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: containerWidth,
-      color: AppColors.purple100,
+      color: Theme.of(context).colorScheme.onTertiary,
       height: containerHeight,
       child: Center(
           child: Column(
@@ -28,7 +28,7 @@ class LogoWidget extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: radius,
-            backgroundColor: AppColors.purple500,
+            backgroundColor: Theme.of(context).colorScheme.primary,
             child: Image(
               image: AssetImage('assets/icons/logo.png'),
               height: imageDimension,
@@ -38,7 +38,9 @@ class LogoWidget extends StatelessWidget {
           ),
           spaceH10,
           RockSalt(
-              text: 'HabitQuest', fontSize: 28, textColor: AppColors.purple500)
+              text: 'HabitQuest',
+              fontSize: 28,
+              textColor: Theme.of(context).colorScheme.primary)
         ],
       )),
     );

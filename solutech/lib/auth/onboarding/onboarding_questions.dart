@@ -4,7 +4,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:solutech/common/constants.dart';
 import 'package:solutech/common/widgets/rounded_button.dart';
-import 'package:solutech/utils/app_colors.dart';
+
 import 'package:solutech/utils/fonts/roboto_condensed.dart';
 import 'package:solutech/utils/spacers.dart';
 
@@ -125,17 +125,20 @@ class _OnboardingQuestionsState extends State<OnboardingQuestions> {
                               padding: const EdgeInsets.all(8.0),
                               decoration: BoxDecoration(
                                 color: _userAnswers[key]?["hour"] == hour
-                                    ? AppColors.purple100
+                                    ? Theme.of(context).colorScheme.onTertiary
                                     : Colors.transparent,
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: RobotoCondensed(
-                                text: hour.toString().padLeft(2, '0'),
-                                fontSize: 24,
-                                textColor: _userAnswers[key]?["hour"] == hour
-                                    ? AppColors.purple600
-                                    : Colors.grey,
-                              ),
+                                  text: hour.toString().padLeft(2, '0'),
+                                  fontSize: 24,
+                                  textColor: _userAnswers[key]?["hour"] == hour
+                                      ? Theme.of(context)
+                                          .colorScheme
+                                          .onPrimaryContainer
+                                      : Theme.of(context)
+                                          .colorScheme
+                                          .onSecondaryContainer),
                             ),
                           );
                         },
@@ -168,18 +171,21 @@ class _OnboardingQuestionsState extends State<OnboardingQuestions> {
                                 padding: const EdgeInsets.all(8.0),
                                 decoration: BoxDecoration(
                                   color: _userAnswers[key]?["minute"] == index
-                                      ? AppColors.purple100
+                                      ? Theme.of(context).colorScheme.onTertiary
                                       : Colors.transparent,
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: RobotoCondensed(
-                                  text: index.toString().padLeft(2, '0'),
-                                  fontSize: 24,
-                                  textColor:
-                                      _userAnswers[key]?["minute"] == index
-                                          ? AppColors.purple600
-                                          : Colors.grey,
-                                ),
+                                    text: index.toString().padLeft(2, '0'),
+                                    fontSize: 24,
+                                    textColor:
+                                        _userAnswers[key]?["minute"] == index
+                                            ? Theme.of(context)
+                                                .colorScheme
+                                                .onPrimaryContainer
+                                            : Theme.of(context)
+                                                .colorScheme
+                                                .onSecondaryContainer),
                               ),
                             );
                           }
@@ -214,18 +220,21 @@ class _OnboardingQuestionsState extends State<OnboardingQuestions> {
                               padding: const EdgeInsets.all(8.0),
                               decoration: BoxDecoration(
                                 color: _userAnswers[key]?["period"] == period
-                                    ? AppColors.purple100
+                                    ? Theme.of(context).colorScheme.onTertiary
                                     : Colors.transparent,
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: RobotoCondensed(
-                                text: period,
-                                fontSize: 24,
-                                textColor:
-                                    _userAnswers[key]?["period"] == period
-                                        ? AppColors.purple600
-                                        : Colors.grey,
-                              ),
+                                  text: period,
+                                  fontSize: 24,
+                                  textColor:
+                                      _userAnswers[key]?["period"] == period
+                                          ? Theme.of(context)
+                                              .colorScheme
+                                              .onPrimaryContainer
+                                          : Theme.of(context)
+                                              .colorScheme
+                                              .onSecondaryContainer),
                             ),
                           );
                         },
@@ -273,24 +282,28 @@ class _OnboardingQuestionsState extends State<OnboardingQuestions> {
                     const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: isSelected ? AppColors.purple600 : Colors.grey,
-                  ),
+                      color: isSelected
+                          ? Theme.of(context).colorScheme.onPrimaryContainer
+                          : Theme.of(context).colorScheme.onSecondaryContainer),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(
                   children: [
                     Icon(
-                      isSelected
-                          ? Icons.radio_button_checked
-                          : Icons.radio_button_off,
-                      color: isSelected ? AppColors.purple600 : Colors.grey,
-                    ),
+                        isSelected
+                            ? Icons.radio_button_checked
+                            : Icons.radio_button_off,
+                        color: isSelected
+                            ? Theme.of(context).colorScheme.onPrimaryContainer
+                            : Theme.of(context)
+                                .colorScheme
+                                .onSecondaryContainer),
                     spaceW10,
                     RobotoCondensed(
                       text: choice,
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
-                      textColor: Colors.black,
+                      textColor: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
                   ],
                 ),
@@ -322,8 +335,8 @@ class _OnboardingQuestionsState extends State<OnboardingQuestions> {
             ),
             child: LinearProgressIndicator(
               value: progress,
-              backgroundColor: Colors.grey[300],
-              color: AppColors.purple500,
+              backgroundColor: Theme.of(context).colorScheme.onSecondary,
+              color: Theme.of(context).colorScheme.primary,
               minHeight: 7,
               borderRadius: BorderRadius.circular(7),
             ),

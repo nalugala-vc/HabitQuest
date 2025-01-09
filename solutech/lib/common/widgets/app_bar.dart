@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:solutech/notifications/mobile/notifications_page.dart';
-import 'package:solutech/utils/app_colors.dart';
+
 import 'package:solutech/utils/fonts/rock_salt.dart';
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -11,9 +11,11 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: AppColors.purple100,
+      backgroundColor: Theme.of(context).colorScheme.onTertiary,
       title: RockSalt(
-          text: 'HabitQuest', fontSize: 24, textColor: AppColors.purple500),
+          text: 'HabitQuest',
+          fontSize: 24,
+          textColor: Theme.of(context).colorScheme.primary),
       actions: [
         IconButton(
             icon: const HeroIcon(

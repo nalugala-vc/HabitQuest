@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:solutech/common/widgets/rounded_button.dart';
-import 'package:solutech/utils/app_colors.dart';
+
 import 'package:solutech/utils/fonts/roboto_condensed.dart';
 import 'package:solutech/utils/spacers.dart';
 
@@ -27,9 +27,9 @@ void confirmDialogue(
                     onTap: () {
                       Navigator.of(context).pop();
                     },
-                    child: const Icon(
+                    child: Icon(
                       Icons.close,
-                      color: AppColors.grey500,
+                      color: Theme.of(context).colorScheme.onSecondaryFixed,
                     ),
                   ),
                 ],
@@ -50,7 +50,7 @@ void confirmDialogue(
                 text: message,
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
-                textColor: AppColors.grey900,
+                textColor: Theme.of(context).colorScheme.onTertiaryFixed,
               ),
               spaceH10,
               RoundedButton(
