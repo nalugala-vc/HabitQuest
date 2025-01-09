@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:solutech/common/constants.dart';
 
 import 'package:solutech/common/widgets/nav_bar.dart';
+import 'package:solutech/profile/theme_screen.dart';
 import 'package:solutech/profile/widgets/profile_image_widget.dart';
 import 'package:solutech/profile/widgets/profile_widgets.dart';
 import 'package:solutech/streaks/web/streaks_web.dart';
@@ -65,7 +68,9 @@ class _ProfilePageWebState extends State<ProfilePageWeb> {
                     itemBuilder: (context, index) => ProfileWidget(
                       bgColor: profileColors[index],
                       icon: customizationIcons[index],
-                      onTap: () {},
+                      onTap: () {
+                        if (index == 0) Get.to(() => ThemeScreen());
+                      },
                       title: custimizationTitles[index],
                     ),
                     itemCount: custimizationTitles.length,
@@ -92,6 +97,13 @@ class _ProfilePageWebState extends State<ProfilePageWeb> {
                 ],
               ),
             ),
+          ),
+        ),
+        SizedBox(
+          height: double.infinity,
+          child: VerticalDivider(
+            color: Colors.grey,
+            thickness: 1,
           ),
         ),
         Expanded(child: StreaksWeb()),
