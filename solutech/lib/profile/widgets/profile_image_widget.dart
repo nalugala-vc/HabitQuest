@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:solutech/utils/app_colors.dart';
 import 'package:solutech/utils/fonts/roboto_condensed.dart';
 import 'package:solutech/utils/spacers.dart';
 
@@ -58,7 +57,7 @@ class _ProfileImageWidgetState extends State<ProfileImageWidget> {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: AppColors.purple500,
+                      color: Theme.of(context).colorScheme.primary,
                       width: 2.0,
                     ),
                   ),
@@ -73,15 +72,15 @@ class _ProfileImageWidgetState extends State<ProfileImageWidget> {
                           backgroundImage: FileImage(image!),
                           backgroundColor: Colors.transparent,
                         )),
-              const Positioned(
+              Positioned(
                 right: 0,
                 top: 0,
                 child: CircleAvatar(
                   radius: 12,
-                  backgroundColor: Colors.white,
+                  backgroundColor: Theme.of(context).colorScheme.surface,
                   child: HeroIcon(
                     HeroIcons.pencil,
-                    color: AppColors.purple500,
+                    color: Theme.of(context).colorScheme.primary,
                     style: HeroIconStyle.solid,
                     size: 16,
                   ),

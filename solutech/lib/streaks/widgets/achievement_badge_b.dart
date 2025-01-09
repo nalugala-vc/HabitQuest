@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:solutech/utils/app_colors.dart';
 import 'package:solutech/utils/fonts/roboto_condensed.dart';
 import 'package:solutech/utils/spacers.dart';
 
 class AchievementBadgeB extends StatefulWidget {
   final String imgURL;
   final String title;
-  final Color bgColor;
+  final Color? bgColor;
   final Color titleColor;
   final VoidCallback onPressed;
 
   const AchievementBadgeB({
     super.key,
     required this.imgURL,
-    required this.bgColor,
+    this.bgColor,
     required this.title,
     required this.onPressed,
     this.titleColor = const Color(0xFF121212),
@@ -27,6 +26,8 @@ class AchievementBadgeBState extends State<AchievementBadgeB> {
 
   @override
   Widget build(BuildContext context) {
+    final Color effectiveBackgroundColor =
+        widget.bgColor ?? Theme.of(context).colorScheme.onTertiaryFixed;
     return GestureDetector(
       onTap: widget.onPressed,
       child: Container(
@@ -34,13 +35,7 @@ class AchievementBadgeBState extends State<AchievementBadgeB> {
           margin: EdgeInsets.all(5),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
-            color: widget.bgColor,
-            border: Border.all(
-              color: isSelected
-                  ? AppColors.purple650
-                  : const Color.fromARGB(255, 193, 193, 193),
-              width: 1.0,
-            ),
+            color: effectiveBackgroundColor,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

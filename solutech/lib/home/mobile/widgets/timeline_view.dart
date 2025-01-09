@@ -1,8 +1,6 @@
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
 
-import 'package:solutech/utils/app_colors.dart';
-
 class TimelineView extends StatefulWidget {
   final DateTime selectedDate;
   final void Function(DateTime) onSelectedDateChanged;
@@ -28,17 +26,19 @@ class _TimelineViewState extends State<TimelineView> {
         ),
         dayProps: EasyDayProps(
           activeDayStyle: DayStyle(
-            dayNumStyle: const TextStyle(
-                color: AppColors.purple500,
+            dayNumStyle: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
                 fontSize: 18,
                 fontWeight: FontWeight.w900),
-            dayStrStyle: const TextStyle(
-                color: AppColors.purple500, fontWeight: FontWeight.w500),
-            monthStrStyle: const TextStyle(
-                color: AppColors.purple500, fontWeight: FontWeight.w500),
+            dayStrStyle: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+                fontWeight: FontWeight.w500),
+            monthStrStyle: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+                fontWeight: FontWeight.w500),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
-              color: AppColors.purple100,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
         ),

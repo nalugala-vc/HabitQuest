@@ -21,6 +21,11 @@ class ProfilePageWeb extends StatefulWidget {
 class _ProfilePageWebState extends State<ProfilePageWeb> {
   @override
   Widget build(BuildContext context) {
+    List<Color> profileColors = [
+      Theme.of(context).colorScheme.primaryFixed,
+      Theme.of(context).colorScheme.shadow,
+      Theme.of(context).colorScheme.onSurface,
+    ];
     return Scaffold(
         body: Row(
       children: [
@@ -102,7 +107,7 @@ class _ProfilePageWebState extends State<ProfilePageWeb> {
         SizedBox(
           height: double.infinity,
           child: VerticalDivider(
-            color: Colors.grey,
+            color: Theme.of(context).colorScheme.onSecondary,
             thickness: 1,
           ),
         ),

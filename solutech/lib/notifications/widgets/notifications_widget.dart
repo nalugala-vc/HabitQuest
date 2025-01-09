@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:solutech/utils/app_colors.dart';
 import 'package:solutech/utils/fonts/roboto_condensed.dart';
 import 'package:solutech/utils/spacers.dart';
 
@@ -30,19 +29,19 @@ class NotificationWidget extends StatelessWidget {
     switch (type) {
       case "Reminder":
         icon = HeroIcons.clock;
-        backgroundColor = AppColors.peach200;
+        backgroundColor = Theme.of(context).colorScheme.primaryFixed;
         break;
       case "Tip":
         icon = HeroIcons.lightBulb;
-        backgroundColor = AppColors.pink400;
+        backgroundColor = Theme.of(context).colorScheme.secondary;
         break;
       case "Update":
         icon = HeroIcons.heart;
-        backgroundColor = AppColors.purple100;
+        backgroundColor = Theme.of(context).colorScheme.onTertiary;
         break;
       default:
         icon = HeroIcons.bell;
-        backgroundColor = Colors.grey.shade300;
+        backgroundColor = Theme.of(context).colorScheme.onSecondary;
     }
 
     return Container(
@@ -50,7 +49,7 @@ class NotificationWidget extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: Colors.grey.shade300,
+            color: Theme.of(context).colorScheme.onSecondary,
           ),
         ),
       ),
@@ -87,14 +86,17 @@ class NotificationWidget extends StatelessWidget {
                           RobotoCondensed(
                               text: time,
                               fontSize: 12,
-                              textColor: AppColors.grey500),
+                              textColor: Theme.of(context)
+                                  .colorScheme
+                                  .onSecondaryFixed),
                           spaceW10,
                           if (!isRead)
-                            const Padding(
-                              padding: EdgeInsets.only(right: 5, top: 10),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 5, top: 10),
                               child: CircleAvatar(
                                 radius: 5,
-                                backgroundColor: Colors.red,
+                                backgroundColor:
+                                    Theme.of(context).colorScheme.error,
                               ),
                             ),
                         ],
@@ -106,19 +108,17 @@ class NotificationWidget extends StatelessWidget {
                 RobotoCondensed(
                   text: description,
                   fontSize: 14,
-                  textColor: AppColors.grey700,
+                  textColor: Theme.of(context).colorScheme.onInverseSurface,
                 ),
                 spaceH5,
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
                     onPressed: onMarkAsRead,
-                    child: const Text(
-                      "Mark as Read",
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.blue,
-                      ),
+                    child: RobotoCondensed(
+                      text: "Mark as Read",
+                      fontSize: 12,
+                      textColor: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                 ),

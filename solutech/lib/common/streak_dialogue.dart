@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:solutech/utils/app_colors.dart';
 import 'package:solutech/utils/fonts/roboto_condensed.dart';
 import 'package:solutech/utils/spacers.dart';
 
 void streakDialogue({
   required BuildContext context,
   required String title,
-  required bool isUnlocked, // Add isUnlocked as a parameter
+  required bool isUnlocked,
 }) {
-  // Define a map for the titles and corresponding base messages
   Map<String, String> titleMessages = {
     "DAY ONE DONE": "your 1st habit",
     "TRIPLE THREAT": "3 day streak",
@@ -50,9 +48,9 @@ void streakDialogue({
                     onTap: () {
                       Navigator.of(context).pop();
                     },
-                    child: const Icon(
+                    child: Icon(
                       Icons.close,
-                      color: AppColors.grey500,
+                      color: Theme.of(context).colorScheme.onSecondaryFixed,
                     ),
                   ),
                 ],
@@ -63,7 +61,7 @@ void streakDialogue({
                   text: title,
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
-                  textColor: AppColors.grey900,
+                  textColor: Theme.of(context).colorScheme.onTertiaryFixed,
                   shouldTruncate: false,
                 ),
               ),
@@ -87,7 +85,7 @@ void streakDialogue({
                 text: message,
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
-                textColor: AppColors.grey900,
+                textColor: Theme.of(context).colorScheme.onTertiaryFixed,
                 shouldTruncate: false,
               ),
               spaceH10,

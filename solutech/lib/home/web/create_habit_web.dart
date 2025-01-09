@@ -6,7 +6,6 @@ import 'package:solutech/common/widgets/rounded_button.dart';
 import 'package:solutech/home/controller/habit_controller.dart';
 import 'package:solutech/models/habit.dart';
 import 'package:solutech/streaks/web/streaks_web.dart';
-import 'package:solutech/utils/app_colors.dart';
 import 'package:solutech/utils/fonts/roboto_condensed.dart';
 import 'package:solutech/utils/spacers.dart';
 
@@ -81,7 +80,7 @@ class _CreateHabitWebState extends State<CreateHabitWeb> {
                             text: 'Daily',
                             fontSize: 16,
                             fontWeight: FontWeight.normal,
-                            textColor: AppColors.grey600,
+                            textColor: Theme.of(context).colorScheme.onPrimary,
                           ),
                           spaceW20,
                           Obx(() => Switch(
@@ -101,7 +100,7 @@ class _CreateHabitWebState extends State<CreateHabitWeb> {
                             text: 'Weekly',
                             fontSize: 16,
                             fontWeight: FontWeight.normal,
-                            textColor: AppColors.grey600,
+                            textColor: Theme.of(context).colorScheme.onPrimary,
                           ),
                           spaceW20,
                           Obx(() => Switch(
@@ -130,7 +129,8 @@ class _CreateHabitWebState extends State<CreateHabitWeb> {
                                 text: 'Has Reminder',
                                 fontSize: 16,
                                 fontWeight: FontWeight.normal,
-                                textColor: AppColors.grey600,
+                                textColor:
+                                    Theme.of(context).colorScheme.onPrimary,
                               ),
                               Obx(() => controller.hasReminder.value
                                   ? RobotoCondensed(
@@ -216,7 +216,7 @@ class _CreateHabitWebState extends State<CreateHabitWeb> {
         SizedBox(
           height: double.infinity,
           child: VerticalDivider(
-            color: Colors.grey,
+            color: Theme.of(context).colorScheme.onSecondary,
             thickness: 1,
           ),
         ),

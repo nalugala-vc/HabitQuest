@@ -10,7 +10,6 @@ import 'package:solutech/home/controller/habit_controller.dart';
 import 'package:solutech/streaks/widgets/achievement_badge_a.dart';
 import 'package:solutech/streaks/widgets/achievement_badge_b.dart';
 import 'package:solutech/streaks/widgets/heat_map.dart';
-import 'package:solutech/utils/app_colors.dart';
 import 'package:solutech/utils/fonts/roboto_condensed.dart';
 import 'package:solutech/utils/spacers.dart';
 
@@ -86,8 +85,8 @@ class StreaksMobile extends StatelessWidget {
                               return AchievementBadgeB(
                                 imgURL: imgURL,
                                 bgColor: isUnlocked
-                                    ? AppColors.purple500
-                                    : AppColors.purple100,
+                                    ? Theme.of(context).colorScheme.primary
+                                    : Theme.of(context).colorScheme.onTertiary,
                                 title: isUnlocked
                                     ? "$badgeName (Unlocked)"
                                     : badgeName,
@@ -141,8 +140,8 @@ class StreaksMobile extends StatelessWidget {
                                       isUnlocked: isUnlocked);
                                 },
                                 bgColor: isUnlocked
-                                    ? AppColors.purple500
-                                    : AppColors.purple100,
+                                    ? Theme.of(context).colorScheme.primary
+                                    : Theme.of(context).colorScheme.onTertiary,
                                 title: isUnlocked
                                     ? "$badgeName (Unlocked)"
                                     : badgeName,
@@ -190,8 +189,8 @@ class StreaksMobile extends StatelessWidget {
                                       isUnlocked: isUnlocked);
                                 },
                                 bgColor: isUnlocked
-                                    ? AppColors.purple500
-                                    : AppColors.purple100,
+                                    ? Theme.of(context).colorScheme.primary
+                                    : Theme.of(context).colorScheme.onTertiary,
                                 title: isUnlocked
                                     ? "$badgeName (Unlocked)"
                                     : badgeName,

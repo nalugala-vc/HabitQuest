@@ -17,6 +17,11 @@ class ProfilePageMobile extends StatefulWidget {
 class _ProfilePageMobileState extends State<ProfilePageMobile> {
   @override
   Widget build(BuildContext context) {
+    List<Color> profileColors = [
+      Theme.of(context).colorScheme.primaryFixed,
+      Theme.of(context).colorScheme.shadow,
+      Theme.of(context).colorScheme.onSurface,
+    ];
     return Scaffold(
       appBar: const MainAppBar(),
       body: SingleChildScrollView(

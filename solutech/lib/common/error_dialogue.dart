@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:solutech/utils/app_colors.dart';
 import 'package:solutech/utils/fonts/roboto_condensed.dart';
 import 'package:solutech/utils/spacers.dart';
 
@@ -24,9 +23,9 @@ void errorDialogue({
                     onTap: () {
                       Navigator.of(context).pop();
                     },
-                    child: const Icon(
+                    child: Icon(
                       Icons.close,
-                      color: AppColors.grey500,
+                      color: Theme.of(context).colorScheme.onSecondaryFixed,
                     ),
                   ),
                 ],
@@ -37,7 +36,7 @@ void errorDialogue({
                   text: 'OOPS!',
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
-                  textColor: AppColors.grey900,
+                  textColor: Theme.of(context).colorScheme.onTertiaryFixed,
                   shouldTruncate: false,
                 ),
               ),
@@ -61,7 +60,7 @@ void errorDialogue({
                     : 'You can only unmark habits as not completed for today!',
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
-                textColor: AppColors.grey900,
+                textColor: Theme.of(context).colorScheme.onTertiaryFixed,
                 shouldTruncate: false,
               ),
               spaceH10,

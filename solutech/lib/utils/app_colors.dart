@@ -26,6 +26,7 @@ class AppColors {
   static const Color grey700 = Color(0XFF616161);
   static const Color grey800 = Color(0XFF424242);
   static const Color grey900 = Color(0XFF212121);
+  static const Color red400 = Color(0XFFFF0000);
 
   // Dark Mode Colors
   static const Color darkPlainWhite = Color(0xFF1A1A1A);
@@ -50,11 +51,15 @@ class AppColors {
   static const Color darkGrey700 = Color(0XFF9E9E9E);
   static const Color darkGrey800 = Color(0XFFBDBDBD);
   static const Color darkGrey900 = Color(0XFFDEDEDE);
+  static const Color darkRed400 = Color(0XFF8B0000);
+
   static ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     colorScheme: const ColorScheme.light(
         surface: plainWhite,
         primary: purple500,
+        shadow: pink100,
+        error: red400,
         onSurface: purple400,
         secondary: pink400,
         onPrimary: grey600,
@@ -65,7 +70,11 @@ class AppColors {
         onSurfaceVariant: black,
         outline: purple630,
         onTertiaryFixed: grey900,
-        onSecondaryFixed: grey500),
+        onSecondaryFixed: grey500,
+        onPrimaryFixedVariant: grey200,
+        secondaryFixedDim: purple750,
+        onInverseSurface: grey700,
+        primaryFixed: peach200),
     scaffoldBackgroundColor: plainWhite,
   );
 
@@ -74,9 +83,11 @@ class AppColors {
     colorScheme: const ColorScheme.dark(
         surface: darkPlainWhite,
         primary: darkPurple500,
+        error: darkRed400,
         onSurface: darkPurple400,
         secondary: darkPink400,
         onSecondary: darkGrey300,
+        shadow: darkPink100,
         onPrimary: darkGrey600,
         onTertiary: darkPurple100,
         onTertiaryFixed: darkGrey900,
@@ -84,7 +95,11 @@ class AppColors {
         onSecondaryContainer: darkGrey400,
         onSurfaceVariant: darkBlack,
         outline: darkPurple600,
-        onSecondaryFixed: darkGrey500),
-    scaffoldBackgroundColor: grey900,
+        onSecondaryFixed: darkGrey500,
+        onPrimaryFixedVariant: darkGrey200,
+        secondaryFixedDim: darkPurple750,
+        onInverseSurface: darkGrey700,
+        primaryFixed: darkPeach200),
+    scaffoldBackgroundColor: darkPlainWhite,
   );
 }

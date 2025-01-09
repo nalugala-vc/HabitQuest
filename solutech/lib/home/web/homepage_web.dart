@@ -109,7 +109,7 @@ class _HomepageWebState extends State<HomepageWeb> {
           SizedBox(
             height: double.infinity,
             child: VerticalDivider(
-              color: Colors.grey,
+              color: Theme.of(context).colorScheme.onSecondary,
               thickness: 1,
             ),
           ),

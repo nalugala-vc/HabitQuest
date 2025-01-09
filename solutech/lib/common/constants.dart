@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:solutech/utils/app_colors.dart';
 
 final List<Map<String, dynamic>> questions = [
   {
@@ -153,12 +151,6 @@ List<String> supportTitles = [
   'App Permisions',
   'Support & FAQ',
   'Give us feedback',
-];
-
-List<Color> profileColors = [
-  AppColors.peach200,
-  AppColors.pink400,
-  AppColors.purple400,
 ];
 
 final List<Map<String, String>> pages = [

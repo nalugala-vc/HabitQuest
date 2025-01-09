@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:solutech/utils/app_colors.dart';
 import 'package:solutech/utils/fonts/roboto_condensed.dart';
 import 'package:solutech/utils/spacers.dart';
 
@@ -13,9 +12,9 @@ class NoNotificationsWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const CircleAvatar(
+          CircleAvatar(
             radius: 90,
-            backgroundColor: AppColors.purple100,
+            backgroundColor: Theme.of(context).colorScheme.onTertiary,
             child: Image(
               image: AssetImage('assets/images/bell.png'),
               height: 90,

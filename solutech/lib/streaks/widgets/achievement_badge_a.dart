@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:solutech/utils/app_colors.dart';
 
 class AchievementBadgeA extends StatefulWidget {
   final String imgURL;
@@ -26,10 +25,6 @@ class AchievementBadgeAState extends State<AchievementBadgeA> {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          border: Border.all(
-            color: isSelected ? AppColors.purple650 : Colors.transparent,
-            width: 2.0,
-          ),
         ),
         child: Image.asset(
           widget.imgURL, // Replace with your image URL

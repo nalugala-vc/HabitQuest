@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:solutech/utils/app_colors.dart';
 import 'package:solutech/utils/fonts/roboto_condensed.dart';
 import 'package:solutech/utils/spacers.dart';
 
@@ -48,7 +47,7 @@ class _NavWidgetState extends State<NavWidget> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
               color: widget.isActive
-                  ? Color.fromARGB(255, 149, 121, 168)
+                  ? Theme.of(context).colorScheme.outline
                   : Colors.transparent,
             ),
             child: Row(
@@ -63,7 +62,7 @@ class _NavWidgetState extends State<NavWidget> {
                       fontSize: 14,
                       fontWeight:
                           widget.isActive ? FontWeight.bold : FontWeight.normal,
-                      textColor: AppColors.plainWhite,
+                      textColor: Theme.of(context).colorScheme.surface,
                     ),
                   ],
                 ),
@@ -72,7 +71,7 @@ class _NavWidgetState extends State<NavWidget> {
                     _isExpanded
                         ? Icons.keyboard_arrow_up
                         : Icons.keyboard_arrow_down,
-                    color: AppColors.plainWhite,
+                    color: Theme.of(context).colorScheme.surface,
                   ),
               ],
             ),

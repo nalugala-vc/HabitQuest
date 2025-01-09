@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:heroicons/heroicons.dart';
-
-import 'package:solutech/utils/app_colors.dart';
 import 'package:solutech/utils/fonts/roboto_condensed.dart';
 import 'package:solutech/utils/spacers.dart';
 
@@ -34,13 +32,13 @@ class HabitCard extends StatelessWidget {
       endActionPane: ActionPane(motion: StretchMotion(), children: [
         SlidableAction(
           onPressed: editTapped,
-          backgroundColor: Colors.grey.shade700,
+          backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
           icon: Icons.edit,
           borderRadius: BorderRadius.circular(12),
         ),
         SlidableAction(
           onPressed: deleteTapped,
-          backgroundColor: Colors.redAccent,
+          backgroundColor: Theme.of(context).colorScheme.error,
           icon: Icons.delete,
           borderRadius: BorderRadius.circular(12),
         )
@@ -49,18 +47,24 @@ class HabitCard extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: AppColors.purple500,
+              color: Theme.of(context).colorScheme.primary,
             ),
             gradient: LinearGradient(
               colors: isCompleted
-                  ? [AppColors.purple100, AppColors.purple400]
-                  : [AppColors.pink100, AppColors.pink400],
+                  ? [
+                      Theme.of(context).colorScheme.onTertiary,
+                      Theme.of(context).colorScheme.onSurface,
+                    ]
+                  : [
+                      Theme.of(context).colorScheme.shadow,
+                      Theme.of(context).colorScheme.secondary,
+                    ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
-            boxShadow: const [
+            boxShadow: [
               BoxShadow(
-                color: AppColors.grey300,
+                color: Theme.of(context).colorScheme.onSecondary,
                 blurRadius: 16,
               ),
             ]),
@@ -86,17 +90,19 @@ class HabitCard extends StatelessWidget {
                     if (streak > 0) ...[
                       Row(
                         children: [
-                          const HeroIcon(
+                          HeroIcon(
                             HeroIcons.fire,
                             style: HeroIconStyle.outline,
-                            color: AppColors.purple750,
+                            color:
+                                Theme.of(context).colorScheme.secondaryFixedDim,
                           ),
                           spaceW5,
                           RobotoCondensed(
                             text: '$streak days',
                             fontSize: 15,
                             fontWeight: FontWeight.w400,
-                            textColor: AppColors.purple750,
+                            textColor:
+                                Theme.of(context).colorScheme.secondaryFixedDim,
                           )
                         ],
                       )

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:solutech/utils/app_colors.dart';
+
 import 'package:solutech/utils/fonts/roboto_condensed.dart';
 import 'package:solutech/utils/spacers.dart';
 
@@ -19,7 +19,7 @@ class DailySummary extends StatelessWidget {
     final progress = totalTasks == 0 ? 0.0 : completedTasts / totalTasks;
     return Card(
       elevation: 8,
-      shadowColor: AppColors.grey200,
+      shadowColor: Theme.of(context).colorScheme.onPrimaryFixedVariant,
       shape: ContinuousRectangleBorder(
         borderRadius: BorderRadius.circular(24),
       ),
@@ -27,7 +27,7 @@ class DailySummary extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(24),
-          color: AppColors.purple100,
+          color: Theme.of(context).colorScheme.onTertiary,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,7 +44,7 @@ class DailySummary extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   child: RobotoCondensed(
                     text: date,
-                    textColor: AppColors.purple750,
+                    textColor: Theme.of(context).colorScheme.secondaryFixedDim,
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
                   ),
@@ -59,9 +59,13 @@ class DailySummary extends StatelessWidget {
                   child: LinearProgressIndicator(
                     value: progress,
                     minHeight: 8,
-                    backgroundColor: AppColors.grey700.withOpacity(0.1),
-                    valueColor:
-                        const AlwaysStoppedAnimation(AppColors.purple500),
+                    backgroundColor: Theme.of(context)
+                        .colorScheme
+                        .onInverseSurface
+                        .withOpacity(0.1),
+                    valueColor: AlwaysStoppedAnimation(
+                      Theme.of(context).colorScheme.onPrimary,
+                    ),
                   ),
                 )
               ],
@@ -69,16 +73,16 @@ class DailySummary extends StatelessWidget {
             spaceH20,
             Row(
               children: [
-                const HeroIcon(
+                HeroIcon(
                   HeroIcons.checkCircle,
                   style: HeroIconStyle.outline,
-                  color: AppColors.purple750,
+                  color: Theme.of(context).colorScheme.secondaryFixedDim,
                 ),
                 spaceW10,
                 RobotoCondensed(
                   text: '$completedTasts / $totalTasks',
                   fontSize: 15,
-                  textColor: AppColors.purple750,
+                  textColor: Theme.of(context).colorScheme.secondaryFixedDim,
                 )
               ],
             )

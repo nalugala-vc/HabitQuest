@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:solutech/utils/app_colors.dart';
 import 'package:solutech/utils/fonts/roboto_condensed.dart';
 import 'package:solutech/utils/spacers.dart';
 
@@ -30,7 +29,7 @@ class ProfileWidget extends StatelessWidget {
                   backgroundColor: bgColor,
                   child: HeroIcon(
                     icon,
-                    color: AppColors.grey900,
+                    color: Theme.of(context).colorScheme.onTertiaryFixed,
                     style: HeroIconStyle.outline,
                     size: 24,
                   ),
@@ -44,9 +43,9 @@ class ProfileWidget extends StatelessWidget {
               ],
             ),
           ),
-          const HeroIcon(
+          HeroIcon(
             HeroIcons.chevronRight,
-            color: AppColors.grey900,
+            color: Theme.of(context).colorScheme.onTertiaryFixed,
             style: HeroIconStyle.outline,
             size: 24,
           ),

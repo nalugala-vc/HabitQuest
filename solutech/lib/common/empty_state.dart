@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:solutech/utils/app_colors.dart';
 import 'package:solutech/utils/fonts/roboto_condensed.dart';
 import 'package:solutech/utils/spacers.dart';
 
@@ -17,8 +16,8 @@ class EmptyStateWidget extends StatelessWidget {
             Container(
               width: 100,
               height: 100,
-              decoration: const BoxDecoration(
-                color: Colors.white,
+              decoration: BoxDecoration(
+                color: Theme.of(context).scaffoldBackgroundColor,
                 image: DecorationImage(
                   fit: BoxFit.fill,
                   image: AssetImage('assets/images/panda.png'),
@@ -30,7 +29,7 @@ class EmptyStateWidget extends StatelessWidget {
               text: message,
               fontSize: 14,
               fontWeight: FontWeight.normal,
-              textColor: AppColors.grey600,
+              textColor: Theme.of(context).colorScheme.onPrimary,
             ),
           ],
         ),

@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class RobotoCondensed extends StatelessWidget {
   final String text;
-  final Color textColor;
+  final Color? textColor;
   final double fontSize;
   final bool shouldTruncate;
   final FontWeight fontWeight;
@@ -15,7 +15,7 @@ class RobotoCondensed extends StatelessWidget {
     super.key,
     required this.text,
     this.shouldTruncate = true,
-    this.textColor = const Color(0xFF121212),
+    this.textColor,
     this.fontSize = 0,
     this.truncateLength = 45,
     this.fontWeight = FontWeight.bold,
@@ -25,6 +25,8 @@ class RobotoCondensed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Color effectiveTextColor =
+        textColor ?? Theme.of(context).colorScheme.onPrimary;
     return Text(
       shouldTruncate
           ? text.length > truncateLength
@@ -33,7 +35,7 @@ class RobotoCondensed extends StatelessWidget {
           : text,
       textAlign: textAlignment,
       style: GoogleFonts.robotoCondensed(
-        color: textColor,
+        color: effectiveTextColor,
         fontSize: fontSize == 0 ? 36 : fontSize,
         fontWeight: fontWeight,
         decoration: underline ? TextDecoration.underline : TextDecoration.none,
