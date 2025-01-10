@@ -54,6 +54,8 @@ dependencies:
   firebase_messaging: ^15.2.0
   flutter_local_notifications: ^18.0.1
   flutter_native_splash: ^2.4.4
+  timezone: ^0.9.0
+  permission_handler: ^11.3.1
 
 dev_dependencies:
   flutter_test:
@@ -118,3 +120,13 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+flutter_native_splash:
+  android: true
+  ios: true
+  web: false
+  image: assets/icons/logo.png
+  color: "#c8add9"
+  android_12:
+    image:  assets/icons/logo.png
+    color: "#c8add9"

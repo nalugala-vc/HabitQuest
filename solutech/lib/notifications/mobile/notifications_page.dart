@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:solutech/common/constants.dart';
-
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:solutech/common/widgets/app_bar.dart';
 import 'package:solutech/common/widgets/bottom_nav_bar.dart';
 import 'package:solutech/notifications/widgets/no_notifications_widget.dart';
@@ -12,10 +12,15 @@ class NotificationsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final arguments = Get.arguments;
+    final title = arguments['title'];
+    final message = arguments['message'];
+    final time = arguments['currentTime'];
+
     return Scaffold(
       appBar: const MainAppBar(),
       body: SingleChildScrollView(
-          child: notifications == null
+          child: (message.isEmpty)
               ? Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -25,21 +30,15 @@ class NotificationsPage extends StatelessWidget {
               : Column(
                   children: [
                     spaceH15,
-                    ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: notifications.length,
-                        itemBuilder: (context, index) {
-                          final notification = notifications[index];
-                          return NotificationWidget(
-                            type: notification['type'],
-                            title: notification['title'],
-                            description: notification['description'],
-                            time: notification['time'],
-                            isRead: notification['isRead'],
-                            onMarkAsRead: () {},
-                          );
-                        }),
+                    NotificationWidget(
+                      description: message,
+                      onMarkAsRead: () {},
+                      time: time,
+                      title: title,
+                      type: "Reminder",
+                      isRead: false,
+                    ),
+                    spaceH15,
                   ],
                 )),
       bottomNavigationBar: const BottomNavBar(),

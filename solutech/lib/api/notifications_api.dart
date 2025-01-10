@@ -26,8 +26,9 @@ class FirebaseApi {
     if (message == null) return;
     //navigate to new screen when message is received and user taps on it
     Get.to(() => NotificationsPage(), arguments: {
-      'title': 'New Notification',
-      'message': 'You have a new message!',
+      'title': "Reminder",
+      'message': message,
+      'currentTime': DateTime.now().toString(),
     });
   }
 

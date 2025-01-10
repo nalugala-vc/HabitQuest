@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:solutech/api/notification_service.dart';
 import 'package:solutech/core/controller/base_controller.dart';
 
 import 'package:solutech/models/habit.dart';
@@ -189,6 +190,24 @@ class HabitController extends BaseController {
 
       if (habit.hasReminder == true && habit.reminderTime != null) {
         updateData['reminderTime'] = habit.reminderTime;
+
+        List<String> timeParts = habit.reminderTime!.split(":");
+        int hour = int.parse(timeParts[0].trim());
+        int minute = int.parse(timeParts[1].split(" ")[0].trim());
+
+        if (habit.reminderTime!.contains("AM") && hour == 12) {
+          hour = 0;
+        } else if (habit.reminderTime!.contains("PM") && hour != 12) {
+          hour += 12;
+        }
+
+        TimeOfDay reminderTime = TimeOfDay(hour: hour, minute: minute);
+
+        await NotificationService.scheduleNotification(
+          title: habit.title,
+          message: habit.description,
+          reminderTime: reminderTime,
+        );
       } else {
         updateData['reminderTime'] = null;
       }
@@ -395,6 +414,15 @@ class HabitController extends BaseController {
         'createdAt': FieldValue.serverTimestamp(),
       });
 
+      // Schedule the reminder notification if the user has set a reminder
+      if (hasReminder && reminderTime != null) {
+        await NotificationService.scheduleNotification(
+          title: title,
+          message: description,
+          reminderTime: reminderTime,
+        );
+      }
+
       fetchHabits();
 
       clearFields();
@@ -440,7 +468,6 @@ class HabitController extends BaseController {
   }
 
   Future<void> checkAchievements() async {
-    print('Checking achievements lol');
     Map<DateTime, bool> consecutiveDays = {};
 
     int currentStreak = 0;

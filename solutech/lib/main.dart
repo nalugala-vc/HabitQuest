@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:solutech/api/notification_service.dart';
 import 'package:solutech/api/notifications_api.dart';
 import 'package:solutech/auth/onboarding/onboarding_questions.dart';
 import 'package:solutech/auth/onboarding/onboarding_screen_1.dart';
@@ -46,9 +47,9 @@ Future<void> main() async {
   }
 
   Get.put(ThemeController());
-
-  runApp(MyApp());
   await FirebaseApi.initNotifications();
+  NotificationService.initialize();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -101,6 +102,11 @@ class MyApp extends StatelessWidget {
           ),
           GetPage(
             name: '/theme-screen',
+            page: () => const ThemeScreen(),
+            middlewares: [AuthGuard()],
+          ),
+          GetPage(
+            name: '/notifications',
             page: () => const ThemeScreen(),
             middlewares: [AuthGuard()],
           ),

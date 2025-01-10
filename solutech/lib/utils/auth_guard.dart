@@ -15,6 +15,7 @@ class AuthGuard extends GetMiddleware {
   }
 
   bool checkUserAuthentication() {
+    // ignore: unnecessary_null_comparison
     return _loadUserDetails() != null;
   }
 
