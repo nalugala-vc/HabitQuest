@@ -149,7 +149,7 @@ List<HeroIcons> supportIcons = [
 
 List<String> supportTitles = [
   'App Permisions',
-  'Support & FAQ',
+  'Log out',
   'Give us feedback',
 ];
 

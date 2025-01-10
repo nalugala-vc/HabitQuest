@@ -29,6 +29,24 @@ A gamified habit tracking application built with Flutter that helps users build 
 Here's a walkthrough of implemented app:
 
 
+## CI/CD Pipeline Documentation 🪈
+
+The CI/CD pipeline has been created using Github Actions. The workflow is triggered on push or pull request events targeting the staging branch. 
+
+The pipeline runs on an Ubuntu virtual machine (ubuntu-latest) and begins by checking out the project's source code from the repository.
+Java Setup: The workflow installs Java (Zulu distribution, version 17) using the actions/setup-java@v3 action, as Java is a prerequisite for Flutter builds.
+Flutter Setup: The subosito/flutter-action@v2 action installs Flutter version 3.19.0 from the stable channel, preparing the environment for the project's specific requirements.
+Enable Web Support: A configuration command is executed to enable Flutter web support.
+The pipeline retrieves all necessary project dependencies using flutter pub get, ensuring a consistent and fully configured development environment.
+The flutter test --coverage command runs all unit and widget tests in the project. This step ensures the code's functionality and stability by catching issues early in the pipeline.
+The workflow generates a test coverage report (coverage/lcov.info), which is uploaded as an artifact for further analysis.
+
+The project is built for the web using the flutter build web command. The resulting files are deployed to Netlify using the nwtgck/actions-netlify@v1.1 action.
+The deployment process authenticates using a Netlify token and site ID and publishes the web build to the staging branch environment.
+
+The pipeline then  builds a release version of the Android APK using the flutter build apk --release command. The generated APK file is uploaded as an artifact using actions/upload-artifact@v3.
+
+
 ## Tech Stack 🛠️
 
 - Flutter for cross-platform development
@@ -58,7 +76,6 @@ cd habitquest
 - Enable Authentication (Google Sign-in)
 - Set up Firestore Database
 - Download `google-services.json` for Android
-- Download `GoogleService-Info.plist` for iOS
 - Add Firebase web configuration for web support
 
 3. Configure Google Sign-in

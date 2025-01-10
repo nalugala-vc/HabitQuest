@@ -44,11 +44,12 @@ Future<void> main() async {
       persistenceEnabled: true,
       cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
     );
+    await FirebaseApi.initNotifications();
+    NotificationService.initialize();
   }
 
   Get.put(ThemeController());
-  await FirebaseApi.initNotifications();
-  NotificationService.initialize();
+
   runApp(MyApp());
 }
 

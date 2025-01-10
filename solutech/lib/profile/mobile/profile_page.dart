@@ -4,8 +4,10 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:solutech/common/constants.dart';
 import 'package:solutech/common/widgets/app_bar.dart';
 import 'package:solutech/common/widgets/bottom_nav_bar.dart';
+import 'package:solutech/common/widgets/confirm_dialogue.dart';
 import 'package:solutech/profile/widgets/profile_image_widget.dart';
 import 'package:solutech/profile/widgets/profile_widgets.dart';
+import 'package:solutech/services/auth_services.dart';
 import 'package:solutech/utils/fonts/roboto_condensed.dart';
 import 'package:solutech/utils/spacers.dart';
 
@@ -88,7 +90,11 @@ class _ProfilePageMobileState extends State<ProfilePageMobile> {
                 itemBuilder: (context, index) => ProfileWidget(
                   bgColor: profileColors[index],
                   icon: supportIcons[index],
-                  onTap: () {},
+                  onTap: () {
+                    if (index == 1) {
+                      _handleLogout(context);
+                    }
+                  },
                   title: supportTitles[index],
                 ),
                 itemCount: supportIcons.length,
@@ -98,6 +104,19 @@ class _ProfilePageMobileState extends State<ProfilePageMobile> {
         ),
       ),
       bottomNavigationBar: const BottomNavBar(),
+    );
+  }
+
+  void _handleLogout(BuildContext context) async {
+    final AuthServices _authServices = AuthServices();
+    confirmDialogue(
+      context: context,
+      icon: 'assets/images/warning.png',
+      label: 'Log out',
+      message: 'Are you sure you want to log out?',
+      onConfirm: () async {
+        await _authServices.logout();
+      },
     );
   }
 }
