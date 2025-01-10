@@ -1,4 +1,4 @@
-name: Flutter Android Build
+name: Flutter Android Build with Testing
 
 on:
   push:
@@ -10,31 +10,36 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: solutech
+
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
           java-version: '17'
-      
+
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.19.0'
           channel: 'stable'
-          
+
       - name: Enable Web
         run: flutter config --enable-web
-          
+
       - name: Get dependencies
         run: flutter pub get
-       
+
       - name: Run Unit and Widget Tests
         run: flutter test --coverage
-
+      
       - name: Upload Test Coverage Report
+        if: always()
         uses: actions/upload-artifact@v3
         with:
           name: coverage-report
@@ -57,10 +62,10 @@ jobs:
           NETLIFY_AUTH_TOKEN: $
           NETLIFY_SITE_ID: $
         timeout-minutes: 1
-        
+
       - name: Build APK
         run: flutter build apk --release
-        
+
       - name: Upload APK
         uses: actions/upload-artifact@v3
         with:
