@@ -27,7 +27,10 @@ A gamified habit tracking application built with Flutter that helps users build 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented app:
-<img src='https://github.com/nalugala-vc/TipCalcy/blob/main/tipyGif.gif' title='Video Walkthrough' width='250' height='500' alt='Video Walkthrough' />
+
+<img src='https://github.com/nalugala-vc/HabitQuest/blob/main/vid1.gif' title='Video Walkthrough' width='250' height='500' alt='Video Walkthrough' />
+<img src='https://github.com/nalugala-vc/HabitQuest/blob/main/vid2.gif' title='Video Walkthrough' width='250' height='500' alt='Video Walkthrough' />
+<img src='https://github.com/nalugala-vc/HabitQuest/blob/main/vid3.gif' title='Video Walkthrough' width='250' height='500' alt='Video Walkthrough' />
 
 
 
