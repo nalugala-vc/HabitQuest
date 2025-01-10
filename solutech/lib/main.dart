@@ -14,6 +14,7 @@ import 'package:solutech/home/homepage.dart';
 import 'package:solutech/initial_page.dart';
 import 'package:solutech/profile/profile_page.dart';
 import 'package:solutech/utils/app_colors.dart';
+import 'package:solutech/utils/auth_guard.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -68,14 +69,33 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         initialRoute: '/',
         getPages: [
-          GetPage(name: '/', page: () => const InitialPage()),
+          GetPage(
+            name: '/',
+            page: () => const InitialPage(),
+          ),
           GetPage(name: '/sign-in', page: () => const SignIn()),
           GetPage(name: '/sign-up', page: () => const SignUp()),
-          GetPage(name: '/homepage', page: () => const Homepage()),
+          GetPage(
+            name: '/homepage',
+            page: () => const Homepage(),
+            middlewares: [AuthGuard()],
+          ),
           GetPage(name: '/onboarding', page: () => OnboardingScreen()),
-          GetPage(name: '/onboarding-qs', page: () => OnboardingQuestions()),
-          GetPage(name: '/create-habit', page: () => const CreateHabit()),
-          GetPage(name: '/profile-page', page: () => const ProfilePage()),
+          GetPage(
+            name: '/onboarding-qs',
+            page: () => OnboardingQuestions(),
+            middlewares: [AuthGuard()],
+          ),
+          GetPage(
+            name: '/create-habit',
+            page: () => const CreateHabit(),
+            middlewares: [AuthGuard()],
+          ),
+          GetPage(
+            name: '/profile-page',
+            page: () => const ProfilePage(),
+            middlewares: [AuthGuard()],
+          ),
         ],
       );
     });

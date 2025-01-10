@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:solutech/home/controller/habit_controller.dart';
 import 'package:solutech/services/auth_services.dart';
 
 class SignInController extends GetxController {
@@ -13,6 +14,7 @@ class SignInController extends GetxController {
   void loginUser(String email, String password) async {
     try {
       await _authServices.signIn(email: email, password: password);
+      await HabitController.instance.initializeAfterLogin();
       Get.offAllNamed('/homepage');
     } catch (e) {
       Fluttertoast.showToast(
@@ -30,7 +32,7 @@ class SignInController extends GetxController {
   void loginWithGoogle() async {
     try {
       await _authServices.loginWithGoogle();
-
+      await HabitController.instance.initializeAfterLogin();
       Get.offAllNamed('/homepage');
     } catch (e) {
       Fluttertoast.showToast(
@@ -149,6 +151,7 @@ class SignUpController extends GetxController {
 
     try {
       await _authServices.signUp(email: email, password: password);
+      await HabitController.instance.initializeAfterLogin();
       Get.offAllNamed('/onboarding-qs');
     } catch (e) {
       Fluttertoast.showToast(

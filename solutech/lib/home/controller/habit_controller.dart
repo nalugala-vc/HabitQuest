@@ -7,6 +7,7 @@ import 'package:solutech/core/controller/base_controller.dart';
 
 import 'package:solutech/models/habit.dart';
 import 'package:intl/intl.dart';
+import 'package:solutech/services/auth_services.dart';
 
 class HabitController extends BaseController {
   static HabitController get instance => Get.find();
@@ -31,20 +32,41 @@ class HabitController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    _initializeController();
+    _checkAndInitialize();
   }
 
-  Future<void> _initializeController() async {
-    await _loadUserDetails();
-    await fetchHabits();
-    initializeBadges();
+  Future<void> initializeAfterLogin() async {
+    try {
+      setBusy(true);
+      await _loadUserDetails();
+      if (userId.value.isNotEmpty) {
+        await fetchHabits();
+        initializeBadges();
+      } else {
+        print("User ID is still empty after loading details");
+      }
+    } catch (e) {
+      print("Error initializing controller: $e");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  Future<void> _checkAndInitialize() async {
+    final authServices = AuthServices();
+    if (await authServices.isUserLoggedIn()) {
+      await initializeAfterLogin();
+    }
   }
 
   Future<void> _loadUserDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    print('User ID ${prefs.getString('userId')}');
-
     userId.value = prefs.getString('userId') ?? '';
+    if (userId.value.isEmpty) {
+      print("User ID is still empty after loading from SharedPreferences");
+    } else {
+      print("Successfully loaded user ID: ${userId.value}");
+    }
     userEmail.value = prefs.getString('userEmail') ?? '';
     userName.value = prefs.getString('userName') ?? '';
     userPhotoURL.value = prefs.getString('userPhotoURL') ?? '';
