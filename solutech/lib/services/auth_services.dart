@@ -43,6 +43,8 @@ class AuthServices {
         userCredential = await FirebaseAuth.instance.signInWithCredential(cred);
       }
 
+      print(userCredential.user);
+
       // Save user info in SharedPreferences
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('userEmail', userCredential.user?.email ?? '');
