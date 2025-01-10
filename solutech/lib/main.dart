@@ -13,6 +13,7 @@ import 'package:solutech/home/create_habit.dart';
 import 'package:solutech/home/homepage.dart';
 import 'package:solutech/initial_page.dart';
 import 'package:solutech/profile/profile_page.dart';
+import 'package:solutech/profile/theme_screen.dart';
 import 'package:solutech/utils/app_colors.dart';
 import 'package:solutech/utils/auth_guard.dart';
 
@@ -94,6 +95,11 @@ class MyApp extends StatelessWidget {
           GetPage(
             name: '/profile-page',
             page: () => const ProfilePage(),
+            middlewares: [AuthGuard()],
+          ),
+          GetPage(
+            name: '/theme-screen',
+            page: () => const ThemeScreen(),
             middlewares: [AuthGuard()],
           ),
         ],

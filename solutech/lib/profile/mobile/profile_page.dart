@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:solutech/common/constants.dart';
 import 'package:solutech/common/widgets/app_bar.dart';
 import 'package:solutech/common/widgets/bottom_nav_bar.dart';
@@ -66,7 +68,9 @@ class _ProfilePageMobileState extends State<ProfilePageMobile> {
                 itemBuilder: (context, index) => ProfileWidget(
                   bgColor: profileColors[index],
                   icon: customizationIcons[index],
-                  onTap: () {},
+                  onTap: () {
+                    if (index == 0) Get.toNamed('/theme-screen');
+                  },
                   title: custimizationTitles[index],
                 ),
                 itemCount: custimizationTitles.length,
