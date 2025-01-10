@@ -27,6 +27,8 @@ A gamified habit tracking application built with Flutter that helps users build 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented app:
+<img src='https://github.com/nalugala-vc/TipCalcy/blob/main/tipyGif.gif' title='Video Walkthrough' width='250' height='500' alt='Video Walkthrough' />
+
 
 
 ## CI/CD Pipeline Documentation 🪈

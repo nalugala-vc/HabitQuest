@@ -13,9 +13,18 @@ class NotificationsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final arguments = Get.arguments;
-    final title = arguments['title'];
-    final message = arguments['message'];
-    final time = arguments['currentTime'];
+    String title = '';
+    String message = '';
+    String time = '';
+    // Check if arguments are null
+    if (arguments != null) {
+      title = arguments['title'];
+      message = arguments['message'];
+      time = arguments['currentTime'];
+    } else {
+      // Handle the case where no arguments are passed
+      print("No arguments passed!");
+    }
 
     return Scaffold(
       appBar: const MainAppBar(),
