@@ -30,6 +30,15 @@ jobs:
           
       - name: Get dependencies
         run: flutter pub get
+       
+      - name: Run Unit and Widget Tests
+        run: flutter test --coverage
+
+      - name: Upload Test Coverage Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: coverage/lcov.info
 
       - name: Build Web
         run: flutter build web
