@@ -32,6 +32,10 @@ Here's a walkthrough of implemented app:
 <img src='https://github.com/nalugala-vc/HabitQuest/blob/main/vid2.gif' title='Video Walkthrough' alt='Video Walkthrough' />
 <img src='https://github.com/nalugala-vc/HabitQuest/blob/main/vid3.gif' title='Video Walkthrough' alt='Video Walkthrough' />
 
+ **Web layout and dark mode**
+
+<img src='https://github.com/nalugala-vc/HabitQuest/blob/main/vid4.gif' title='Video Walkthrough' alt='Video Walkthrough' />
+
 
 
 ## CI/CD Pipeline Documentation 🪈
