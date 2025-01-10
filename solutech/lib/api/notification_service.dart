@@ -25,9 +25,8 @@ class NotificationService {
     final now = DateTime.now();
     final reminderDateTime = DateTime(
         now.year, now.month, now.day, reminderTime.hour, reminderTime.minute);
-    final notificationTime = reminderDateTime.subtract(Duration(minutes: 5));
 
-    final scheduledTime = tz.TZDateTime.from(notificationTime, tz.local);
+    final scheduledTime = tz.TZDateTime.from(reminderDateTime, tz.local);
     int notificationId = 0;
 
     await flutterLocalNotificationsPlugin.zonedSchedule(
