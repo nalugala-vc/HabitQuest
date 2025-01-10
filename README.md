@@ -188,10 +188,6 @@ lib/
 - Automatic sync between devices
 - Offline support with data persistence
 
-## License 📄
-
-[Your License]
-
 ## Acknowledgments 🙏
 
 - Firebase Team for the excellent BaaS solution
