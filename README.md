@@ -76,7 +76,7 @@ The pipeline then  builds a release version of the Android APK using the flutter
 
 1. Clone the repository
 ```bash
-git clone [your-repo-link]
+git clone (https://github.com/nalugala-vc/HabitQuest)
 cd habitquest
 ```
 
